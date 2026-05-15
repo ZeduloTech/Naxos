@@ -129,8 +129,8 @@ def test_chip_top_runner(test : str):
         # SRAM macros
         #Path(pdk_root) / pdk / "libs.ref/gf180mcu_fd_ip_sram/verilog/gf180mcu_fd_ip_sram__sram512x8m8wm1.v",
         #proj_path / "../ip/sram/gf180_ram_512x8_wrapper.v",
-	proj_path / "../ip/ocd_sram/gf180mcu_ocd_ip_sram__sram1024x8m8wm1.v",
- 	proj_path / "../ip/ocd_sram/gf180_ram_1024x8_wrapper/gf180_ram_1024x8_wrapper.v",
+	#proj_path / "../ip/sram/gf180mcu_ocd_ip_sram__sram1024x8m8wm1.v",
+ 	proj_path / "../ip/sram/gf180_ram_1024x8_wrapper.v",
  
         # Caravel IP
         proj_path / "../ip/simple_por/verilog/simple_por.v",
