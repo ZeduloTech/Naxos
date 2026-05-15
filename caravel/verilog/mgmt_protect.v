@@ -96,14 +96,14 @@ module mgmt_protect (
 
 	assign la_data_in_enable = la_iena_mprj;
 
-	gf180mcu_fd_sc_mcu7t5v0__nand2_4 user_to_mprj_in_gates [63:0] (
+	gf180mcu_as_sc_mcu7t3v3__nand2_4 user_to_mprj_in_gates [63:0] (
 `ifdef USE_POWER_PINS
                 .VDD(VDD),
                 .VSS(VSS),
 `endif
-		.ZN(la_data_in_mprj_bar),
-		.A1(la_data_out_core),
-		.A2(la_data_in_enable)
+		.Y(la_data_in_mprj_bar),
+		.A(la_data_out_core),
+		.B(la_data_in_enable)
 	);
 
 	assign la_data_in_mprj = ~la_data_in_mprj_bar;
@@ -112,14 +112,14 @@ module mgmt_protect (
 
 	assign user_irq_enable = user_irq_ena;
 
-	gf180mcu_fd_sc_mcu7t5v0__nand2_4 user_irq_gates [2:0] (
+	gf180mcu_as_sc_mcu7t3v3__nand2_4 user_irq_gates [2:0] (
 `ifdef USE_POWER_PINS
                 .VDD(VDD),
                 .VSS(VSS),
 `endif
-		.ZN(user_irq_bar),
-		.A1(user_irq_core),
-		.A2(user_irq_enable)
+		.Y(user_irq_bar),
+		.A(user_irq_core),
+		.B(user_irq_enable)
 	);
 
 	assign user_irq = ~user_irq_bar;
@@ -129,26 +129,26 @@ module mgmt_protect (
 
 	assign wb_in_enable = mprj_iena_wb;
 
-	gf180mcu_fd_sc_mcu7t5v0__nand2_4 user_wb_dat_gates [31:0] (
+	gf180mcu_as_sc_mcu7t3v3__nand2_4 user_wb_dat_gates [31:0] (
 `ifdef USE_POWER_PINS
                 .VDD(VDD),
                 .VSS(VSS),
 `endif
-		.ZN(mprj_dat_i_core_bar),
-		.A1(mprj_dat_i_user),
-		.A2(wb_in_enable)
+		.Y(mprj_dat_i_core_bar),
+		.A(mprj_dat_i_user),
+		.B(wb_in_enable)
 	);
 
 	assign mprj_dat_i_core = ~mprj_dat_i_core_bar;
 
-	gf180mcu_fd_sc_mcu7t5v0__nand2_4 user_wb_ack_gate (
+	gf180mcu_as_sc_mcu7t3v3__nand2_4 user_wb_ack_gate (
 `ifdef USE_POWER_PINS
                 .VDD(VDD),
                 .VSS(VSS),
 `endif
-		.ZN(mprj_ack_i_core_bar),
-		.A1(mprj_ack_i_user),
-		.A2(wb_in_enable)
+		.Y(mprj_ack_i_core_bar),
+		.A(mprj_ack_i_user),
+		.B(wb_in_enable)
 	);
 
 	assign mprj_ack_i_core = ~mprj_ack_i_core_bar;

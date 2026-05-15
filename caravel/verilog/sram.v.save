@@ -11,7 +11,7 @@ module sram(
 
     parameter   NUM_WMASKS  = 4 ;
     parameter   DATA_WIDTH  = 32 ;
-    parameter   ADDR_WIDTH  = 11; //11 ; // block sel
+    parameter   ADDR_WIDTH  = 11 ; // block sel
     parameter   RAM_DEPTH   = 1 << ADDR_WIDTH;
 
     input                   clk0; // clock
@@ -36,43 +36,28 @@ module sram(
     */
 
     wire sram_block = addr0[10]; // block selector
-    wire csb0_00    =  csb0 | sram_block; // active when addr[10] is 0
-    wire csb0_01    =  csb0 | ~sram_block; // active when addr[10] is 1
+    wire csb_0    =  csb0 | sram_bock; // active when addr[10] is 0
+    wire csb_1    =  csb0 | ~sram_block; // active when addr[10] is 1
 
-    wire [31:0] dout_00, dout_01;
-    // Register for block selected mux read (output)
-    reg sram_blk_out;
+    wire dout_0, dout_1;
+    // Register for block selected mux read
+    reg sram_blk_out
     always @(posedge clk0)
-	if (!csb0) sram_blk_out <= sram_block;
+	if (!csb0) 
  
-    assign dout0 = sram_blk_out ? dout_01 : dout_00; 
 
-    GF180_RAM_1024x32 ram1024x32_00 (    
+    GF180_RAM_1024x32 ram1024x32 (    
                                     `ifdef USE_POWER_PINS
                                     .VDD(VDD), 
                                     .VSS(VSS),
                                     `endif
                                     .CLK(clk0), 
-                                    .CEN(csb0_00),
+                                    .CEN(csb0),
                                     .GWEN(web0), 
                                     .WEN(~wmask0), 
-                                    .A(addr0[9:0]), 
+                                    .A(addr0), 
                                     .D(din0), 
-                                    .Q(dout_00)
+                                    .Q(dout0)
                                 );
 
-    GF180_RAM_1024x32 ram1024x32_01 (    
-                                    `ifdef USE_POWER_PINS
-                                    .VDD(VDD), 
-                                    .VSS(VSS),
-                                    `endif
-                                    .CLK(clk0), 
-                                    .CEN(csb0_01),
-                                    .GWEN(web0), 
-                                    .WEN(~wmask0), 
-                                    .A(addr0[9:0]), 
-                                    .D(din0), 
-                                    .Q(dout_01)
-                                );
-
-endmodule
+endmodule 

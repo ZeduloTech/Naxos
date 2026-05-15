@@ -1,24 +1,22 @@
 ############################## General #################################
-
 meta:
   version: 2
   flow: Classic
   substituting_steps:
     
     # Save time
-    #Magic.DRC: null                 
-    #KLayout.DRC: null
-    #OpenROAD.IRDropReport: null
-    #Magic.SpiceExtraction: null    
-    #Checker.MagicDRC: null
-    #KLayout.XOR: null
-    #Netgen.LVS: null
-    #Checker.LVS: null
-    #Checker.SetupViolations: null
+    Magic.DRC: null                 
+    KLayout.DRC: null
+    OpenROAD.IRDropReport: null
+    Magic.SpiceExtraction: null    
+    Checker.MagicDRC: null
+    KLayout.XOR: null
+    Netgen.LVS: null
+    Checker.LVS: null
+    Checker.SetupViolations: null
     #Verilator.Lint: null
     
     Checker.YosysSynthChecks: null  # Fails due to multisources in PLL
-
 DESIGN_NAME: caravel_core
 VERILOG_FILES:
 - dir::../verilog/defines.v
@@ -29,7 +27,7 @@ VERILOG_FILES:
 - dir::../verilog/digital_pll_controller.v
 - dir::../verilog/gpio_defaults_block.v
 - dir::../verilog/gpio_control_block.v
-- dir::../verilog/GF180_RAM_512x32.v
+- dir::../verilog/GF180_RAM_1024x32.v
 - dir::../verilog/mgmt_core.v
 - dir::../verilog/mgmt_core_wrapper.v
 - dir::../verilog/mgmt_protect.v
@@ -38,32 +36,44 @@ VERILOG_FILES:
 - dir::../verilog/VexRiscv_MinDebugCache.v
 - dir::../verilog/housekeeping.v
 - dir::../verilog/housekeeping_spi.v
-
 MACROS:
-  gf180_ram_512x8_wrapper:
+  gf180_ram_1024x8_wrapper:
     gds:
-      - dir::../../ip/sram/gf180_ram_512x8_wrapper.gds.gz
+      - dir::../../ip/sram/gf180_ram_1024x8_wrapper.gds.gz
     lef:
-      - dir::../../ip/sram/gf180_ram_512x8_wrapper.lef
-    nl:
-      - dir::../../ip/sram/gf180_ram_512x8_wrapper.v
+      - dir::../../ip/sram/gf180_ram_1024x8_wrapper.lef
+    vh:
+      - dir::../../ip/sram/gf180_ram_1024x8_wrapper.vh
     lib:
-      "*tt*" : [ dir::../../ip/sram/gf180mcu_fd_ip_sram__sram512x8m8wm1__tt_025C_5v00.lib ]
-      "*ss*" : [ dir::../../ip/sram/gf180mcu_fd_ip_sram__sram512x8m8wm1__ss_125C_4v50.lib ]
-      "*ff*" : [ dir::../../ip/sram/gf180mcu_fd_ip_sram__sram512x8m8wm1__ff_n40C_5v50.lib ]
+      "*tt*" : [ dir::../../ip/sram/gf180_ram_1024x8_wrapper__tt_025C_3v30.lib ]
+      "*ff*" : [ dir::../../ip/sram/gf180_ram_1024x8_wrapper__ff_n40C_3v60.lib ]
       
     instances:  
-      soc.core.sram.ram512x32.RAM00:
-        location: [119, 85]
+      # Bank 00 - left group
+      soc.core.sram.ram1024x32_00.RAM00:
+        location: [50, 85]
         orientation: S
-      soc.core.sram.ram512x32.RAM01:
-        location: [555.86, 85]
+      soc.core.sram.ram1024x32_00.RAM01:
+        location: [353.30, 85]
         orientation: S
-      soc.core.sram.ram512x32.RAM02:
-        location: [992.72, 85]
+      soc.core.sram.ram1024x32_00.RAM02:
+        location: [656.60, 85]
         orientation: S
-      soc.core.sram.ram512x32.RAM03:
-        location: [1429.58, 85]
+      soc.core.sram.ram1024x32_00.RAM03:
+        location: [959.90, 85]
+        orientation: S
+      # Bank 01 - rigth group
+      soc.core.sram.ram1024x32_01.RAM00:
+        location: [1610, 85] #1310
+        orientation: S
+      soc.core.sram.ram1024x32_01.RAM01:
+        location: [1913.30, 85] #1613
+        orientation: S
+      soc.core.sram.ram1024x32_01.RAM02:
+        location: [2216.60, 85] #1916
+        orientation: S
+      soc.core.sram.ram1024x32_01.RAM03:
+        location: [2519.90, 85] #2219
         orientation: S
 
   ring_osc2x13:
@@ -83,7 +93,7 @@ MACROS:
       "*ff*" : [ dir::../ring_osc2x13/final/spef/min/ring_osc2x13.min.spef]
     instances:  
       pll.ringosc:
-        location: [2500, 95]
+        location: [2500, 700] #[2500, 700]
         orientation: N
 
   simple_por:
@@ -95,8 +105,12 @@ MACROS:
       - dir::../../ip/simple_por/verilog/simple_por.v
     instances:  
       por_inst:
-        location: [2617, 95]
+        location: [2617, 700] #[2617, 700]
         orientation: MX
+
+# 3.3V CELL LIBRABRY
+STD_CELL_LIBRARY: gf180mcu_as_sc_mcu7t3v3
+STD_CELL_LIBRARY_OPT: gf180mcu_as_sc_mcu7t3v3
 
 # Slightly smaller file sizes
 PRIMARY_GDSII_STREAMOUT_TOOL: klayout
@@ -114,14 +128,17 @@ GND_NETS:
 
 # Clock, period should be consistent with sdc_defs.tcl
 CLOCK_PORT: "clock_core"
-CLOCK_PERIOD: 30
+CLOCK_PERIOD: 50 #30
 
 ############################ Floorplanning ############################# 
 
 FP_SIZING: absolute
-DIE_AREA: [0, 0, 2900, 1000]
-CORE_AREA: [24, 26, 2875, 974]
+#DIE_AREA: [0, 0, 2900, 1000]
+#CORE_AREA: [24, 26, 2875, 974]
 
+DIE_AREA: [0, 0, 2900, 1100]
+CORE_AREA: [24, 30, 2875, 1070]
+ 
 FP_PIN_ORDER_CFG: dir::pin.cfg
 FP_IO_MIN_DISTANCE: 10
 FP_IO_VTHICKNESS_MULT: 4
@@ -154,7 +171,7 @@ PDN_CFG: dir::pdn_cfg.tcl
 
 ############################### Placement ############################## 
 
-PL_TARGET_DENSITY_PCT: 50
+PL_TARGET_DENSITY_PCT: 60
 PL_KEEP_RESIZE_BELOW_OVERFLOW: 0
 PL_RESIZER_ALLOW_SETUP_VIOS: True
 PL_RESIZER_HOLD_SLACK_MARGIN: 0.5

@@ -18,7 +18,7 @@ from cocotb_tools.runner import get_runner
 sim = os.getenv("SIM", "icarus")
 pdk_root = os.getenv("PDK_ROOT", Path("../gf180mcu").absolute())
 pdk = os.getenv("PDK", "gf180mcuD")
-scl = os.getenv("SCL", "gf180mcu_fd_sc_mcu7t5v0")
+scl = os.getenv("SCL", "gf180mcu_as_sc_mcu7t3v3")
 gl = os.getenv("GL", False)
 sdf = os.getenv("SDF", False)
 test_env = os.getenv("TEST", "all")
@@ -95,8 +95,10 @@ def test_chip_top_runner(test : str):
     })
 
     sources.append(Path(pdk_root) / pdk / "libs.ref" / scl / "verilog" / f"{scl}.v")
-    sources.append(Path(pdk_root) / pdk / "libs.ref" / scl / "verilog" / "primitives.v")
-
+#    sources.append(Path(pdk_root) / pdk / "libs.ref" / scl / "verilog" / "primitives.v")
+# 5V cells needed for ring_osc2x13 macro
+    sources.append(Path(pdk_root) / pdk / "libs.ref" / "gf180mcu_fd_sc_mcu7t5v0" / "verilog" / "gf180mcu_fd_sc_mcu7t5v0.v")
+    sources.append(Path(pdk_root) / pdk / "libs.ref" / "gf180mcu_fd_sc_mcu7t5v0" / "verilog" / "primitives.v")
     if gl:
         # Use the powered netlist
         sources.append(proj_path / "../caravel/ring_osc2x13/final/pnl/ring_osc2x13.pnl.v")
@@ -125,9 +127,11 @@ def test_chip_top_runner(test : str):
         Path(pdk_root) / pdk / "libs.ref/gf180mcu_fd_io/verilog/gf180mcu_ws_io.v",
         
         # SRAM macros
-        Path(pdk_root) / pdk / "libs.ref/gf180mcu_fd_ip_sram/verilog/gf180mcu_fd_ip_sram__sram512x8m8wm1.v",
-        proj_path / "../ip/sram/gf180_ram_512x8_wrapper.v",
-
+        #Path(pdk_root) / pdk / "libs.ref/gf180mcu_fd_ip_sram/verilog/gf180mcu_fd_ip_sram__sram512x8m8wm1.v",
+        #proj_path / "../ip/sram/gf180_ram_512x8_wrapper.v",
+	proj_path / "../ip/ocd_sram/gf180mcu_ocd_ip_sram__sram1024x8m8wm1.v",
+ 	proj_path / "../ip/ocd_sram/gf180_ram_1024x8_wrapper/gf180_ram_1024x8_wrapper.v",
+ 
         # Caravel IP
         proj_path / "../ip/simple_por/verilog/simple_por.v",
         

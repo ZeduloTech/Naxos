@@ -51,14 +51,14 @@ module digital_pll(
     assign itrim = (dco == 1'b0) ? otrim : ext_trim;
     assign creset = (dco == 1'b0) ? ireset : 1'b1;
     
-    (* keep, dont_touch *) gf180mcu_fd_sc_mcu7t5v0__clkbuf_4 ringosc0_clk_buf (
-        .I(clockp_prebuf[0]),
-        .Z(clockp[0])
+    (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__clkbuff_4 ringosc0_clk_buf (
+        .A(clockp_prebuf[0]),
+        .Y(clockp[0])
     );
     
-    (* keep, dont_touch *) gf180mcu_fd_sc_mcu7t5v0__clkbuf_4 ringosc1_clk_buf (
-        .I(clockp_prebuf[1]),
-        .Z(clockp[1])
+    (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__clkbuff_4 ringosc1_clk_buf (
+        .A(clockp_prebuf[1]),
+        .Y(clockp[1])
     );
 
     ring_osc2x13 ringosc (

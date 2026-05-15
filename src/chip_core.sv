@@ -83,9 +83,9 @@ module chip_core #(
     );
 
     // Buffer wb clock
-    (* keep, dont_touch *) gf180mcu_fd_sc_mcu7t5v0__clkbuf_8 wb_clk_buf (
-        .I(user_wb_clk_prebuf),
-        .Z(user_wb_clk)
+    (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__clkbuff_8 wb_clk_buf (
+        .A(user_wb_clk_prebuf),
+        .Y(user_wb_clk)
     );
     
     caravel_core caravel (

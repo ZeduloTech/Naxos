@@ -7651,7 +7651,7 @@ sram sram(
     .VDD(VDD),
     .VSS(VSS),
 `endif
-	.addr0(bus_adr[9:0]),
+	.addr0(bus_adr[10:0]), //[9:0]
 	.addr1(adr1),
 	.clk0(sys_clk),
 	.clk1(clk1),

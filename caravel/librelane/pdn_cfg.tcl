@@ -134,6 +134,7 @@ if { $::env(FP_PDN_CORE_RING) == 1 } {
     }
 }
 
+
 define_pdn_grid \
     -macro \
     -default \
@@ -145,5 +146,5 @@ add_pdn_connect \
     -grid macro \
     -layers "$::env(FP_PDN_VERTICAL_LAYER) $::env(FP_PDN_HORIZONTAL_LAYER)"
 #add_pdn_connect \
-    #-grid macro \
-    #-layers "Metal4 Metal3"
+#    -grid macro \
+#    -layers "Metal4 Metal3"

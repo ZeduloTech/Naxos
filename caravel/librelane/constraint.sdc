@@ -27,24 +27,24 @@ create_clock -name clk -period $clk_period [get_pins $caravel_clk_start]
 create_generated_clock -name wbbd_sck -source [get_pins $caravel_clk_start] -divide_by 2 -master_clock clk [get_driver {housekeeping.wbbd_sck}]
 
 # Housekeeping SPI clock (do not confuse with hk_serial)
-create_clock -name hkspi_clk -period $hkspi_clk_period [get_pins {housekeeping.hkspi_clk_buf/Z}] 
+create_clock -name hkspi_clk -period $hkspi_clk_period [get_pins {housekeeping.hkspi_clk_buf/Y}] 
 
 if {$analyse_hkspi == 1} {
     set_case_analysis 0 [get_driver {housekeeping.wbbd_busy}]
-    create_generated_clock -name hk_csclk -source [get_pins {housekeeping.hkspi_clk_buf/Z}] -divide_by 1 -master_clock hkspi_clk [get_driver {housekeeping.csclk}]
+    create_generated_clock -name hk_csclk -source [get_pins {housekeeping.hkspi_clk_buf/Y}] -divide_by 1 -master_clock hkspi_clk [get_driver {housekeeping.csclk}]
 }
 
 # Oscilator clocks
-create_clock -name osc_clk0 -period $osc_period [get_pins {pll.ringosc0_clk_buf/Z}] 
-create_clock -name osc_clk1 -period $osc_period [get_pins {pll.ringosc1_clk_buf/Z}] 
+create_clock -name osc_clk0 -period $osc_period [get_pins {pll.ringosc0_clk_buf/Y}] 
+create_clock -name osc_clk1 -period $osc_period [get_pins {pll.ringosc1_clk_buf/Y}] 
 
 # hk_serial_clk period is x2 core clock
-create_generated_clock -name hk_serial_clk -source [get_pins serial_clk_buf/I] -divide_by 2 -master clk [get_pins serial_clk_buf/Z]
-create_generated_clock -name hk_serial_load -source [get_pins serial_load_clk_buf/I] -divide_by 20 -master clk [get_pins serial_load_clk_buf/Z]
+create_generated_clock -name hk_serial_clk -source [get_pins serial_clk_buf/A] -divide_by 2 -master clk [get_pins serial_clk_buf/Y]
+create_generated_clock -name hk_serial_load -source [get_pins serial_load_clk_buf/A] -divide_by 20 -master clk [get_pins serial_load_clk_buf/Y]
 
 ## Flash & WB generated clocks
-create_generated_clock -name flash_clk -source [get_pins flash_clk_buf/Z] -divide_by 4 [get_ports flash_clk_frame]
-create_generated_clock -name user_wb_clk -source [get_pins user_wb_clk_buf/Z] -divide_by 1 [get_ports user_wb_clk_o]
+create_generated_clock -name flash_clk -source [get_pins flash_clk_buf/Y] -divide_by 4 [get_ports flash_clk_frame]
+create_generated_clock -name user_wb_clk -source [get_pins user_wb_clk_buf/Y] -divide_by 1 [get_ports user_wb_clk_o]
 
 set_clock_uncertainty 1 [get_clocks {hk_serial_clk hk_serial_load}]
 set_clock_uncertainty 1 [get_clocks {flash_clk}]
@@ -117,8 +117,11 @@ set max_in_tran 1.0
 # Input driving cells
 set user_inputs [get_ports [list flash_io*_di user_wb_dat_i* user_wb_ack_i user_gpio_out* user_gpio_oeb* user_irq_core]]
 set pad_inputs [get_ports [list caravel_io_in* rstb clock_core gpio_in_core]]
-set_driving_cell -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_16 -pin Z -min -from_pin I -input_transition_rise $min_in_tran -input_transition_fall $min_in_tran $user_inputs
-set_driving_cell -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -pin Z -max -from_pin I -input_transition_rise $max_in_tran -input_transition_fall $max_in_tran $user_inputs
+#set_driving_cell -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_16 -pin Y -min -from_pin I -input_transition_rise $min_in_tran -input_transition_fall $min_in_tran $user_inputs
+#set_driving_cell -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -pin Y -max -from_pin I -input_transition_rise $max_in_tran -input_transition_fall $max_in_tran $user_inputs
+set_driving_cell -lib_cell gf180mcu_as_sc_mcu7t3v3__buff_12 -pin Y -min -from_pin A -input_transition_rise $min_in_tran -input_transition_fall $min_in_tran $user_inputs
+set_driving_cell -lib_cell gf180mcu_as_sc_mcu7t3v3__buff_2 -pin Y -max -from_pin A -input_transition_rise $max_in_tran -input_transition_fall $max_in_tran $user_inputs
+
 set_driving_cell -lib_cell gf180mcu_fd_io__bi_24t -pin Y -from_pin PAD -input_transition_rise $max_in_tran -input_transition_fall $max_in_tran $pad_inputs
 
 # Derates

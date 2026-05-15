@@ -1,6 +1,14 @@
-# gf180mcu Caravel Template
+# gf180mcu Project Template
 
-Project template for wafer.space MPW runs using the gf180mcu PDK with integrated Caravel core. Based on the [gf180mcu-project-template](https://github.com/wafer-space/gf180mcu-project-template) with Caravel core which is essentially a simplified fork of the [GF180MCU Caravel by eFabless](https://github.com/efabless/caravel-gf180mcu) used during OpenMPW GF180MCU runs. This template is intended to be used as a base for wafer.space gf180mcu designs when proven Wishbone-capable CPU core is needed. Please see [TZ-01 testchip from the wafer.space Run-1](https://github.com/ZeduloTech/gf180mcu-testchip2025) as an example of such usage.
+Project template for wafer.space MPW runs using the gf180mcu PDK.
+
+## Prerequisites
+
+We use a custom fork of the [gf180mcuD PDK variant](https://github.com/wafer-space/gf180mcu) until all changes have been upstreamed.
+
+To clone the latest PDK version, simply run `make clone-pdk`.
+
+In the next step, install LibreLane by following the Nix-based installation instructions: https://librelane.readthedocs.io/en/latest/installation/nix_installation/index.html
 
 ## Implement the Design
 
@@ -8,46 +16,103 @@ This repository contains a Nix flake that provides a shell with the [`leo/gf180m
 
 Simply run `nix-shell` in the root of this repository.
 
-With this shell enabled, run the implementation, first implementing the Caravel core (can be skipped as all required files are already in the repository):
+> [!NOTE]
+> Since we are working on a branch of LibreLane, OpenROAD needs to be compiled locally. This will be done automatically by Nix, and the binary will be cached locally. 
 
-```
-make caravel-librelane
-```
-
-After Caravel implementation is done run the implementation of the chip top:
+With this shell enabled, run the implementation:
 
 ```
 make librelane
 ```
 
-To run everything at once:
+## View the Design
+
+After completion, you can view the design using the OpenROAD GUI:
+
 ```
-make all
+make librelane-openroad
 ```
 
-For more info, see the original [gf180mcu-project-template](https://github.com/wafer-space/gf180mcu-project-template) and check the GitHub CI scripts in this repo.
+Or using KLayout:
 
-## Caravel core
-
-Only a part of Caravel core was ported for this project. VexRiscv management processor, user Wishbone bus, flash & housekeeping SPI, PLL and GPIO config blocks are present, but padframe and user area are not. Also a total number of pads used by Caravel was reduced to 18 of which 13 could be configured for user IO bypass. All Caravel logic including GPIO config blocks are now placed inside the core area. No "frame" is going around the user project, and user project itself should be implemented inside the upper level template (`src\chip_core.sv`) and connected to the remaining pads directly. Caravel uses first 18 bidir pads (0-17) located at the bottom of the template padframe, for the pad assignment see `src/pinout.vh`.
-
-The only major addition to the original Caravel is the `start_mode` input pin. Driving this pin to 1 during Caravel power-up will put the Caravel core into "self-sufficient" mode, in which it will use the clock from the internal ring-oscillator and start code execution from the user Wishbone area instead of SPI flash. For regular Caravel behavior `start_mode` pin should be tied to 0.
-
-## Integrating user design with Caravel
-
-User design located in `chip_core.sv` could be connected to Caravel's Wishbone bus. It will be mapped to the address 0x30000000 in the CPU address space. Most of the pads connected to the Caravel could be connected to the user design signals using user_gpio_\* pins. User IO on these pins is multiplexed with Caravel IO and multiplexing is controlled from Caravel software in a manner similar to the original Caravel. For examples of user designs please see Wishbone counter connected in this repository or more complex case in the [TZ-01 testchip](https://github.com/ZeduloTech/gf180mcu-testchip2025/blob/main/src/chip_core.sv).
+```
+make librelane-klayout
+```
 
 ## Verification and Simulation
 
-Verification is based on the cocotb using Icarus Verilog as a default simulator and extending original gf180mcu-project-template testbench. To run all provided tests on behavioral RTL please run:
+We use [cocotb](https://www.cocotb.org/), a Python-based testbench environment, for the verification of the chip.
+The underlying simulator is Icarus Verilog (https://github.com/steveicarus/iverilog).
+
+The testbench is located in `cocotb/chip_top_tb.py`. To run the RTL simulation, run the following command:
+
 ```
 make sim
 ```
 
-To run all the tests on post-implementation gate-level netlist (will be present in the `final` folder after implementation) run:
+To run the GL (gate-level) simulation, run the following command:
+
 ```
 make sim-gl
 ```
 
-Cocotb testbench is located in `cocotb/chip_top_tb.py` and could be run either directly with python or via pytest. Makefile targets launch all the tests via pytest with the number of parallel runs equivalent to a number of available CPU threads. The list of available tests could be found in `cocotb/test_list.json`. Currently each test consists of a Verilog testbench (`caravel/sim/caravel_tb`) and a Caravel program (`caravel/sim/caravel_sw`), with cocotb testbench acting mostly as a test framework. Extension of this test structure to more complex test cases could be found in the [TZ-01 testchip repository](https://github.com/ZeduloTech/gf180mcu-testchip2025/tree/main/cocotb).
+> [!NOTE]
+> You need to have the latest implementation of your design in the `final/` folder. After a run has completed without errors, the final views will be copied to `final/`.
 
+In both cases, a waveform file will be generated under `cocotb/sim_build/chip_top.fst`.
+You can view it using a waveform viewer, for example, [GTKWave](https://gtkwave.github.io/gtkwave/).
+
+```
+make sim-view
+```
+
+You can now update the testbench according to your design.
+
+## Implementing Your Own Design
+
+The source files for this template can be found in the `src/` directory. `chip_top.sv` defines the top-level ports and instantiates `chip_core`, chip ID (QR code) and the wafer.space logo. To allow for the default bonding setup, do not change the number of pads in order to keep the original bondpad positions. To be compatible with the default breakout PCB, do not change any of the power or ground pads. However, you can change the type of the signal pads, e.g. to bidirectional, input-only or e.g. analog pads. The template provides the `NUM_INPUT` and `NUM_BIDIR` parameters for this purpose.
+
+The actual pad positions are defined in the LibreLane configuration file under `librelane/config.yaml`. The variables `PAD_SOUTH`/`PAD_EAST`/`PAD_NORTH`/`PAD_WEST` determine the respective pad placement. The LibreLane configuration also allows you to customize the flow (enable or disable steps), specify the source files, set various variables for the steps, and instantiate macros. For more information about the configuration, please refer to the LibreLane documentation: https://librelane.readthedocs.io/en/latest/
+
+To implement your own design, simply edit `chip_core.sv`. The `chip_core` module receives the clock and reset, as well as the signals from the pads defined in `chip_top`. As an example, a 42-bit wide counter is implemented.
+
+> [!NOTE]
+> For more comprehensive SystemVerilog support, enable the `USE_SLANG` variable in the LibreLane configuration.
+
+## Choosing a Different Slot Size
+
+The template supports the following slot sizes: `1x1`, `0p5x1`, `1x0p5`, `0p5x0p5`.
+By default, the design is implemented using the `1x1` slot definition.
+
+To select a different slot size, simply set the `SLOT` environment variable.
+This can be done when invoking a make target:
+
+```
+SLOT=0p5x0p5 make librelane
+```
+
+Alternatively, you can export the slot size:
+
+```
+export SLOT=0p5x0p5
+```
+
+You can change the slot that is selected by default in the Makefile by editing the value of `DEFAULT_SLOT`.
+
+## Building a Standalone Padring for Analog Design
+
+To build just the padring without any standard cell rows, digital routing or filler cells, run the following command:
+
+```
+make librelane-padring
+```
+
+It is also possible to build the padring for other slot sizes:
+
+```
+SLOT=0p5x0p5 make librelane-padring
+```
+
+## Precheck
+
+To check whether your design is suitable for manufacturing, run the [gf180mcu-precheck](https://github.com/wafer-space/gf180mcu-precheck) with your layout.

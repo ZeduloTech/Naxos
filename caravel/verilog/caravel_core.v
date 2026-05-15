@@ -448,9 +448,9 @@ module caravel_core (
     /* Connect user signals, from outside of Caravel    */
     /*--------------------------------------------------*/
 
-    (* keep, dont_touch *) gf180mcu_fd_sc_mcu7t5v0__clkbuf_20 user_wb_clk_buf (
-        .I(mprj_clock),
-        .Z(user_wb_clk_o)
+    (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__clkbuff_12 user_wb_clk_buf (
+        .A(mprj_clock),
+        .Y(user_wb_clk_o)
     );
     
     assign user_wb_rst_o = mprj_reset;
@@ -555,21 +555,21 @@ module caravel_core (
     assign clk_select = ext_clk_sel & ~start_mode;
     
     // these buffers have to be x16 to reduce antenna
-    (* keep, dont_touch *) gf180mcu_fd_sc_mcu7t5v0__clkbuf_16 coreclkin_clkmovable_buf (
-        .I(clock_core),
-        .Z(clock_core_buf)
+    (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__clkbuff_12 coreclkin_clkmovable_buf (
+        .A(clock_core),
+        .Y(clock_core_buf)
     );
     
-    (* keep, dont_touch *) gf180mcu_fd_sc_mcu7t5v0__clkbuf_16 core_clk_buf (
-        .I(clock_core_buf),
-        .Z(clock_core_postbuf)
+    (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__clkbuff_12 core_clk_buf (
+        .A(clock_core_buf),
+        .Y(clock_core_postbuf)
     );
 
     // DCO/Digital Locked Loop
 
-    (* keep, dont_touch *) gf180mcu_fd_sc_mcu7t5v0__clkbuf_16 pll_in_clk_buf (
-        .I(clock_core_buf),
-        .Z(clock_core_forpll)
+    (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__clkbuff_12 pll_in_clk_buf (
+        .A(clock_core_buf),
+        .Y(clock_core_forpll)
     );
     
     digital_pll pll (
@@ -687,19 +687,19 @@ module caravel_core (
     );
     
     // Clock buffers to start clocks from in SDC
-    (* keep, dont_touch  *) gf180mcu_fd_sc_mcu7t5v0__clkbuf_4 serial_clk_buf (
-        .I(serial_clock),
-        .Z(mprj_io_loader_clock)
+    (* keep, dont_touch  *) gf180mcu_as_sc_mcu7t3v3__clkbuff_4 serial_clk_buf (
+        .A(serial_clock),
+        .Y(mprj_io_loader_clock)
     );
     
-    (* keep, dont_touch  *)  gf180mcu_fd_sc_mcu7t5v0__clkbuf_4 serial_load_clk_buf (
-        .I(serial_load),
-        .Z(mprj_io_loader_strobe)
+    (* keep, dont_touch  *)  gf180mcu_as_sc_mcu7t3v3__clkbuff_4 serial_load_clk_buf (
+        .A(serial_load),
+        .Y(mprj_io_loader_strobe)
     );
     
-    (* keep, dont_touch  *)  gf180mcu_fd_sc_mcu7t5v0__clkbuf_20 flash_clk_buf (
-        .I(flash_clk_frame_prebuf),
-        .Z(flash_clk_frame)
+    (* keep, dont_touch  *)  gf180mcu_as_sc_mcu7t3v3__clkbuff_12 flash_clk_buf (
+        .A(flash_clk_frame_prebuf),
+        .Y(flash_clk_frame)
     );
 
     /*------------------------------------------*/

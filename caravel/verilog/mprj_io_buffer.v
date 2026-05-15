@@ -10,12 +10,12 @@ module mprj_io_buffer (
      input [17:0]  mgmt_gpio_out,
      output [17:0] mgmt_gpio_out_buf);
 
-(* keep *) gf180mcu_fd_sc_mcu7t5v0__clkbuf_8 BUF[38:0] (
+(* keep *) gf180mcu_as_sc_mcu7t3v3__clkbuff_8 BUF[38:0] (
 		`ifdef USE_POWER_PINS
 			.VDD(VDD),
 			.VSS(VSS),
 		`endif
-		.I({mgmt_gpio_in, mgmt_gpio_oeb, mgmt_gpio_out}), 
-		.Z({mgmt_gpio_in_buf, mgmt_gpio_oeb_buf, mgmt_gpio_out_buf})); 
+		.A({mgmt_gpio_in, mgmt_gpio_oeb, mgmt_gpio_out}), 
+		.Y({mgmt_gpio_in_buf, mgmt_gpio_oeb_buf, mgmt_gpio_out_buf})); 
 
 endmodule

@@ -4,23 +4,23 @@ meta:
   substituting_steps:
   
     # Disable KLayout antenna check
-    #KLayout.Antenna: null
-    #Checker.KLayoutAntenna: null
+    KLayout.Antenna: null
+    Checker.KLayoutAntenna: null
 
     # Disable KLayout density check
-    #KLayout.Density: null
-    #Checker.KLayoutDensity: null
+    KLayout.Density: null
+    Checker.KLayoutDensity: null
 
     # Save time during development
     # Enable for sign-off
-    #KLayout.DRC: null
-    #Checker.KLayoutDRC: null
-    #OpenROAD.IRDropReport: null
-    #Magic.DRC: null
-    #Checker.MagicDRC: null
-    #KLayout.XOR: null
-    #Netgen.LVS: null
-    #Checker.LVS: null
+    KLayout.DRC: null
+    Checker.KLayoutDRC: null
+    OpenROAD.IRDropReport: null
+    Magic.DRC: null
+    Checker.MagicDRC: null
+    KLayout.XOR: null
+    Netgen.LVS: null
+    Checker.LVS: null
     
     Checker.YosysSynthChecks: null  # Fails due to multisources in PLL
 
@@ -34,6 +34,10 @@ VERILOG_INCLUDE_DIRS: [ dir::../caravel/verilog/ ]
 
 # Enable plugin for better SystemVerilog support
 # USE_SLANG: True
+
+# 3.3V CELL LIBRABRY
+STD_CELL_LIBRARY: gf180mcu_as_sc_mcu7t3v3
+STD_CELL_LIBRARY_OPT: gf180mcu_as_sc_mcu7t3v3
 
 # Slightly smaller file sizes
 PRIMARY_GDSII_STREAMOUT_TOOL: klayout
@@ -57,9 +61,9 @@ IGNORE_DISCONNECTED_MODULES:
 - gf180mcu_ws_ip__logo
 
 # Clock
-CLOCK_NET: i_chip_core.wb_clk_buf/Z
+CLOCK_NET: i_chip_core.wb_clk_buf/Y
 
-CLOCK_PERIOD: 40 # 25 MHz
+CLOCK_PERIOD: 50 # 25 MHz
 
 # Fix hold violations
 PL_RESIZER_HOLD_SLACK_MARGIN: 0.35
@@ -178,16 +182,14 @@ MACROS:
     pnl:
       - dir::../caravel/final/pnl/caravel_core.pnl.v
     lib:
-      "*tt*" : [ dir::../caravel/final/lib/nom_tt_025C_5v00/caravel_core__nom_tt_025C_5v00.lib ]
-      "*ss*" : [ dir::../caravel/final/lib/max_ss_125C_4v50/caravel_core__max_ss_125C_4v50.lib ]
-      "*ff*" : [ dir::../caravel/final/lib/min_ff_n40C_5v50/caravel_core__min_ff_n40C_5v50.lib ]
+      "*tt*" : [ dir::../caravel/final/lib/nom_tt_025C_3v30/caravel_core__nom_tt_025C_3v30.lib ]
+      "*ff*" : [ dir::../caravel/final/lib/min_ff_n40C_3v60/caravel_core__min_ff_n40C_3v60.lib ]
     spef:
       "*tt*" : [ dir::../caravel/final/spef/nom/caravel_core.nom.spef.gz ]
-      "*ss*" : [ dir::../caravel/final/spef/max/caravel_core.max.spef.gz ]
       "*ff*" : [ dir::../caravel/final/spef/min/caravel_core.min.spef.gz ]
     instances:
       i_chip_core.caravel:
-        location: [500, 500]
+        location: [500, 490]
         orientation: N
         
 

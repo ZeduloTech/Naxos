@@ -12,4 +12,10 @@
 
 `define PAD_CARAVEL_END `PAD_FLASH_IO1
 
+// I2C
+`define PAD_OT_LOW    33
+`define PAD_OT_I2CSDA 34
+`define PAD_OT_I2CSCL 35
+`define PAD_OT_HIGH   36
+
 `endif

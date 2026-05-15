@@ -46,9 +46,9 @@ module caravel_clocking(
     reg	 ext_clk_syncd;
     
     wire core_clk_prebuf;
-    (* keep, dont_touch *) gf180mcu_fd_sc_mcu7t5v0__clkbuf_8 caravel_clk_buf (
-        .I(core_clk_prebuf),
-        .Z(core_clk)
+    (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__clkbuff_8 caravel_clk_buf (
+        .A(core_clk_prebuf),
+        .Y(core_clk)
     );
 
     assign pll_clk_sel = ~ext_clk_sel;

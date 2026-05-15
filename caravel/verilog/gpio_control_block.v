@@ -120,13 +120,13 @@ module gpio_control_block #(
     // assign serial_clock_out = serial_clock;
     // assign resetn_out = resetn;
     // assign serial_load_out = serial_load;
-    (* keep *) gf180mcu_fd_sc_mcu7t5v0__clkbuf_8 BUF[2:0] (
+    (* keep *) gf180mcu_as_sc_mcu7t3v3__clkbuff_8 BUF[2:0] (
 		`ifdef USE_POWER_PINS
 			.VDD(VDD),
 			.VSS(VSS),
 		`endif
-		.I({serial_clock, resetn, serial_load}), 
-		.Z({serial_clock_out, resetn_out, serial_load_out})); 
+		.A({serial_clock, resetn, serial_load}), 
+		.Y({serial_clock_out, resetn_out, serial_load_out})); 
 
 
 
@@ -192,20 +192,20 @@ module gpio_control_block #(
     assign pad_gpio_out = (mgmt_ena) ? mgmt_gpio_out : user_gpio_out;
 
 
-    (* keep *) gf180mcu_fd_sc_mcu7t5v0__tieh const_source_one (
+    (* keep *) gf180mcu_as_sc_mcu7t3v3__tieh_4 const_source_one (
 `ifdef USE_POWER_PINS
             .VDD(VDD),
             .VSS(VSS),
 `endif
-            .Z(one)
+            .ONE(one)
     );
 
-    (* keep *) gf180mcu_fd_sc_mcu7t5v0__tiel const_source_zero (
+    (* keep *) gf180mcu_as_sc_mcu7t3v3__tiel_4 const_source_zero (
 `ifdef USE_POWER_PINS
             .VDD(VDD),
             .VSS(VSS),
 `endif
-            .ZN(zero)
+            .ZERO(zero)
     );
 
 

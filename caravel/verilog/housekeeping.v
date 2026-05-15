@@ -723,9 +723,9 @@ module housekeeping #(
 
     // Instantiate the SPI interface protocol module
     
-    (* keep, dont_touch *) gf180mcu_fd_sc_mcu7t5v0__clkbuf_16 hkspi_clk_buf (
-        .I(mgmt_gpio_in[4]),
-        .Z(hkspi_sck)
+    (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__clkbuff_12 hkspi_clk_buf (
+        .A(mgmt_gpio_in[4]),
+        .Y(hkspi_sck)
     );
     
     housekeeping_spi hkspi (
@@ -973,9 +973,9 @@ module housekeeping #(
     assign cwstb = (wbbd_busy) ? wbbd_write : wrstb;
     
     // buffer to disable timing and break look
-    (* keep, dont_touch *) gf180mcu_fd_sc_mcu7t5v0__buf_1 spi_is_active_clk_buf (
-        .I(spi_is_active),
-        .Z(spi_is_active_buf)
+    (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__buff_2 spi_is_active_clk_buf (
+        .A(spi_is_active),
+        .Y(spi_is_active_buf)
     );
 
     assign odata = fdata(caddr);

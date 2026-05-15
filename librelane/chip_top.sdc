@@ -21,7 +21,7 @@ if {$hierarchical_sta} {
 ####################### HIER CONSTRAINTS ############################### 
     puts "\[INFO] Using SDC constraints for hierarchical mode (probably running from OpenSTA)..."
 
-    set caravel_clock_src i_chip_core.caravel/clock_ctrl.caravel_clk_buf/Z
+    set caravel_clock_src i_chip_core.caravel/clock_ctrl.caravel_clk_buf/Y
     create_clock $caravel_clock_src -name $wb_clock_name -period $::env(CLOCK_PERIOD)
     
 } else {
