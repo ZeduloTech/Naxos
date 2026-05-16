@@ -92,7 +92,7 @@ jobs:
       - name: Implement the Chip
         if: success() || failure()
         run: |
-          nix develop --command make librelane-nodrc
+          nix develop --command make all
           make copy-final
           nix develop --command make render-image
       - name: Create summary
