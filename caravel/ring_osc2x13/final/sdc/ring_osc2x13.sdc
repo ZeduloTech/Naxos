@@ -1,0 +1,71 @@
+###############################################################################
+# Created by write_sdc
+###############################################################################
+current_design ring_osc2x13
+###############################################################################
+# Timing Constraints
+###############################################################################
+###############################################################################
+# Environment
+###############################################################################
+set_load -pin_load -min 0.0060 [get_ports {clockp[1]}]
+set_load -pin_load -max 0.1000 [get_ports {clockp[1]}]
+set_load -pin_load -min 0.0060 [get_ports {clockp[0]}]
+set_load -pin_load -max 0.1000 [get_ports {clockp[0]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {reset}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {reset}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[25]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[25]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[24]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[24]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[23]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[23]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[22]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[22]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[21]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[21]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[20]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[20]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[19]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[19]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[18]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[18]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[17]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[17]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[16]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[16]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[15]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[15]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[14]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[14]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[13]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[13]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[12]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[12]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[11]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[11]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[10]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[10]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[9]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[9]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[8]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[8]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[7]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[7]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[6]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[6]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[5]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[5]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[4]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[4]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[3]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[3]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[2]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[2]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[1]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[1]}]
+set_driving_cell -rise  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[0]}]
+set_driving_cell -fall  -min -lib_cell gf180mcu_fd_sc_mcu7t5v0__buf_1 -from_pin {I} -pin {Z} -input_transition_rise 1.0000 -input_transition_fall 1.0000 [get_ports {trim[0]}]
+###############################################################################
+# Design Rules
+###############################################################################
