@@ -83,6 +83,7 @@ jobs:
         run: |
           cp -r ip/gf180mcu_as_sc_mcu7t3v3/libs.ref/gf180mcu_as_sc_mcu7t3v3 gf180mcu/gf180mcuD/libs.ref/
           cp -r ip/gf180mcu_as_sc_mcu7t3v3/libs.tech/librelane/gf180mcu_as_sc_mcu7t3v3 gf180mcu/gf180mcuD/libs.tech/librelane/
+          sed -i 's/set ::env(STD_CELL_LIBRARY) gf180mcu_fd_sc_mcu7t5v0/set ::env(STD_CELL_LIBRARY) gf180mcu_as_sc_mcu7t3v3/' gf180mcu/gf180mcuD/libs.tech/librelane/config.tcl
       - name: Run RTL simulation
         run: |
           nix develop --command make sim
