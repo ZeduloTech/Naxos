@@ -45,7 +45,9 @@ librelane: ## Run LibreLane flow (synthesis, PnR, verification)
 .PHONY: librelane
 
 caravel-librelane: ## Run LibreLane flow for caravel
-	make -C caravel all
+	#make -C caravel all
+	make -C caravel librelane
+	make -C caravel copy-final
 .PHONY: caravel-librelane
 
 librelane-nodrc: ## Run LibreLane flow without DRC checks
