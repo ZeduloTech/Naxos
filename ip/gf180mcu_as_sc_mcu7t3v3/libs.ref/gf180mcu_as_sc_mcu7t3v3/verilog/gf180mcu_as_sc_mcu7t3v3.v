@@ -49,17 +49,16 @@ reg state;
 wire sr;
 
 assign sr = ~(RN & SN);
-assign Q = state;
 
 always @(posedge CLK or posedge sr) begin
 	if (sr == 1'b1) begin
 	if (RN == 1'b0) begin
-		state <= 1'b0;
+		Q <= 1'b0;
 	end else if (SN == 1'b0) begin
-		state <= 1'b1;
+		Q <= 1'b1;
 	end
 	end else begin
-		state <= D;
+		Q <= state;
 	end
 end
 
@@ -121,20 +120,6 @@ assign Y = A;
 
 endmodule
 
-module gf180mcu_as_sc_mcu7t3v3__buff_16(
-	input VPW,
-	input VNW,
-	input VDD,
-	input VSS,
-	
-	input A,
-	output Y
-);
-
-assign Y = A;
-
-endmodule
-
 module gf180mcu_as_sc_mcu7t3v3__clkbuff_4(
 	input VPW,
 	input VNW,
@@ -164,34 +149,6 @@ assign Y = A;
 endmodule
 
 module gf180mcu_as_sc_mcu7t3v3__clkbuff_12(
-	input VPW,
-	input VNW,
-	input VDD,
-	input VSS,
-	
-	input A,
-	output Y
-);
-
-assign Y = A;
-
-endmodule
-
-module gf180mcu_as_sc_mcu7t3v3__dlybuff_2(
-	input VPW,
-	input VNW,
-	input VDD,
-	input VSS,
-	
-	input A,
-	output Y
-);
-
-assign Y = A;
-
-endmodule
-
-module gf180mcu_as_sc_mcu7t3v3__dlybuff_4(
 	input VPW,
 	input VNW,
 	input VDD,
@@ -521,36 +478,6 @@ assign Y = A == B;
 
 endmodule
 
-module gf180mcu_as_sc_mcu7t3v3__xor2_2(
-	input VPW,
-	input VNW,
-	input VDD,
-	input VSS,
-
-	input A,
-	input B,
-	output Y
-);
-
-assign Y = A != B;
-
-endmodule
-
-module gf180mcu_as_sc_mcu7t3v3__xor2_4(
-	input VPW,
-	input VNW,
-	input VDD,
-	input VSS,
-
-	input A,
-	input B,
-	output Y
-);
-
-assign Y = A != B;
-
-endmodule
-
 module gf180mcu_as_sc_mcu7t3v3__maj3_2(
 	input VPW,
 	input VNW,
@@ -596,40 +523,6 @@ module gf180mcu_as_sc_mcu7t3v3__aoi21_2 (
 );
 
 assign Y = ~((A & B) | C);
-
-endmodule
-
-module gf180mcu_as_sc_mcu7t3v3__aoi211_2 (
-	input VPW,
-	input VNW,
-	input VDD,
-	input VSS,
-
-	input A,
-	input B,
-	input C,
-	input D,
-	output Y
-);
-
-assign Y = ~((A & B) | C | D);
-
-endmodule
-
-module gf180mcu_as_sc_mcu7t3v3__aoi211_4 (
-	input VPW,
-	input VNW,
-	input VDD,
-	input VSS,
-
-	input A,
-	input B,
-	input C,
-	input D,
-	output Y
-);
-
-assign Y = ~((A & B) | C | D);
 
 endmodule
 
@@ -694,40 +587,6 @@ module gf180mcu_as_sc_mcu7t3v3__ao21_2 (
 );
 
 assign Y = (A & B) | C;
-
-endmodule
-
-module gf180mcu_as_sc_mcu7t3v3__ao211_2 (
-	input VPW,
-	input VNW,
-	input VDD,
-	input VSS,
-
-	input A,
-	input B,
-	input C,
-	input D,
-	output Y
-);
-
-assign Y = (A & B) | C | D;
-
-endmodule
-
-module gf180mcu_as_sc_mcu7t3v3__ao211_4 (
-	input VPW,
-	input VNW,
-	input VDD,
-	input VSS,
-
-	input A,
-	input B,
-	input C,
-	input D,
-	output Y
-);
-
-assign Y = (A & B) | C | D;
 
 endmodule
 
@@ -915,24 +774,6 @@ assign Y = (A & B & C) | D;
 
 endmodule
 
-
-module gf180mcu_as_sc_mcu7t3v3__oai211_2 (
-	input VPW,
-	input VNW,
-	input VDD,
-	input VSS,
-
-	input A,
-	input B,
-	input C,
-	input D,
-	output Y
-);
-
-assign Y = ~((A | B) & C & D);
-
-endmodule
-
 module gf180mcu_as_sc_mcu7t3v3__mux2_2(
 	input VPW,
 	input VNW,
@@ -1070,17 +911,6 @@ module gf180mcu_as_sc_mcu7t3v3__diode_2(
 	input VSS,
 
 	input DIODE
-);
-
-endmodule
-
-module gf180mcu_as_sc_mcu7t3v3__hcf_7(
-	input VPW,
-	input VNW,
-	input VDD,
-	input VSS,
-
-	input HCF
 );
 
 endmodule
