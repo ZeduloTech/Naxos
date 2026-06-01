@@ -29,7 +29,7 @@
  */
 
 module gpio_control_block #(
-    parameter PAD_CTRL_BITS = 10
+    parameter PAD_CTRL_BITS = `IO_CTRL_BITS
 ) (
     `ifdef USE_POWER_PINS
          inout VDD,
@@ -38,22 +38,18 @@ module gpio_control_block #(
 
     // Power-on defaults
     input [PAD_CTRL_BITS-1:0] gpio_defaults,
+    input [PAD_CTRL_BITS-1:0] gpio_conf_in,
+    input gpio_conf_clk,    // clock to latch GPIO configuration on
 
     // Management Soc-facing signals
-    input  	 resetn,		// Global reset, locally propagated
-    output       resetn_out,
-    input  	 serial_clock,		// Global clock, locally propatated
-    output  	 serial_clock_out,
-    input	 serial_load,		// Register load strobe
-    output	 serial_load_out,
+    input  	 clk,		// Clock to latch data on
+    input  	 resetn,	// Global reset
+    
+    input       gpio_conf_set,
 
-    output       mgmt_gpio_in,		// Management from pad (input only)
-    input        mgmt_gpio_out,		// Management to pad (output only)
-    input        mgmt_gpio_oeb,		// Management to pad (output only)
-
-    // Serial data chain for pad configuration
-    input  	 serial_data_in,
-    output 	reg serial_data_out,
+    output      mgmt_gpio_in,		// Management from pad (input only)
+    input       mgmt_gpio_out,		// Management to pad (output only)
+    input       mgmt_gpio_oeb,		// Management to pad (output only)
 
     // User-facing signals
     output	wire user_gpio_in,		// Pad to user space
@@ -69,12 +65,7 @@ module gpio_control_block #(
     output	 wire       pad_gpio_schmitt_sel,
     output   wire [1:0] pad_gpio_drive_sel,
     output	 wire       pad_gpio_pullup_sel,
-    output	 wire       pad_gpio_pulldown_sel,
-
-    // to provide a way to automatically disable/enable output
-    // from the outside with needing a tiehi or tielo cell
-    output	wire one,
-    output	wire zero
+    output	 wire       pad_gpio_pulldown_sel
 );
 
     /* Parameters defining the bit offset of each function in the chain */
@@ -102,68 +93,30 @@ module gpio_control_block #(
     reg		gpio_pulldown_sel;
 
 
-    /* Serial shift for the above (latched) values */
-    reg [PAD_CTRL_BITS-1:0] shift_register;
-
-    /* Latch the output on the clock negative edge */
-    always @(negedge serial_clock or negedge resetn) begin
-	if (resetn == 1'b0) begin
-	    /* Clear the shift register output */
-	    serial_data_out <= 1'b0;
-	end else begin
-	    serial_data_out <= shift_register[PAD_CTRL_BITS-1];
-	end
-    end
-
-    /* Propagate the clock and reset signals so that they aren't wired	*/
-    /* all over the chip, but are just wired between the blocks.	*/
-    // assign serial_clock_out = serial_clock;
-    // assign resetn_out = resetn;
-    // assign serial_load_out = serial_load;
-    (* keep *) gf180mcu_as_sc_mcu7t3v3__clkbuff_8 BUF[2:0] (
-		`ifdef USE_POWER_PINS
-			.VDD(VDD),
-			.VSS(VSS),
-		`endif
-		.A({serial_clock, resetn, serial_load}), 
-		.Y({serial_clock_out, resetn_out, serial_load_out})); 
-
-
-
-    always @(posedge serial_clock or negedge resetn) begin
-	if (resetn == 1'b0) begin
-	    /* Clear shift register */
-	    shift_register <= 'd0;
-	end else begin
-	    /* Shift data in */
-	    shift_register <= {shift_register[PAD_CTRL_BITS-2:0], serial_data_in};
-	end
-    end
-
-    always @(posedge serial_load or negedge resetn) begin
-	if (resetn == 1'b0) begin
-	    /* Initial state on reset depends on applied defaults */
+    always @(posedge gpio_conf_clk or negedge resetn) begin  // latches
+        if (resetn == 1'b0) begin
+            /* Initial state on reset depends on applied defaults */
             mgmt_ena 	      <= gpio_defaults[MGMT_EN];
-	    gpio_oe_override  <= gpio_defaults[OE_OVR];
-	    gpio_inen 	      <= gpio_defaults[IE];
-	    gpio_outen        <= gpio_defaults[OE];
-	    gpio_slew_sel     <= gpio_defaults[SLEW];
-	    gpio_schmitt_sel  <= gpio_defaults[SCHMITT];
-	    gpio_pullup_sel   <= gpio_defaults[PU];
-	    gpio_pulldown_sel <= gpio_defaults[PD];
-	    gpio_drive_sel    <= gpio_defaults[DRIVE+1:DRIVE];
-	end else begin
-	    /* Load data */
-	    mgmt_ena 	      <= shift_register[MGMT_EN];
-	    gpio_oe_override  <= shift_register[OE_OVR];
-	    gpio_inen 	      <= shift_register[IE];
-	    gpio_outen        <= shift_register[OE];
-	    gpio_slew_sel     <= shift_register[SLEW];
-	    gpio_schmitt_sel  <= shift_register[SCHMITT];
-	    gpio_pullup_sel   <= shift_register[PU];
-	    gpio_pulldown_sel <= shift_register[PD];
-	    gpio_drive_sel    <= shift_register[DRIVE+1:DRIVE];
-	end
+            gpio_oe_override  <= gpio_defaults[OE_OVR];
+            gpio_inen 	      <= gpio_defaults[IE];
+            gpio_outen        <= gpio_defaults[OE];
+            gpio_slew_sel     <= gpio_defaults[SLEW];
+            gpio_schmitt_sel  <= gpio_defaults[SCHMITT];
+            gpio_pullup_sel   <= gpio_defaults[PU];
+            gpio_pulldown_sel <= gpio_defaults[PD];
+            gpio_drive_sel    <= gpio_defaults[DRIVE+1:DRIVE];
+        end else if (gpio_conf_set == 1'b1) begin
+            /* Load data */
+            mgmt_ena 	      <= gpio_conf_in[MGMT_EN];
+            gpio_oe_override  <= gpio_conf_in[OE_OVR];
+            gpio_inen 	      <= gpio_conf_in[IE];
+            gpio_outen        <= gpio_conf_in[OE];
+            gpio_slew_sel     <= gpio_conf_in[SLEW];
+            gpio_schmitt_sel  <= gpio_conf_in[SCHMITT];
+            gpio_pullup_sel   <= gpio_conf_in[PU];
+            gpio_pulldown_sel <= gpio_conf_in[PD];
+            gpio_drive_sel    <= gpio_conf_in[DRIVE+1:DRIVE];
+        end
     end
 
     /* These pad configuration signals are static and do not change	*/
@@ -190,24 +143,6 @@ module gpio_control_block #(
 			((mgmt_ena) ? ~mgmt_gpio_oeb  : ~user_gpio_oeb);
 
     assign pad_gpio_out = (mgmt_ena) ? mgmt_gpio_out : user_gpio_out;
-
-
-    (* keep *) gf180mcu_as_sc_mcu7t3v3__tieh_4 const_source_one (
-`ifdef USE_POWER_PINS
-            .VDD(VDD),
-            .VSS(VSS),
-`endif
-            .ONE(one)
-    );
-
-    (* keep *) gf180mcu_as_sc_mcu7t3v3__tiel_4 const_source_zero (
-`ifdef USE_POWER_PINS
-            .VDD(VDD),
-            .VSS(VSS),
-`endif
-            .ZERO(zero)
-    );
-
 
 endmodule
 `default_nettype wire

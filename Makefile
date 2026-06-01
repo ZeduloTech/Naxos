@@ -6,7 +6,8 @@ TOP = chip_top
 
 PDK_ROOT ?= $(MAKEFILE_DIR)/gf180mcu
 PDK ?= gf180mcuD
-PDK_TAG ?= 1.6.6
+PDK_TAG ?= 1.8.0
+export STD_CELL_LIBRARY = gf180mcu_as_sc_mcu7t3v3
 
 AVAILABLE_SLOTS = 1x1 0p5x1 1x0p5 0p5x0p5
 DEFAULT_SLOT = 1x0p5
@@ -38,6 +39,9 @@ all: caravel-librelane librelane copy-final ## Build the project (runs LibreLane
 clone-pdk: ## Clone the GF180MCU PDK repository
 	rm -rf $(MAKEFILE_DIR)/gf180mcu
 	git clone https://github.com/wafer-space/gf180mcu.git $(MAKEFILE_DIR)/gf180mcu --depth 1 --branch ${PDK_TAG}
+	git clone https://github.com/AvalonSemiconductors/gf180mcu_as_sc_mcu7t3v3 --depth 1 gf180mcu/gf180mcu_as_sc_mcu7t3v3
+	ln -s $(shell realpath gf180mcu/gf180mcu_as_sc_mcu7t3v3/pdk/libs.ref/gf180mcu_as_sc_mcu7t3v3) gf180mcu/gf180mcuD/libs.ref/
+	ln -s $(shell realpath gf180mcu/gf180mcu_as_sc_mcu7t3v3/pdk/libs.tech/librelane/gf180mcu_as_sc_mcu7t3v3) gf180mcu/gf180mcuD/libs.tech/librelane/
 .PHONY: clone-pdk
 
 librelane: ## Run LibreLane flow (synthesis, PnR, verification)
@@ -46,7 +50,7 @@ librelane: ## Run LibreLane flow (synthesis, PnR, verification)
 
 caravel-librelane: ## Run LibreLane flow for caravel
 	#make -C caravel all
-	make -C caravel librelane
+	make -C caravel librelane-nodrc
 	make -C caravel copy-final
 .PHONY: caravel-librelane
 

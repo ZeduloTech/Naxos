@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 `default_nettype none
-
 `include "slot_defines.svh"
 
 module chip_top #(

@@ -35,6 +35,10 @@ module chip_core #(
     inout  wire [NUM_ANALOG_PADS-1:0] analog  // Analog
 );
 
+    // Clocks
+    wire xtal_clk;
+    wire core_clk;
+    
     // Wishbone from Caravel
     wire user_wb_clk_prebuf;
     wire user_wb_clk;
@@ -70,6 +74,21 @@ module chip_core #(
     assign bidir_ie[NUM_BIDIR_PADS-1:`PAD_CARAVEL_END+1] = '0;
     assign bidir_oe[NUM_BIDIR_PADS-1:`PAD_CARAVEL_END+1] = '0;
     
+    // XTAL driver IP
+    (* keep, dont_touch *) XTAL xtal_driver (
+        .OSC1(analog[1]),
+        .OSC2(analog[0]),
+        .VCLOCK(xtal_clk)
+    );
+    
+    // Clock input selector, 0 - CMOS, 1 - XTAL
+    (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__mux2_4 clk_mux (
+        .A(clk),
+        .B(xtal_clk),
+        .S(0),
+        .Y(core_clk)
+    );
+    
     wb_counter counter (
         .wb_clk_i(user_wb_clk),
         .wb_rst_i(user_wb_rst),
@@ -95,7 +114,7 @@ module chip_core #(
         `endif
         // SoC Core Interface
         .rstb(rst_n),
-        .clock_core(clk),
+        .clock_core(core_clk),
         .gpio_out_core(bidir_out[`PAD_GPIO]),
         .gpio_in_core(bidir_in[`PAD_GPIO]),
         .gpio_outenb_core(bidir_oe[`PAD_GPIO]),

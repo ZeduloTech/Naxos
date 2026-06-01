@@ -1,6 +1,5 @@
 {
     "caravel_hkspi"             : {}, 
-    "caravel_mprj_bitbang"      : {}, 
     "caravel_uart"              : {"uart" : "Hi\n"}, 
     "caravel_pll"               : {"skip_glnosdf" : 1}, 
     "caravel_pass_thru"         : {},

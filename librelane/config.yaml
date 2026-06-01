@@ -13,16 +13,32 @@ meta:
 
     # Save time during development
     # Enable for sign-off
-    KLayout.DRC: null
-    Checker.KLayoutDRC: null
-    OpenROAD.IRDropReport: null
-    Magic.DRC: null
-    Checker.MagicDRC: null
-    KLayout.XOR: null
+    #KLayout.DRC: null
+    #Checker.KLayoutDRC: null
+    #OpenROAD.IRDropReport: null
+    #Magic.DRC: null
+    #Checker.MagicDRC: null
+    #KLayout.XOR: null
     Netgen.LVS: null
     Checker.LVS: null
     
     Checker.YosysSynthChecks: null  # Fails due to multisources in PLL
+    
+    
+# Redefine lib files to include pad libs
+LIB:
+  "*_tt_025C_3v30": 
+    - pdk_dir::/libs.ref/gf180mcu_as_sc_mcu7t3v3/lib/gf180mcu_as_sc_mcu7t3v3__tt_025C_3v30.lib 
+    - pdk_dir::/libs.ref/gf180mcu_fd_io/lib/gf180mcu_fd_io__tt_025C_3v30.lib
+    - pdk_dir::/libs.ref/gf180mcu_fd_io/lib/gf180mcu_ws_io__tt_025C_5v00.lib
+  "*_ss_125C_3v00": 
+    - pdk_dir::/libs.ref/gf180mcu_as_sc_mcu7t3v3/lib/gf180mcu_as_sc_mcu7t3v3__ss_125C_3v00.lib 
+    - pdk_dir::/libs.ref/gf180mcu_fd_io/lib/gf180mcu_fd_io__ss_125C_2v97.lib
+    - pdk_dir::/libs.ref/gf180mcu_fd_io/lib/gf180mcu_ws_io__tt_025C_5v00.lib
+  "*_ff_n40C_3v60": 
+    - pdk_dir::/libs.ref/gf180mcu_as_sc_mcu7t3v3/lib/gf180mcu_as_sc_mcu7t3v3__ff_n40C_3v60.lib 
+    - pdk_dir::/libs.ref/gf180mcu_fd_io/lib/gf180mcu_fd_io__ff_n40C_3v63.lib
+    - pdk_dir::/libs.ref/gf180mcu_fd_io/lib/gf180mcu_ws_io__tt_025C_5v00.lib
 
 DESIGN_NAME: chip_top
 VERILOG_FILES:
@@ -63,11 +79,11 @@ IGNORE_DISCONNECTED_MODULES:
 # Clock
 CLOCK_NET: i_chip_core.wb_clk_buf/Y
 
-CLOCK_PERIOD: 50 # 25 MHz
+CLOCK_PERIOD: 20 # 25 MHz
 
 # Fix hold violations
-PL_RESIZER_HOLD_SLACK_MARGIN: 0.35
-GRT_RESIZER_HOLD_SLACK_MARGIN: 0.3
+PL_RESIZER_HOLD_SLACK_MARGIN: 0.7
+GRT_RESIZER_HOLD_SLACK_MARGIN: 0.7
 
 # Increase for more logic
 # on your die
@@ -75,7 +91,10 @@ PL_TARGET_DENSITY_PCT: 35
 GRT_ALLOW_CONGESTION: true
 
 # PDN
+PDN_CFG: dir::pdn_cfg.tcl
 PDN_CORE_RING: True
+#PDN_CORE_VERTICAL_LAYER: Metal4
+#PDN_CORE_HORIZONTAL_LAYER: Metal
 # Maximum metal width without slotting: 30um
 PDN_CORE_RING_VWIDTH: 25
 PDN_CORE_RING_HWIDTH: 25
@@ -84,6 +103,9 @@ PDN_ENABLE_PINS: False
 PDN_CORE_VERTICAL_LAYER: Metal2
 PDN_CORE_HORIZONTAL_LAYER: Metal3
 PDN_HPITCH: 100
+
+PDN_MACRO_CONNECTIONS:
+  - "i_chip_core.xtal_driver VDD VSS VDD_XTAL VSS_XTAL"
 
 # To disable ports buffering & wire repair with dly cells as they degrade timing
 PNR_EXCLUDED_CELL_FILE: dir::../caravel/librelane/pnr_exclude.cells
@@ -184,13 +206,28 @@ MACROS:
     lib:
       "*tt*" : [ dir::../caravel/final/lib/nom_tt_025C_3v30/caravel_core__nom_tt_025C_3v30.lib ]
       "*ff*" : [ dir::../caravel/final/lib/min_ff_n40C_3v60/caravel_core__min_ff_n40C_3v60.lib ]
+      "*ss*" : [ dir::../caravel/final/lib/max_ss_125C_3v00/caravel_core__max_ss_125C_3v00.lib ]
     spef:
       "*tt*" : [ dir::../caravel/final/spef/nom/caravel_core.nom.spef.gz ]
       "*ff*" : [ dir::../caravel/final/spef/min/caravel_core.min.spef.gz ]
+      "*ss*" : [ dir::../caravel/final/spef/max/caravel_core.max.spef.gz ]
     instances:
       i_chip_core.caravel:
-        location: [500, 490]
+        location: [490, 475]
         orientation: N
+
+  XTAL:
+    gds:
+      - dir::../ip/XTAL3P3/XTAL.gds
+    lef:
+      - dir::../ip/XTAL3P3/XTAL.lef
+    vh:
+      - dir::../ip/XTAL3P3/XTAL.v
+    instances:
+      i_chip_core.xtal_driver:
+        location: [460.5, 2087.5]
+        orientation: N
+
         
 
 # Make sure netgen doesn't create 'no_connect' nets

@@ -1,2 +1,0 @@
-# Source the PDK magicrc file
-source $env(PDK_ROOT)/$env(PDK)/libs.tech/magic/$env(PDK).magicrc

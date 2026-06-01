@@ -24,7 +24,7 @@ proc get_driver {net_pattern} {
 
 # MASTER CLOCK (start from the pin of caravel_clocking)
 create_clock -name clk -period $clk_period [get_pins $caravel_clk_start] 
-create_generated_clock -name wbbd_sck -source [get_pins $caravel_clk_start] -divide_by 2 -master_clock clk [get_driver {housekeeping.wbbd_sck}]
+create_clock -name wbbd_sck -period [expr $clk_period / 2] [get_driver [get_nets housekeeping.csclk]]
 
 # Housekeeping SPI clock (do not confuse with hk_serial)
 create_clock -name hkspi_clk -period $hkspi_clk_period [get_pins {housekeeping.hkspi_clk_buf/Y}] 
@@ -38,23 +38,18 @@ if {$analyse_hkspi == 1} {
 create_clock -name osc_clk0 -period $osc_period [get_pins {pll.ringosc0_clk_buf/Y}] 
 create_clock -name osc_clk1 -period $osc_period [get_pins {pll.ringosc1_clk_buf/Y}] 
 
-# hk_serial_clk period is x2 core clock
-create_generated_clock -name hk_serial_clk -source [get_pins serial_clk_buf/A] -divide_by 2 -master clk [get_pins serial_clk_buf/Y]
-create_generated_clock -name hk_serial_load -source [get_pins serial_load_clk_buf/A] -divide_by 20 -master clk [get_pins serial_load_clk_buf/Y]
-
 ## Flash & WB generated clocks
 create_generated_clock -name flash_clk -source [get_pins flash_clk_buf/Y] -divide_by 4 [get_ports flash_clk_frame]
 create_generated_clock -name user_wb_clk -source [get_pins user_wb_clk_buf/Y] -divide_by 1 [get_ports user_wb_clk_o]
 
 set_clock_uncertainty 1 [get_clocks {hk_serial_clk hk_serial_load}]
 set_clock_uncertainty 1 [get_clocks {flash_clk}]
+set_clock_uncertainty 0.1 [get_clocks clk]
 
 set_clock_groups \
    -name clock_group_async \
    -asynchronous \
    -group [get_clocks [list clk flash_clk user_wb_clk wbbd_sck]] \
-   -group [get_clocks hk_serial_clk]\
-   -group [get_clocks hk_serial_load]\
    -group [get_clocks [list hkspi_clk hk_csclk]]\
    -group [get_clocks [list osc_clk0 osc_clk1]]
    
@@ -122,10 +117,11 @@ set pad_inputs [get_ports [list caravel_io_in* rstb clock_core gpio_in_core]]
 set_driving_cell -lib_cell gf180mcu_as_sc_mcu7t3v3__buff_12 -pin Y -min -from_pin A -input_transition_rise $min_in_tran -input_transition_fall $min_in_tran $user_inputs
 set_driving_cell -lib_cell gf180mcu_as_sc_mcu7t3v3__buff_2 -pin Y -max -from_pin A -input_transition_rise $max_in_tran -input_transition_fall $max_in_tran $user_inputs
 
-set_driving_cell -lib_cell gf180mcu_fd_io__bi_24t -pin Y -from_pin PAD -input_transition_rise $max_in_tran -input_transition_fall $max_in_tran $pad_inputs
+#set_driving_cell -lib_cell gf180mcu_fd_io__bi_24t -pin Y -from_pin PAD -input_transition_rise $max_in_tran -input_transition_fall $max_in_tran $pad_inputs
+set_driving_cell -lib_cell gf180mcu_as_sc_mcu7t3v3__buff_12 -pin Y -from_pin A -input_transition_rise $max_in_tran -input_transition_fall $max_in_tran $pad_inputs
 
 # Derates
-set derate 0.05
+set derate 0.07
 puts "\[INFO\]: Setting derate factor to: [expr $derate * 100] %"
 set_timing_derate -early [expr 1-$derate]
 set_timing_derate -late [expr 1+$derate]

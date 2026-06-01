@@ -5,15 +5,15 @@ meta:
   substituting_steps:
     
     # Save time
-    Magic.DRC: null                 
-    KLayout.DRC: null
+    #Magic.DRC: null                 
+    #KLayout.DRC: null
     OpenROAD.IRDropReport: null
-    Magic.SpiceExtraction: null    
-    Checker.MagicDRC: null
-    KLayout.XOR: null
+    #Magic.SpiceExtraction: null    
+    #Checker.MagicDRC: null
+    #KLayout.XOR: null
     Netgen.LVS: null
     Checker.LVS: null
-    Checker.SetupViolations: null
+    #Checker.SetupViolations: null
     #Verilator.Lint: null
     
     Checker.YosysSynthChecks: null  # Fails due to multisources in PLL
@@ -46,34 +46,35 @@ MACROS:
       - dir::../../ip/sram/gf180_ram_1024x8_wrapper.vh
     lib:
       "*tt*" : [ dir::../../ip/sram/gf180_ram_1024x8_wrapper__tt_025C_3v30.lib ]
+      "*ss*" : [ dir::../../ip/sram/gf180_ram_1024x8_wrapper__tt_025C_3v30.lib ]
       "*ff*" : [ dir::../../ip/sram/gf180_ram_1024x8_wrapper__ff_n40C_3v60.lib ]
       
     instances:  
       # Bank 00 - left group
       soc.core.sram.ram1024x32_00.RAM00:
-        location: [50, 85]
+        location: [140, 65]
         orientation: S
       soc.core.sram.ram1024x32_00.RAM01:
-        location: [353.30, 85]
+        location: [443.30, 65]
         orientation: S
       soc.core.sram.ram1024x32_00.RAM02:
-        location: [656.60, 85]
+        location: [746.60, 65]
         orientation: S
       soc.core.sram.ram1024x32_00.RAM03:
-        location: [959.90, 85]
+        location: [1049.90, 65]
         orientation: S
       # Bank 01 - rigth group
       soc.core.sram.ram1024x32_01.RAM00:
-        location: [1610, 85] #1310
+        location: [1630, 75] #1310
         orientation: S
       soc.core.sram.ram1024x32_01.RAM01:
-        location: [1913.30, 85] #1613
+        location: [1933.30, 75] #1613
         orientation: S
       soc.core.sram.ram1024x32_01.RAM02:
-        location: [2216.60, 85] #1916
+        location: [2236.60, 75] #1916
         orientation: S
       soc.core.sram.ram1024x32_01.RAM03:
-        location: [2519.90, 85] #2219
+        location: [2539.90, 75] #2219
         orientation: S
 
   ring_osc2x13:
@@ -128,16 +129,14 @@ GND_NETS:
 
 # Clock, period should be consistent with sdc_defs.tcl
 CLOCK_PORT: "clock_core"
-CLOCK_PERIOD: 50 #30
+CLOCK_PERIOD: 20 #30
 
 ############################ Floorplanning ############################# 
 
 FP_SIZING: absolute
-#DIE_AREA: [0, 0, 2900, 1000]
-#CORE_AREA: [24, 26, 2875, 974]
 
-DIE_AREA: [0, 0, 2900, 1100]
-CORE_AREA: [24, 30, 2875, 1070]
+DIE_AREA: [0, 0, 2950, 990]
+CORE_AREA: [24, 25, 2925, 965]
  
 FP_PIN_ORDER_CFG: dir::pin.cfg
 FP_IO_MIN_DISTANCE: 10
@@ -149,7 +148,6 @@ FP_MACRO_VERTICAL_HALO: 5
 ################################ PDN ################################### 
 
 PDN_CORE_RING: True
-PDN_SKIPTRIM: True
 PDN_VERTICAL_HALO: 8
 PDN_HORIZONTAL_HALO: -2
 PDN_CORE_RING_VWIDTH: 9
@@ -157,7 +155,7 @@ PDN_CORE_RING_HWIDTH: 9
 PDN_CORE_RING_VSPACING: 2
 PDN_CORE_RING_HSPACING: 2
 PDN_CORE_RING_VOFFSET: 4
-PDN_CORE_RING_HOFFSET: 7
+PDN_CORE_RING_HOFFSET: 4
 PDN_VPITCH: 80
 PDN_HPITCH: 60
 PDN_VSPACING: 19
@@ -171,13 +169,20 @@ PDN_CFG: dir::pdn_cfg.tcl
 
 ############################### Placement ############################## 
 
-PL_TARGET_DENSITY_PCT: 60
-PL_KEEP_RESIZE_BELOW_OVERFLOW: 0
-PL_RESIZER_ALLOW_SETUP_VIOS: True
-PL_RESIZER_HOLD_SLACK_MARGIN: 0.5
-PL_RESIZER_SETUP_SLACK_MARGIN: 0.2
 
-RSZ_DONT_TOUCH_RX: .*clk_buf
+PL_TARGET_DENSITY_PCT: 65
+PL_KEEP_RESIZE_BELOW_OVERFLOW: 0
+PL_TIMING_DRIVEN: True
+PL_RESIZER_ALLOW_SETUP_VIOS: True
+PL_RESIZER_FIX_HOLD_FIRST: True
+PL_RESIZER_HOLD_SLACK_MARGIN: 0.6
+PL_RESIZER_SETUP_SLACK_MARGIN: 0.2
+PL_RESIZER_HOLD_MAX_BUFFER_PCT: 100
+
+PL_MAX_DISPLACEMENT_X: 700
+PL_MAX_DISPLACEMENT_Y: 400
+
+#RSZ_DONT_TOUCH_RX: .*clk_buf
 
 DESIGN_REPAIR_MAX_WIRE_LENGTH: 1500
 DESIGN_REPAIR_MAX_SLEW_PCT: 25
@@ -185,9 +190,18 @@ DESIGN_REPAIR_MAX_SLEW_PCT: 25
 ############################### Routing ################################
 
 # following is required to fix antennas
-DIODE_ON_PORTS: in
-GRT_ANTENNA_MARGIN: 20
-GRT_ANTENNA_ITERS: 10
+#DIODE_ON_PORTS: in
+GRT_ANTENNA_MARGIN: 5
+GRT_ANTENNA_ITERS: 2
+
+RUN_POST_GRT_RESIZER_TIMING: True
+GRT_RESIZER_HOLD_SLACK_MARGIN: 0.6
+GRT_RESIZER_SETUP_SLACK_MARGIN: 0.2
+GRT_RESIZER_HOLD_MAX_BUFFER_PCT: 100
+GRT_RESIZER_ALLOW_SETUP_VIOS: True
+#GRT_RESIZER_FIX_HOLD_FIRST: True
+GRT_ALLOW_CONGESTION: True
+#GRT_ADJUSTMENT: 0.30
 DRT_ANTENNA_REPAIR_ITERS: 10
 
 # To disable ports buffering & wire repair with dly cells as they degrade timing

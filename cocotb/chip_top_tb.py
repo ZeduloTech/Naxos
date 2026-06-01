@@ -21,6 +21,7 @@ pdk = os.getenv("PDK", "gf180mcuD")
 scl = os.getenv("SCL", "gf180mcu_as_sc_mcu7t3v3")
 gl = os.getenv("GL", False)
 sdf = os.getenv("SDF", False)
+slot = os.getenv("SLOT", "1X0P5").upper()
 test_env = os.getenv("TEST", "all")
 add_build_args = os.getenv("ADD_BUILD_ARGS", "").split()
 add_plus_args = os.getenv("ADD_PLUS_ARGS", "").split()
@@ -88,6 +89,7 @@ def test_chip_top_runner(test : str):
     hex_prefix = str(proj_path / "../caravel/sim/caravel_sw") + "/"
     defines.update({
         "SIM" : 1, 
+        "SLOT_" + slot : "", 
         "HEX_PREFIX" : hex_prefix,
         "FINAL_PREFIX" : str(proj_path / "../final") + "/",
         "CARAVEL_FINAL_PREFIX" : str(proj_path / "../caravel/final") + "/",
@@ -95,8 +97,8 @@ def test_chip_top_runner(test : str):
     })
 
     sources.append(Path(pdk_root) / pdk / "libs.ref" / scl / "verilog" / f"{scl}.v")
-#    sources.append(Path(pdk_root) / pdk / "libs.ref" / scl / "verilog" / "primitives.v")
-# 5V cells needed for ring_osc2x13 macro
+    # sources.append(Path(pdk_root) / pdk / "libs.ref" / scl / "verilog" / "primitives.v")
+    # 5V cells needed for ring_osc2x13 macro
     sources.append(Path(pdk_root) / pdk / "libs.ref" / "gf180mcu_fd_sc_mcu7t5v0" / "verilog" / "gf180mcu_fd_sc_mcu7t5v0.v")
     sources.append(Path(pdk_root) / pdk / "libs.ref" / "gf180mcu_fd_sc_mcu7t5v0" / "verilog" / "primitives.v")
     if gl:
@@ -115,7 +117,7 @@ def test_chip_top_runner(test : str):
 
         sources += (proj_path / "../caravel/verilog/").glob("*.v")
 
-        defines.update({"SLOT_1X1" : 1, "FUNCTIONAL": 1})
+        defines.update({"FUNCTIONAL": 1})
 
     includes.append(proj_path / "../src")
     includes.append(proj_path / "../caravel/verilog/")
@@ -129,8 +131,11 @@ def test_chip_top_runner(test : str):
         # SRAM macros
         #Path(pdk_root) / pdk / "libs.ref/gf180mcu_fd_ip_sram/verilog/gf180mcu_fd_ip_sram__sram512x8m8wm1.v",
         #proj_path / "../ip/sram/gf180_ram_512x8_wrapper.v",
-	#proj_path / "../ip/sram/gf180mcu_ocd_ip_sram__sram1024x8m8wm1.v",
- 	proj_path / "../ip/sram/gf180_ram_1024x8_wrapper.v",
+        #proj_path / "../ip/sram/gf180mcu_ocd_ip_sram__sram1024x8m8wm1.v",
+        proj_path / "../ip/sram/gf180_ram_1024x8_wrapper.v",
+ 
+        # XTAL IP
+        proj_path / "../ip/XTAL3P3/XTAL.v",
  
         # Caravel IP
         proj_path / "../ip/simple_por/verilog/simple_por.v",

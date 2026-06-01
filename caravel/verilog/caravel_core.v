@@ -175,14 +175,7 @@ module caravel_core (
     wire [`MPRJ_IO_PADS-1:0] user_io_out;
     
     /* Padframe control signals */
-    wire [`MPRJ_IO_PADS_1-1:0] gpio_serial_link_1;
-    wire [`MPRJ_IO_PADS_2-1:0] gpio_serial_link_2;
     wire [1:0] gpio_drive_select_core;  // bogus
-    wire mprj_io_loader_resetn;
-    wire mprj_io_loader_clock;
-    wire mprj_io_loader_strobe;
-    wire mprj_io_loader_data_1;        /* user1 side serial loader */
-    wire mprj_io_loader_data_2;        /* user2 side serial loader */
 
     // User Project Control management I/O
     // There are two types of GPIO connections:
@@ -474,49 +467,13 @@ module caravel_core (
     /* Clocking & housekeeping                  */
     /*------------------------------------------*/
 
-    wire [`MPRJ_IO_PADS_1-1:0] gpio_serial_link_1_shifted;
-    wire [`MPRJ_IO_PADS_2-1:0] gpio_serial_link_2_shifted;
-
-    assign gpio_serial_link_1_shifted = {gpio_serial_link_1[`MPRJ_IO_PADS_1-2:0],
-                     mprj_io_loader_data_1};
-    // Note that serial_link_2 is backwards compared to serial_link_1, so it
-    // shifts in the other direction.
-    assign gpio_serial_link_2_shifted = {mprj_io_loader_data_2,
-                     gpio_serial_link_2[`MPRJ_IO_PADS_2-1:1]};
-
-    // Propagating clock and reset to mitigate timing and fanout issues
-    wire [`MPRJ_IO_PADS_1-1:0] gpio_clock_1;
-    wire [`MPRJ_IO_PADS_2-1:0] gpio_clock_2;
-    wire [`MPRJ_IO_PADS_1-1:0] gpio_resetn_1;
-    wire [`MPRJ_IO_PADS_2-1:0] gpio_resetn_2;
-    wire [`MPRJ_IO_PADS_1-1:0] gpio_load_1;
-    wire [`MPRJ_IO_PADS_2-1:0] gpio_load_2;
-    wire [`MPRJ_IO_PADS_1-1:0] gpio_clock_1_shifted;
-    wire [`MPRJ_IO_PADS_2-1:0] gpio_clock_2_shifted;
-    wire [`MPRJ_IO_PADS_1-1:0] gpio_resetn_1_shifted;
-    wire [`MPRJ_IO_PADS_2-1:0] gpio_resetn_2_shifted;
-    wire [`MPRJ_IO_PADS_1-1:0] gpio_load_1_shifted;
-    wire [`MPRJ_IO_PADS_2-1:0] gpio_load_2_shifted;
-
-    assign gpio_clock_1_shifted = {gpio_clock_1[`MPRJ_IO_PADS_1-2:0],
-                     mprj_io_loader_clock};
-    assign gpio_clock_2_shifted = {mprj_io_loader_clock,
-                    gpio_clock_2[`MPRJ_IO_PADS_2-1:1]};
-    assign gpio_resetn_1_shifted = {gpio_resetn_1[`MPRJ_IO_PADS_1-2:0],
-                     mprj_io_loader_resetn};
-    assign gpio_resetn_2_shifted = {mprj_io_loader_resetn,
-                    gpio_resetn_2[`MPRJ_IO_PADS_2-1:1]};
-    assign gpio_load_1_shifted = {gpio_load_1[`MPRJ_IO_PADS_1-2:0],
-                     mprj_io_loader_strobe};
-    assign gpio_load_2_shifted = {mprj_io_loader_strobe,
-                    gpio_load_2[`MPRJ_IO_PADS_2-1:1]};
-
     wire [2:0] spi_pll_sel;
     wire [2:0] spi_pll90_sel;
     wire [4:0] spi_pll_div;
     wire [25:0] spi_pll_trim;
     
-    wire serial_clock, serial_load;
+    wire [`IO_CTRL_BITS*`MPRJ_IO_PADS-1:0] gpio_configure;
+    wire gpio_conf_set;
 
 
     // mprj_gpio_buffer
@@ -639,12 +596,6 @@ module caravel_core (
         .irq(irq_spi),
         .reset(ext_reset),
 
-        .serial_clock(serial_clock),
-        .serial_load(serial_load),
-        .serial_resetn(mprj_io_loader_resetn),
-        .serial_data_1(mprj_io_loader_data_1),
-        .serial_data_2(mprj_io_loader_data_2),
-
         .mgmt_gpio_in(mgmt_io_in_hk),
         .mgmt_gpio_out(mgmt_io_out_hk), 
         .mgmt_gpio_oeb({gpio_buf_mgmt_io_oeb, mgmt_io_nc[`MPRJ_IO_PADS-6:0], mgmt_io_oeb[1:0]}), 
@@ -683,20 +634,13 @@ module caravel_core (
         .pad_flash_io0_do(flash_io0_do),
         .pad_flash_io1_do(flash_io1_do),
         .pad_flash_io0_di(flash_io0_di),
-        .pad_flash_io1_di(flash_io1_di)
+        .pad_flash_io1_di(flash_io1_di),
+        
+        .gpio_configure_out(gpio_configure),
+        .gpio_conf_set(gpio_conf_set)
     );
     
-    // Clock buffers to start clocks from in SDC
-    (* keep, dont_touch  *) gf180mcu_as_sc_mcu7t3v3__clkbuff_4 serial_clk_buf (
-        .A(serial_clock),
-        .Y(mprj_io_loader_clock)
-    );
-    
-    (* keep, dont_touch  *)  gf180mcu_as_sc_mcu7t3v3__clkbuff_4 serial_load_clk_buf (
-        .A(serial_load),
-        .Y(mprj_io_loader_strobe)
-    );
-    
+    // Clock buffers to start clocks from in SDC  
     (* keep, dont_touch  *)  gf180mcu_as_sc_mcu7t3v3__clkbuff_12 flash_clk_buf (
         .A(flash_clk_frame_prebuf),
         .Y(flash_clk_frame)
@@ -832,263 +776,48 @@ module caravel_core (
             );
 		end
 	endgenerate
+    
+	generate
+        for (i = 0; i < `MPRJ_IO_PADS; i = i + 1) begin
+            gpio_control_block gpio_control (
+                `ifdef USE_POWER_PINS
+                .VDD(VDD),
+                .VSS(VSS),
+                `endif
 
-    // Original Caravel GPIO control comment:
-    // Each control block sits next to an I/O pad in the user area.
-    // It gets input through a serial chain from the previous control
-    // block and passes it to the next control block.  Due to the nature
-    // of the shift register, bits are presented in reverse, as the first
-    // bit in ends up as the last bit of the last I/O pad control block.
+                .gpio_defaults(gpio_defaults[((i+1)*`IO_CTRL_BITS)-1:i*`IO_CTRL_BITS]),
+                .gpio_conf_in(gpio_configure[((i+1)*`IO_CTRL_BITS)-1:i*`IO_CTRL_BITS]),
+                .gpio_conf_clk(caravel_clk),
 
-    // There are two types of block;  the first two and the last two
-    // are configured to be full bidirectional under control of the
-    // management Soc (JTAG and SDO for the first two;  flash_io2 and
-    // flash_io3 for the last two).  The rest are configured to be default
-    // (input).  Note that the first two and last two are the ones closest
-    // to the management SoC on either side, which minimizes the wire length
-    // of the extra signals those pads need.
+                 // Management Soc-facing signals
 
-    gpio_control_block gpio_control_bidir_1 [1:0] (
-        `ifdef USE_POWER_PINS
-        .VDD(VDD),
-        .VSS(VSS),
-        `endif
+                .resetn(caravel_rstn),
+                .clk(caravel_rstn),
+                
+                .gpio_conf_set(gpio_conf_set),
 
-        .gpio_defaults(gpio_defaults[19:0]),
+                .mgmt_gpio_in(mgmt_io_in[i]),
+                .mgmt_gpio_out(mgmt_io_out[i]),
+                .mgmt_gpio_oeb(mgmt_io_oeb[i]),
 
-        // Management Soc-facing signals
+                 // User-facing signals
+                .user_gpio_out(user_io_out[i]),
+                .user_gpio_oeb(user_io_oeb[i]),
+                .user_gpio_in(user_io_in[i]),
 
-        .resetn(gpio_resetn_1_shifted[1:0]),
-        .serial_clock(gpio_clock_1_shifted[1:0]),
-        .serial_load(gpio_load_1_shifted[1:0]),
-
-        .resetn_out(gpio_resetn_1[1:0]),
-        .serial_clock_out(gpio_clock_1[1:0]),
-        .serial_load_out(gpio_load_1[1:0]),
-
-        .mgmt_gpio_in(mgmt_io_in[1:0]),
-        .mgmt_gpio_out(mgmt_io_out[1:0]),
-        .mgmt_gpio_oeb(mgmt_io_oeb[1:0]),
-
-        .one(),
-        .zero(),
-
-        // Serial data chain for pad configuration
-        .serial_data_in(gpio_serial_link_1_shifted[1:0]),
-        .serial_data_out(gpio_serial_link_1[1:0]),
-
-        // User-facing signals
-        .user_gpio_out(user_io_out[1:0]),
-        .user_gpio_oeb(user_io_oeb[1:0]),
-        .user_gpio_in(user_io_in[1:0]),
-
-        // Pad-facing signals (Pad GPIOv2)
-        .pad_gpio_inen(mprj_io_ie[1:0]),
-        .pad_gpio_schmitt_sel(mprj_io_schmitt_sel[1:0]),
-        .pad_gpio_pullup_sel(mprj_io_pullup_sel[1:0]),
-        .pad_gpio_pulldown_sel(mprj_io_pulldown_sel[1:0]),
-        .pad_gpio_slew_sel(mprj_io_slew_sel[1:0]),
-        .pad_gpio_drive_sel(mprj_io_drive_sel[3:0]),
-        .pad_gpio_outen(mprj_io_oe[1:0]),
-        .pad_gpio_out(mprj_io_out[1:0]),
-        .pad_gpio_in(mprj_io_in[1:0])
-    );
-
-    /* Section 1 GPIOs (GPIO 0 to 18) */
-    wire [`MPRJ_IO_PADS_1-1:2] zero_loop1;
-
-    /* Section 1 GPIOs (GPIO 2 to 7) that start up under management control */
-
-    gpio_control_block gpio_control_in_1a [5:0] (
-        `ifdef USE_POWER_PINS
-        .VDD(VDD),
-        .VSS(VSS),
-        `endif
-
-        .gpio_defaults(gpio_defaults[79:20]),
-
-        // Management Soc-facing signals
-
-        .resetn(gpio_resetn_1_shifted[7:2]),
-        .serial_clock(gpio_clock_1_shifted[7:2]),
-        .serial_load(gpio_load_1_shifted[7:2]),
-
-        .resetn_out(gpio_resetn_1[7:2]),
-        .serial_clock_out(gpio_clock_1[7:2]),
-        .serial_load_out(gpio_load_1[7:2]),
-
-        .mgmt_gpio_in(mgmt_io_in[7:2]),
-        .mgmt_gpio_out(mgmt_io_out[7:2]),
-        .mgmt_gpio_oeb(zero_loop1[7:2]),
-
-        .one(),
-        .zero(zero_loop1[7:2]),
-
-        // Serial data chain for pad configuration
-        .serial_data_in(gpio_serial_link_1_shifted[7:2]),
-        .serial_data_out(gpio_serial_link_1[7:2]),
-
-        // User-facing signals
-        .user_gpio_out(user_io_out[7:2]),
-        .user_gpio_oeb(user_io_oeb[7:2]),
-        .user_gpio_in(user_io_in[7:2]),
-
-        // Pad-facing signals (Pad GPIOv2)
-        .pad_gpio_inen(mprj_io_ie[7:2]),
-        .pad_gpio_schmitt_sel(mprj_io_schmitt_sel[7:2]),
-        .pad_gpio_pullup_sel(mprj_io_pullup_sel[7:2]),
-        .pad_gpio_pulldown_sel(mprj_io_pulldown_sel[7:2]),
-        .pad_gpio_slew_sel(mprj_io_slew_sel[7:2]),
-        .pad_gpio_drive_sel(mprj_io_drive_sel[15:4]),
-        .pad_gpio_outen(mprj_io_oe[7:2]),
-        .pad_gpio_out(mprj_io_out[7:2]),
-        .pad_gpio_in(mprj_io_in[7:2])
-    );
-
-    /* Section 1 GPIOs (GPIO 8 to 18) */
-
-    gpio_control_block gpio_control_in_1 [`MPRJ_IO_PADS_1-9:0] (
-        `ifdef USE_POWER_PINS
-        .VDD(VDD),
-        .VSS(VSS),
-        `endif
-
-        .gpio_defaults(gpio_defaults[(`MPRJ_IO_PADS_1*10-1):80]),
-
-        // Management Soc-facing signals
-
-        .resetn(gpio_resetn_1_shifted[(`MPRJ_IO_PADS_1-1):8]),
-        .serial_clock(gpio_clock_1_shifted[(`MPRJ_IO_PADS_1-1):8]),
-        .serial_load(gpio_load_1_shifted[(`MPRJ_IO_PADS_1-1):8]),
-
-        .resetn_out(gpio_resetn_1[(`MPRJ_IO_PADS_1-1):8]),
-        .serial_clock_out(gpio_clock_1[(`MPRJ_IO_PADS_1-1):8]),
-        .serial_load_out(gpio_load_1[(`MPRJ_IO_PADS_1-1):8]),
-
-        .mgmt_gpio_in(mgmt_io_in[(`MPRJ_IO_PADS_1-1):8]),
-        .mgmt_gpio_out(mgmt_io_out[(`MPRJ_IO_PADS_1-1):8]),
-        .mgmt_gpio_oeb(zero_loop1[(`MPRJ_IO_PADS_1-1):8]),
-
-        .one(),
-        .zero(zero_loop1[(`MPRJ_IO_PADS_1-1):8]),
-
-        // Serial data chain for pad configuration
-        .serial_data_in(gpio_serial_link_1_shifted[(`MPRJ_IO_PADS_1-1):8]),
-        .serial_data_out(gpio_serial_link_1[(`MPRJ_IO_PADS_1-1):8]),
-
-        // User-facing signals
-        .user_gpio_out(user_io_out[(`MPRJ_IO_PADS_1-1):8]),
-        .user_gpio_oeb(user_io_oeb[(`MPRJ_IO_PADS_1-1):8]),
-        .user_gpio_in(user_io_in[(`MPRJ_IO_PADS_1-1):8]),
-
-        // Pad-facing signals (Pad GPIOv2)
-        .pad_gpio_inen(mprj_io_ie[(`MPRJ_IO_PADS_1-1):8]),
-        .pad_gpio_schmitt_sel(mprj_io_schmitt_sel[(`MPRJ_IO_PADS_1-1):8]),
-        .pad_gpio_pullup_sel(mprj_io_pullup_sel[(`MPRJ_IO_PADS_1-1):8]),
-        .pad_gpio_pulldown_sel(mprj_io_pulldown_sel[(`MPRJ_IO_PADS_1-1):8]),
-        .pad_gpio_slew_sel(mprj_io_slew_sel[(`MPRJ_IO_PADS_1-1):8]),
-        .pad_gpio_drive_sel(mprj_io_drive_sel[(`MPRJ_IO_PADS_1*2-1):16]),
-        .pad_gpio_outen(mprj_io_oe[(`MPRJ_IO_PADS_1-1):8]),
-        .pad_gpio_out(mprj_io_out[(`MPRJ_IO_PADS_1-1):8]),
-        .pad_gpio_in(mprj_io_in[(`MPRJ_IO_PADS_1-1):8])
-    );
-
-    /* Last three GPIOs (spi_sdo, flash_io2, and flash_io3) */
-
-    gpio_control_block gpio_control_bidir_2 [2:0] (
-        `ifdef USE_POWER_PINS
-        .VDD(VDD),
-        .VSS(VSS),
-        `endif
-
-        .gpio_defaults(gpio_defaults[(`MPRJ_IO_PADS*10-1):(`MPRJ_IO_PADS*10-30)]),
-
-        // Management Soc-facing signals
-
-        .resetn(gpio_resetn_2_shifted[(`MPRJ_IO_PADS_2-1):(`MPRJ_IO_PADS_2-3)]),
-        .serial_clock(gpio_clock_2_shifted[(`MPRJ_IO_PADS_2-1):(`MPRJ_IO_PADS_2-3)]),
-        .serial_load(gpio_load_2_shifted[(`MPRJ_IO_PADS_2-1):(`MPRJ_IO_PADS_2-3)]),
-
-        .resetn_out(gpio_resetn_2[(`MPRJ_IO_PADS_2-1):(`MPRJ_IO_PADS_2-3)]),
-        .serial_clock_out(gpio_clock_2[(`MPRJ_IO_PADS_2-1):(`MPRJ_IO_PADS_2-3)]),
-        .serial_load_out(gpio_load_2[(`MPRJ_IO_PADS_2-1):(`MPRJ_IO_PADS_2-3)]),
-
-        .mgmt_gpio_in(mgmt_io_in[(`MPRJ_IO_PADS-1):(`MPRJ_IO_PADS-3)]),
-        .mgmt_gpio_out(mgmt_io_out[(`MPRJ_IO_PADS-1):(`MPRJ_IO_PADS-3)]),
-        .mgmt_gpio_oeb(gpio_buf_mgmt_io_oeb_buf),
-
-        .one(),
-        .zero(),
-
-        // Serial data chain for pad configuration
-        .serial_data_in(gpio_serial_link_2_shifted[(`MPRJ_IO_PADS_2-1):(`MPRJ_IO_PADS_2-3)]),
-        .serial_data_out(gpio_serial_link_2[(`MPRJ_IO_PADS_2-1):(`MPRJ_IO_PADS_2-3)]),
-
-        // User-facing signals
-        .user_gpio_out(user_io_out[(`MPRJ_IO_PADS-1):(`MPRJ_IO_PADS-3)]),
-        .user_gpio_oeb(user_io_oeb[(`MPRJ_IO_PADS-1):(`MPRJ_IO_PADS-3)]),
-        .user_gpio_in(user_io_in[(`MPRJ_IO_PADS-1):(`MPRJ_IO_PADS-3)]),
-
-        // Pad-facing signals (Pad GPIOv2)
-        .pad_gpio_inen(mprj_io_ie[(`MPRJ_IO_PADS-1):(`MPRJ_IO_PADS-3)]),
-        .pad_gpio_schmitt_sel(mprj_io_schmitt_sel[(`MPRJ_IO_PADS-1):(`MPRJ_IO_PADS-3)]),
-        .pad_gpio_pullup_sel(mprj_io_pullup_sel[(`MPRJ_IO_PADS-1):(`MPRJ_IO_PADS-3)]),
-        .pad_gpio_pulldown_sel(mprj_io_pulldown_sel[(`MPRJ_IO_PADS-1):(`MPRJ_IO_PADS-3)]),
-        .pad_gpio_slew_sel(mprj_io_slew_sel[(`MPRJ_IO_PADS-1):(`MPRJ_IO_PADS-3)]),
-        .pad_gpio_drive_sel(mprj_io_drive_sel[(`MPRJ_IO_PADS*2-1):(`MPRJ_IO_PADS*2-6)]),
-        .pad_gpio_outen(mprj_io_oe[(`MPRJ_IO_PADS-1):(`MPRJ_IO_PADS-3)]),
-        .pad_gpio_out(mprj_io_out[(`MPRJ_IO_PADS-1):(`MPRJ_IO_PADS-3)]),
-        .pad_gpio_in(mprj_io_in[(`MPRJ_IO_PADS-1):(`MPRJ_IO_PADS-3)])
-    );
-
-    /* Section 2 GPIOs (GPIO 19 to 34) */
-    wire [`MPRJ_IO_PADS_2-4:0] zero_loop2;
-
-    gpio_control_block gpio_control_in_2 [`MPRJ_IO_PADS_2-4:0] (
-        `ifdef USE_POWER_PINS
-        .VDD(VDD),
-        .VSS(VSS),
-        `endif
-
-        .gpio_defaults(gpio_defaults[(`MPRJ_IO_PADS*10-31):(`MPRJ_IO_PADS_1*10)]),
-
-        // Management Soc-facing signals
-
-        .resetn(gpio_resetn_2_shifted[(`MPRJ_IO_PADS_2-4):0]),
-        .serial_clock(gpio_clock_2_shifted[(`MPRJ_IO_PADS_2-4):0]),
-        .serial_load(gpio_load_2_shifted[(`MPRJ_IO_PADS_2-4):0]),
-
-        .resetn_out(gpio_resetn_2[(`MPRJ_IO_PADS_2-4):0]),
-        .serial_clock_out(gpio_clock_2[(`MPRJ_IO_PADS_2-4):0]),
-        .serial_load_out(gpio_load_2[(`MPRJ_IO_PADS_2-4):0]),
-
-        .mgmt_gpio_in(mgmt_io_in[(`MPRJ_IO_PADS-4):(`MPRJ_IO_PADS_1)]),
-        .mgmt_gpio_out(mgmt_io_out[(`MPRJ_IO_PADS-4):(`MPRJ_IO_PADS_1)]),
-        .mgmt_gpio_oeb(zero_loop2),
-
-        .one(),
-        .zero(zero_loop2),
-
-        // Serial data chain for pad configuration
-        .serial_data_in(gpio_serial_link_2_shifted[(`MPRJ_IO_PADS_2-4):0]),
-        .serial_data_out(gpio_serial_link_2[(`MPRJ_IO_PADS_2-4):0]),
-
-        // User-facing signals
-        .user_gpio_out(user_io_out[(`MPRJ_IO_PADS-4):(`MPRJ_IO_PADS_1)]),
-        .user_gpio_oeb(user_io_oeb[(`MPRJ_IO_PADS-4):(`MPRJ_IO_PADS_1)]),
-        .user_gpio_in(user_io_in[(`MPRJ_IO_PADS-4):(`MPRJ_IO_PADS_1)]),
-
-        // Pad-facing signals (Pad GPIOv2)
-        .pad_gpio_inen(mprj_io_ie[(`MPRJ_IO_PADS-4):(`MPRJ_IO_PADS_1)]),
-        .pad_gpio_schmitt_sel(mprj_io_schmitt_sel[(`MPRJ_IO_PADS-4):(`MPRJ_IO_PADS_1)]),
-        .pad_gpio_pullup_sel(mprj_io_pullup_sel[(`MPRJ_IO_PADS-4):(`MPRJ_IO_PADS_1)]),
-        .pad_gpio_pulldown_sel(mprj_io_pulldown_sel[(`MPRJ_IO_PADS-4):(`MPRJ_IO_PADS_1)]),
-        .pad_gpio_slew_sel(mprj_io_slew_sel[(`MPRJ_IO_PADS-4):(`MPRJ_IO_PADS_1)]),
-        .pad_gpio_drive_sel(mprj_io_drive_sel[(`MPRJ_IO_PADS*2-7):(`MPRJ_IO_PADS_1*2)]),
-        .pad_gpio_outen(mprj_io_oe[(`MPRJ_IO_PADS-4):(`MPRJ_IO_PADS_1)]),
-        .pad_gpio_out(mprj_io_out[(`MPRJ_IO_PADS-4):(`MPRJ_IO_PADS_1)]),
-        .pad_gpio_in(mprj_io_in[(`MPRJ_IO_PADS-4):(`MPRJ_IO_PADS_1)])
-    );
+                 // Pad-facing signals (Pad GPIOv2)
+                .pad_gpio_inen(mprj_io_ie[i]),
+                .pad_gpio_schmitt_sel(mprj_io_schmitt_sel[i]),
+                .pad_gpio_pullup_sel(mprj_io_pullup_sel[i]),
+                .pad_gpio_pulldown_sel(mprj_io_pulldown_sel[i]),
+                .pad_gpio_slew_sel(mprj_io_slew_sel[i]),
+                .pad_gpio_drive_sel(mprj_io_drive_sel[(i+1)*2-1:i*2]),
+                .pad_gpio_outen(mprj_io_oe[i]),
+                .pad_gpio_out(mprj_io_out[i]),
+                .pad_gpio_in(mprj_io_in[i])
+            );
+		end
+	endgenerate
 
     // Power-on-reset circuit
     (* keep *) simple_por por_inst (

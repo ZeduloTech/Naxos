@@ -22,6 +22,7 @@
 // Written by Tim Edwards
 // efabless, inc. September 27, 2020
 // Updated May 26, 2022 for GF180MCU
+// Updated May 25, 2026 by egorxe, remove bitbang GPIO config
 //-----------------------------------------------------------
 
 //-----------------------------------------------------------
@@ -82,7 +83,7 @@ module housekeeping #(
     parameter GPIO_BASE_ADR = 32'h2600_0000,
     parameter SPI_BASE_ADR = 32'h2610_0000,
     parameter SYS_BASE_ADR = 32'h2620_0000,
-    parameter IO_CTRL_BITS = 10
+    parameter IO_CTRL_BITS = `IO_CTRL_BITS
 ) (
 `ifdef USE_POWER_PINS
     inout VDD,
@@ -133,13 +134,6 @@ module housekeeping #(
     // External (originating from SPI and pad) IRQ and reset
     output wire[2:0] irq,
     output reset,
-
-    // GPIO serial loader programming interface
-    output wire serial_clock,
-    output wire serial_load,
-    output wire serial_resetn,
-    output wire serial_data_1,
-    output wire serial_data_2,
 
     // GPIO data management (to padframe)---three-pin interface
     input  [`MPRJ_IO_PADS-1:0] mgmt_gpio_in,
@@ -192,7 +186,10 @@ module housekeeping #(
     output pad_flash_io0_do,
     output pad_flash_io1_do,
     input pad_flash_io0_di,
-    input pad_flash_io1_di
+    input pad_flash_io1_di,
+    
+    output [IO_CTRL_BITS*`MPRJ_IO_PADS-1:0] gpio_configure_out,
+    output reg gpio_conf_set
 );
 
     localparam IE = 2;		// Offset of input enable in shift register
@@ -200,12 +197,6 @@ module housekeeping #(
 
     reg reset_reg;
     reg irq_spi;
-    reg serial_bb_clock;
-    reg serial_bb_load;
-    reg serial_bb_resetn;
-    reg serial_bb_data_1;
-    reg serial_bb_data_2;
-    reg serial_bb_enable;
     reg serial_xfer;
     reg hkspi_disable;
 
@@ -243,9 +234,6 @@ module housekeeping #(
     wire	cwstb;	// Combination of SPI write strobe and back door write strobe
     wire	csclk;	// Combination of SPI SCK and back door access trigger
 
-
-    reg		serial_busy;
-
     wire [11:0] mfgr_id;
     wire [7:0]  prod_id;
     wire [31:0] mask_rev;
@@ -262,6 +250,14 @@ module housekeeping #(
 	// Invert wb_rstn_i
 	wire wb_rst_i;
 	assign wb_rst_i = ~wb_rstn_i;
+    
+    // Flatten GPIO config for output
+    genvar i;
+    generate
+	for (i = 0; i < `MPRJ_IO_PADS; i = i + 1) begin
+	    assign gpio_configure_out[((i+1)*IO_CTRL_BITS)-1:i*IO_CTRL_BITS] = gpio_configure[i];
+	end
+    endgenerate
 	
     // Pass-through mode.  Housekeeping SPI signals get inserted
     // between the management SoC and the flash SPI I/O.
@@ -355,12 +351,8 @@ module housekeeping #(
 	    8'h11 : fdata = {2'b00, pll90_sel, pll_sel};
 	    8'h12 : fdata = {3'b000, pll_div};
 
-	    // GPIO Control (bit bang and automatic)
-	    // NOTE: "serial_busy" is the read-back signal occupying the same
-	    // address/bit as "serial_xfer".
-	    8'h13 : fdata = {1'b0, serial_data_2, serial_data_1, serial_bb_clock,
-				serial_bb_load, serial_bb_resetn, serial_bb_enable,
-				serial_busy};
+	    // GPIO Control (bogus since bitbang loading was removed).
+	    8'h13 : fdata = {8'b0};
 
 	    /* System monitoring */
 	    8'h1b : fdata = {5'b00000, clk1_output_dest, clk2_output_dest,
@@ -809,8 +801,6 @@ module housekeeping #(
     assign spi_sdi = (spi_enabled) ? mgmt_gpio_in[34] : 1'b0;
     assign debug_in = (debug_mode) ? mgmt_gpio_in[0] : 1'b0;
 
-    genvar i;
-
     /* These are disconnected, but apply a meaningful signal anyway */
     generate
 	for (i = 2; i < `MPRJ_IO_PADS-3; i = i + 1) begin
@@ -839,118 +829,29 @@ module housekeeping #(
 
     // GPIO serial loader and GPIO management control
 
-`define GPIO_IDLE	2'b00
-`define GPIO_START	2'b01
-`define GPIO_XBYTE	2'b10
-`define GPIO_LOAD	2'b11
+`define GPIO_IDLE       1'b0
+`define GPIO_SET        1'b1
 
-    reg [3:0]	xfer_count;
-    reg [4:0]	pad_count_1;
-    reg [5:0]	pad_count_2;
-    reg [1:0]	xfer_state;
-
-    reg serial_clock_pre;
-    reg serial_resetn_pre;
-    reg serial_load_pre;
-    reg [IO_CTRL_BITS-1:0] serial_data_staging_1;
-    reg [IO_CTRL_BITS-1:0] serial_data_staging_2;
-
-    assign serial_clock = (serial_bb_enable == 1'b1) ?
-			serial_bb_clock : serial_clock_pre;
-    assign serial_resetn = (serial_bb_enable == 1'b1) ?
-			serial_bb_resetn : serial_resetn_pre;
-    assign serial_load = (serial_bb_enable == 1'b1) ?
-			serial_bb_load : serial_load_pre;
-
-    assign serial_data_1 = (serial_bb_enable == 1'b1) ?
-			serial_bb_data_1 : serial_data_staging_1[IO_CTRL_BITS-1];
-    assign serial_data_2 = (serial_bb_enable == 1'b1) ?
-			serial_bb_data_2 : serial_data_staging_2[IO_CTRL_BITS-1];
+    reg [0:0]	xfer_state;
 
     always @(posedge wb_clk_i or negedge porb) begin
 	if (porb == 1'b0) begin
-	    xfer_state <= `GPIO_IDLE;
-	    xfer_count <= 4'd0;
-            /* NOTE:  This assumes that MPRJ_IO_PADS_1 and MPRJ_IO_PADS_2 are
-             * equal, because they get clocked the same number of cycles by
-             * the same clock signal.  pad_count_2 gates the count for both.
-             */
-	    pad_count_1 <= `MPRJ_IO_PADS_1 - 1;
-	    pad_count_2 <= `MPRJ_IO_PADS_1;
-	    serial_resetn_pre <= 1'b0;
-	    serial_clock_pre <= 1'b0;
-	    serial_load_pre <= 1'b0;
-	    serial_data_staging_1 <= 0;
-	    serial_data_staging_2 <= 0;
-	    serial_busy <= 1'b0;
-
+            xfer_state <= `GPIO_IDLE;
+            gpio_conf_set <= 1'b0;
 	end else begin
 
-            serial_resetn_pre <= 1'b1;
 	    case (xfer_state)
 		`GPIO_IDLE: begin
-		    pad_count_1 <= `MPRJ_IO_PADS_1 - 1;
-                    pad_count_2 <= `MPRJ_IO_PADS_1;
-                    serial_clock_pre <= 1'b0;
-                    serial_load_pre <= 1'b0;
+                    gpio_conf_set <= 1'b0;
                     if (serial_xfer == 1'b1) begin
-                        xfer_state <= `GPIO_START;
-	    	    	serial_busy <= 1'b1;
-                    end else begin
-	    	    	serial_busy <= 1'b0;
-		    end
-		end
-		`GPIO_START: begin
-                    serial_clock_pre <= 1'b0;
-                    serial_load_pre <= 1'b0;
-                    xfer_count <= 6'd0;
-                    pad_count_1 <= pad_count_1 - 1;
-                    pad_count_2 <= pad_count_2 + 1;
-                    xfer_state <= `GPIO_XBYTE;
-                    serial_data_staging_1 <= gpio_configure[pad_count_1];
-                    serial_data_staging_2 <= gpio_configure[pad_count_2];
-		end
-		`GPIO_XBYTE: begin
-                    serial_clock_pre <= ~serial_clock;
-                    serial_load_pre <= 1'b0;
-                    if (serial_clock == 1'b0) begin
-                        if (xfer_count == IO_CTRL_BITS - 1) begin
-                            xfer_count <= 4'd0;
-                            if (pad_count_2 == `MPRJ_IO_PADS) begin
-                                xfer_state <= `GPIO_LOAD;
-                            end else begin
-                                xfer_state <= `GPIO_START;
-                            end
-                        end else begin
-                            xfer_count <= xfer_count + 1;
-                        end
-                    end else begin
-                        serial_data_staging_1 <=
-				{serial_data_staging_1[IO_CTRL_BITS-2:0], 1'b0};
-                        serial_data_staging_2 <=
-				{serial_data_staging_2[IO_CTRL_BITS-2:0], 1'b0};
+                        xfer_state <= `GPIO_SET;
                     end
-		end
-		`GPIO_LOAD: begin
-                    xfer_count <= xfer_count + 1;
-
-                    /* Load sequence:  Pulse clock for final data shift in;
-                     * Pulse the load strobe.
-                     * Return to idle mode.
-                     */
-                    if (xfer_count == 4'd0) begin
-                        serial_clock_pre <= 1'b0;
-                        serial_load_pre <= 1'b0;
-                    end else if (xfer_count == 4'd1) begin
-                        serial_clock_pre <= 1'b0;
-                        serial_load_pre <= 1'b1;
-                    end else if (xfer_count == 4'd2) begin
-	    	    	serial_busy <= 1'b0;
-                        serial_clock_pre <= 1'b0;
-                        serial_load_pre <= 1'b0;
-                        xfer_state <= `GPIO_IDLE;
-		    end
                 end
+		`GPIO_SET: begin
+                    gpio_conf_set <= 1'b1;
+                    xfer_state <= `GPIO_IDLE;
+                end
+		
             endcase
 	end
     end
@@ -1029,12 +930,6 @@ module housekeeping #(
 
 	    mgmt_gpio_data <= 'd0;
 	    mgmt_gpio_data_buf <= 'd0;
-	    serial_bb_enable <= 1'b0;
-	    serial_bb_load <= 1'b0;
-	    serial_bb_data_1 <= 1'b0;
-	    serial_bb_data_2 <= 1'b0;
-	    serial_bb_clock <= 1'b0;
-	    serial_bb_resetn <= 1'b0;
 	    serial_xfer <= 1'b0;
 	    hkspi_disable <= 1'b0;
 	    pwr_ctrl_out <= 'd0;
@@ -1080,12 +975,6 @@ module housekeeping #(
                 	pll_div <= cdata[4:0];
             	    end
 	    	    8'h13: begin
-			serial_bb_data_2 <= cdata[6];
-			serial_bb_data_1 <= cdata[5];
-			serial_bb_clock  <= cdata[4];
-			serial_bb_load   <= cdata[3];
-			serial_bb_resetn <= cdata[2];
-			serial_bb_enable <= cdata[1];
 			serial_xfer <= cdata[0];
 	    	    end
 

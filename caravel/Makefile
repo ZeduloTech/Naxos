@@ -7,6 +7,8 @@ TOP = chip_top
 PDK_ROOT ?= $(MAKEFILE_DIR)/../gf180mcu
 PDK ?= gf180mcuD
 
+STD_CELL_LIBRARY ?= gf180mcu_as_sc_mcu7t3v3
+
 .DEFAULT_GOAL := help
 
 help: ## Show this help message

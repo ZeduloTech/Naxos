@@ -55,8 +55,8 @@ PAD_EAST: [
 ]
 
 PAD_NORTH: [
-    "bidir\\[45\\].pad",
-    "bidir\\[44\\].pad",
+    "analog\\[1\\].pad",
+    "analog\\[0\\].pad",
     "bidir\\[43\\].pad",
     "bidir\\[42\\].pad",
     
@@ -97,8 +97,8 @@ PAD_WEST: [
     
     "analog\\[3\\].pad",
     "analog\\[2\\].pad",
-    "analog\\[1\\].pad",
-    "analog\\[0\\].pad",
+    "bidir\\[45\\].pad",
+    "bidir\\[44\\].pad",
     
     "dvss_pads\\[6\\].pad",
     "dvdd_pads\\[6\\].pad"

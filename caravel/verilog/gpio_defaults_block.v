@@ -34,8 +34,6 @@ module gpio_defaults_block #(
 `endif
     output wire [9:0] gpio_defaults
 );
-    wire [9:0] gpio_defaults_high;
-    wire [9:0] gpio_defaults_low;
 
     // Replaced original TIEs with a simple assign because 
     // it complicated synthesys and there is no via programming anymore.
