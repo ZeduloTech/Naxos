@@ -12,7 +12,7 @@ export STD_CELL_LIBRARY = gf180mcu_as_sc_mcu7t3v3
 AVAILABLE_SLOTS = 1x1 0p5x1 1x0p5 0p5x0p5
 DEFAULT_SLOT = 1x0p5
 
-# Slot can be any of AVAILABLE_SLOTS, tested only for 1x1!
+# Slot can be any of AVAILABLE_SLOTS, tested only for 1x0p5!
 SLOT ?= $(DEFAULT_SLOT)
 
 ifeq ($(SLOT),default)        
@@ -40,8 +40,8 @@ clone-pdk: ## Clone the GF180MCU PDK repository
 	rm -rf $(MAKEFILE_DIR)/gf180mcu
 	git clone https://github.com/wafer-space/gf180mcu.git $(MAKEFILE_DIR)/gf180mcu --depth 1 --branch ${PDK_TAG}
 	git clone https://github.com/AvalonSemiconductors/gf180mcu_as_sc_mcu7t3v3 --depth 1 gf180mcu/gf180mcu_as_sc_mcu7t3v3
-	ln -s $(PDK_ROOT)/$(PDK)/gf180mcu/gf180mcu_as_sc_mcu7t3v3/pdk/libs.ref/gf180mcu_as_sc_mcu7t3v3 gf180mcu/gf180mcuD/libs.ref/
-	ln -s $(PDK_ROOT)/$(PDK)/gf180mcu/gf180mcu_as_sc_mcu7t3v3/pdk/libs.tech/librelane/gf180mcu_as_sc_mcu7t3v3 gf180mcu/gf180mcuD/libs.tech/librelane/
+	ln -s $(MAKEFILE_DIR)/gf180mcu/gf180mcu_as_sc_mcu7t3v3/pdk/libs.ref/gf180mcu_as_sc_mcu7t3v3 gf180mcu/gf180mcuD/libs.ref/
+	ln -s $(MAKEFILE_DIR)/gf180mcu/gf180mcu_as_sc_mcu7t3v3/pdk/libs.tech/librelane/gf180mcu_as_sc_mcu7t3v3 gf180mcu/gf180mcuD/libs.tech/librelane/
 .PHONY: clone-pdk
 
 librelane: ## Run LibreLane flow (synthesis, PnR, verification)
