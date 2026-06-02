@@ -56,9 +56,9 @@ module chip_core #(
     wire npor;
     wire caravel_start_mode;
     
-    // Disable pull-up and pull-down for input
+    // Set input pads to pull-down
     assign input_pu = '0;
-    assign input_pd = '0;
+    assign input_pd = '1;
     
     // set pad config for flash & GPIO
     assign bidir_pu[`PAD_FLASH_IO1:`PAD_GPIO] = 5'b0010;
@@ -85,7 +85,7 @@ module chip_core #(
     (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__mux2_4 clk_mux (
         .A(clk),
         .B(xtal_clk),
-        .S(0),
+        .S(input_in[`PADI_SYS_CLKSEL]),
         .Y(core_clk)
     );
     
