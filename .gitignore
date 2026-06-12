@@ -6,3 +6,4 @@ sim_build/
 final/
 img/
 *.lyrdb
+exclude_final.txt

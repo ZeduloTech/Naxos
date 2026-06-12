@@ -7,7 +7,7 @@ meta:
     # Save time
     #Magic.DRC: null                 
     #KLayout.DRC: null
-    OpenROAD.IRDropReport: null
+    #OpenROAD.IRDropReport: null
     #Magic.SpiceExtraction: null    
     #Checker.MagicDRC: null
     #KLayout.XOR: null

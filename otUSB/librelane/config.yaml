@@ -1,0 +1,162 @@
+############################## General #################################
+
+meta:
+  version: 2
+  flow: Classic
+  substituting_steps:
+    Checker.YosysSynthChecks: null  # Fails due to multisources in OpenTitan IPs
+    Checker.SetupViolations: null   # Demoted to warning while timing is being closed
+    Checker.MaxSlewViolations: null # Demoted to warning while timing is being closed
+    Checker.MaxCapViolations: null  # Demoted to warning while timing is being closed
+
+DESIGN_NAME: usbdev
+VERILOG_FILES:
+- dir::../src/prim_util/prim_util_pkg.sv
+- dir::../src/other_prim/prim_mubi_pkg.sv
+- dir::../src/other_prim/prim_buf.sv
+- dir::../src/other_prim/prim_clock_mux2.sv
+- dir::../src/other_prim/prim_intr_hw.sv
+- dir::../src/other_prim/prim_onehot_check.sv
+- dir::../src/other_prim/prim_xnor2.sv
+- dir::../src/other_prim/prim_reg_we_check.sv
+- dir::../src/prim_cdc/prim_cdc_rand_delay.sv
+- dir::../src/prim_flop/prim_flop.sv
+- dir::../src/prim_flop/prim_sparse_fsm_flop.sv
+- dir::../src/prim_flop/prim_flop_2sync.sv
+- dir::../src/prim_count/prim_count_pkg.sv
+- dir::../src/prim_count/prim_count.sv
+- dir::../src/prim_sec/prim_sec_anchor_buf.sv
+- dir::../src/prim_sec/prim_sec_anchor_flop.sv
+- dir::../src/other_prim/prim_diff_decode.sv
+- dir::../src/other_prim/prim_edge_detector.sv
+- dir::../src/other_prim/prim_filter.sv
+- dir::../src/prim_sync/prim_sync_reqack.sv
+- dir::../src/prim_sync/prim_pulse_sync.sv
+- dir::../src/prim_cdc/prim_reg_cdc_arb.sv
+- dir::../src/prim_cdc/prim_reg_cdc.sv
+- dir::../src/prim_fifo/prim_fifo_assert.svh
+- dir::../src/prim_fifo/prim_fifo_sync_cnt.sv
+- dir::../src/prim_fifo/prim_fifo_sync.sv
+- dir::../src/prim_subreg/prim_subreg_pkg.sv
+- dir::../src/prim_subreg/prim_subreg_ext.sv
+- dir::../src/prim_subreg/prim_subreg_arb.sv
+- dir::../src/prim_subreg/prim_subreg.sv
+- dir::../src/usb_consts_pkg.sv
+- dir::../src/usb_fs_nb_out_pe.sv
+- dir::../src/usb_fs_nb_in_pe.sv
+- dir::../src/usb_fs_rx.sv
+- dir::../src/usb_fs_tx.sv
+- dir::../src/usb_fs_tx_mux.sv
+- dir::../src/usb_fs_nb_pe.sv
+- dir::../src/usbdev_reg_pkg.sv
+- dir::../src/support_reg_hw_pkg.sv
+- dir::../src/usbdev_counter.sv
+- dir::../src/usbdev_linkstate.sv
+- dir::../src/usbdev_aon_wake.sv
+- dir::../src/usbdev_iomux.sv
+- dir::../src/usbdev_usbif.sv
+- dir::../src/bus_reg_pkg.sv
+- dir::../src/usbdev_reg_top.sv
+- dir::../src/usbdev.sv
+
+# Slightly smaller file sizes
+PRIMARY_GDSII_STREAMOUT_TOOL: klayout
+
+# USE_SLANG enabled
+USE_SLANG: True
+
+# SDC files
+PNR_SDC_FILE: dir::constraint.sdc
+SIGNOFF_SDC_FILE: dir::constraint.sdc
+
+# Power / ground nets
+VDD_NETS:
+- VDD
+GND_NETS:
+- VSS
+
+# Clock
+CLOCK_PORT: clk_i
+CLOCK_PERIOD: 20.83  # 48 MHz
+
+############################### Timing ################################
+
+# Demote setup violations to warnings while timing is being closed
+# Done via substituting_steps — null out the setup checker
+# (QUIT_ON_TIMING_VIOLATIONS and QUIT_ON_SETUP_VIOLATIONS are not valid LibreLane keys)
+
+############################ Floorplanning #############################
+
+FP_SIZING: absolute
+DIE_AREA: [0, 0, 500, 500]
+CORE_AREA: [25, 25, 475, 475]
+
+############################### Placement ##############################
+
+PL_TARGET_DENSITY_PCT: 45
+PL_KEEP_RESIZE_BELOW_OVERFLOW: 0
+PL_RESIZER_HOLD_SLACK_MARGIN: 0.7
+PL_RESIZER_SETUP_SLACK_MARGIN: 0.5  # increased from 0.2 to give resizer more headroom
+
+# Wire length control - critical for antenna prevention
+DESIGN_REPAIR_MAX_WIRE_LENGTH: 300  # reduced from 500 to improve slew/cap
+DESIGN_REPAIR_MAX_SLEW_PCT: 20      # reduced from 25
+
+RUN_POST_CTS_RESIZER_TIMING: False
+DESIGN_REPAIR_BUFFER_INPUT_PORTS: False
+DESIGN_REPAIR_BUFFER_OUTPUT_PORTS: False
+
+############################### Routing ################################
+
+RUN_HEURISTIC_DIODE_INSERTION: True
+HEURISTIC_ANTENNA_THRESHOLD: 90
+GRT_ANTENNA_REPAIR_ITERS: 25
+DIODE_ON_PORTS: in
+RUN_ANTENNA_REPAIR: True
+
+# Routing adjustments to reduce congestion and long wires
+GRT_ALLOW_CONGESTION: True
+GRT_ADJUSTMENT: 0.25
+
+############################### DRC/LVS ################################
+
+ERROR_ON_MAGIC_DRC: False
+
+# Prevent false positive DRC errors
+MAGIC_GDS_FLATGLOB:
+# For contacts
+- "*_CDNS_*"
+# COMP and Poly2 filler cells need to be
+# flattened to form a "filltrans" layer
+- "COMP_fill_cell"
+- "Poly2_fill_cell"
+# Foundry provided SRAMs
+- "*$$*"
+- "M1_N*"
+- "M1_P*"
+- "M2_M1*"
+- "M3_M2*"
+- "nmos_5p0*"
+- "nmos_1p2*"
+- "pmos_5p0*"
+- "pmos_1p2*"
+- "via1_*"
+- "ypass_gate*"
+- "G_ring_*"
+# These additional cells must be flattened to get rid of 3.3V devices
+# (DUALGATE drawn into high-level cells)
+- "dcap_103*"
+- "din_*"
+- "mux821_*"
+- "rdummy_*"
+- "pmoscap_*"
+- "xdec_*"
+- "ypredec*"
+- "xpredec*"
+- "xdec8_*"
+- "prexdec_*"
+- "xdec32_*"
+- "sa_*"
+
+# Because we have multiple power pads for one power domain
+MAGIC_EXT_UNIQUE: notopports

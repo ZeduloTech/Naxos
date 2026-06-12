@@ -1,0 +1,72 @@
+# constraint.sdc — usbdev @ 48 MHz (gf180mcuD)
+
+create_clock -name clk_i     -period 20.833 [get_ports clk_i]
+create_clock -name clk_aon_i -period 1000.0 [get_ports clk_aon_i]
+
+set_clock_groups -asynchronous \
+    -group [get_clocks clk_i] \
+    -group [get_clocks clk_aon_i]
+
+# Input delays — clk_i and clk_aon_i intentionally excluded
+set_input_delay -clock clk_i 4.0 [get_ports rst_ni]
+set_input_delay -clock clk_i 4.0 [get_ports cio_usb_dp_i]
+set_input_delay -clock clk_i 4.0 [get_ports cio_usb_dn_i]
+set_input_delay -clock clk_i 4.0 [get_ports usb_rx_d_i]
+set_input_delay -clock clk_i 4.0 [get_ports cio_sense_i]
+set_input_delay -clock clk_i 4.0 [get_ports bus_i]
+set_input_delay -clock clk_i 4.0 [get_ports ram_rdata_i]
+set_input_delay -clock clk_i 4.0 [get_ports ram_rvalid_i]
+set_input_delay -clock clk_i 4.0 [get_ports ram_rerror_i]
+
+# Output delays
+set_output_delay -clock clk_i 4.0 [get_ports cio_usb_dp_o]
+set_output_delay -clock clk_i 4.0 [get_ports cio_usb_dp_en_o]
+set_output_delay -clock clk_i 4.0 [get_ports cio_usb_dn_o]
+set_output_delay -clock clk_i 4.0 [get_ports cio_usb_dn_en_o]
+set_output_delay -clock clk_i 4.0 [get_ports usb_tx_se0_o]
+set_output_delay -clock clk_i 4.0 [get_ports usb_tx_d_o]
+set_output_delay -clock clk_i 4.0 [get_ports usb_dp_pullup_o]
+set_output_delay -clock clk_i 4.0 [get_ports usb_dn_pullup_o]
+set_output_delay -clock clk_i 4.0 [get_ports usb_rx_enable_o]
+set_output_delay -clock clk_i 4.0 [get_ports usb_tx_use_d_se0_o]
+set_output_delay -clock clk_i 4.0 [get_ports usb_aon_suspend_req_o]
+set_output_delay -clock clk_i 4.0 [get_ports usb_aon_wake_ack_o]
+set_output_delay -clock clk_i 4.0 [get_ports usb_ref_val_o]
+set_output_delay -clock clk_i 4.0 [get_ports usb_ref_pulse_o]
+set_output_delay -clock clk_i 4.0 [get_ports bus_o]
+set_output_delay -clock clk_i 4.0 [get_ports rx_fifo_rvalid]
+set_output_delay -clock clk_i 4.0 [get_ports ram_req_o]
+set_output_delay -clock clk_i 4.0 [get_ports ram_we_o]
+set_output_delay -clock clk_i 4.0 [get_ports ram_addr_o]
+set_output_delay -clock clk_i 4.0 [get_ports ram_wdata_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_pkt_received_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_pkt_sent_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_powered_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_disconnected_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_host_lost_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_link_reset_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_link_suspend_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_link_resume_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_av_out_empty_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_rx_full_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_av_overflow_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_link_in_err_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_link_out_err_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_rx_crc_err_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_rx_pid_err_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_rx_bitstuff_err_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_frame_o]
+set_output_delay -clock clk_i 4.0 [get_ports intr_av_setup_empty_o]
+
+# AON inputs are async — no timing constraint
+set_false_path -from [get_ports rst_aon_ni]
+set_false_path -from [get_ports usb_aon_bus_reset_i]
+set_false_path -from [get_ports usb_aon_sense_lost_i]
+set_false_path -from [get_ports usb_aon_bus_not_idle_i]
+set_false_path -from [get_ports usb_aon_wake_detect_active_i]
+
+# USB RX inputs sampled internally
+set_false_path -from [get_ports cio_usb_dp_i]
+set_false_path -from [get_ports cio_usb_dn_i]
+set_false_path -from [get_ports usb_rx_d_i]
+set_false_path -from [get_ports cio_sense_i]
