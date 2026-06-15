@@ -123,8 +123,23 @@ module chip_core #(
     	.D   (8'b0),
     	.Q   (sram_1k_out)
     );
+/*
+    // usb2sram
+    usb2sram i_usb2sram (
+    	.clk_i        (user_wb_clk),
+    	.rst_ni       (1'b1),
 
-    
+    	.ram_req_i    (1'b0),
+    	.ram_we_i     (1'b0),
+    	.ram_addr_i   (10'h0),
+    	.ram_wdata_i  (8'h0),
+    	.ram_wmask_i  (8'h0),
+
+    	.ram_rdata_o  (),
+    	.ram_rvalid_o (),
+    	.ram_rerror_o ()
+    );
+*/    
     caravel_core caravel (
         `ifdef USE_POWER_PINS
         .VDD(VDD),		

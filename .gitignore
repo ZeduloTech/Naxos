@@ -7,3 +7,4 @@ final/
 img/
 *.lyrdb
 exclude_final.txt
+chip_core_copy.sv
