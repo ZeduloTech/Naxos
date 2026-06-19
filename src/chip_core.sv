@@ -1,4 +1,3 @@
-// SPDX-FileCopyrightText: © 2025 egorxe
 // SPDX-License-Identifier: Apache-2.0
 
 `timescale 1 ns / 1 ps
@@ -114,19 +113,26 @@ module chip_core #(
     );
 
     // 1K SRAM
-    logic [7:0] sram_1k_out;
+    //    logic [7:0] sram_1k_out;
+    logic sram_req_i;
+    logic sram_we_i;
+    logic [9:0] sram_addr_i;
+    logic [7:0] sram_wdata_i;
+    logic [7:0] sram_wmask_i;
+    logic [7:0] sram_rdata_o;
+
     (* keep, dont_touch *) gf180_ram_1024x8_wrapper sram_1k (
         `ifdef USE_POWER_PINS
         .VDD(VDD),
         .VSS(VSS),
         `endif
         .CLK (clk),
-        .CEN (1'b1),
-        .GWEN(1'b0),
-        .WEN (8'b0),
-        .A   (10'b0),
-        .D   (8'b0),
-        .Q   (sram_1k_out)
+        .CEN (~sram_req_i),
+        .GWEN(~sram_we_i),
+        .WEN (~sram_wmask_i),
+        .A   (sram_addr_i),
+        .D   (sram_wdata_i),
+        .Q   (sram_rdata_o)
     );
 
     caravel_core caravel (
@@ -207,7 +213,7 @@ module chip_core #(
     );
 
     //
-    // USB, No functional connection yet
+    // USB
     //
     // bus port tied off
     wire [49:0] usbdev_bus_i_tie;
@@ -216,7 +222,7 @@ module chip_core #(
     //
     //bus_reg_pkg::bus_reg_i_t usbdev_bus_i_tie;
     //assign usbdev_bus_i_tie = '0;
-    // data output, and more
+    // data output
     wire        usbdev_dp_o, usbdev_dp_en_o;
     wire        usbdev_dn_o, usbdev_dn_en_o;
     wire        usbdev_tx_se0_o, usbdev_tx_d_o;
@@ -226,14 +232,17 @@ module chip_core #(
     wire        usbdev_ref_val_o, usbdev_ref_pulse_o;
     wire        usbdev_rx_fifo_rvalid;
     //bus_reg_pkg::bus_reg_o_t usbdev_bus_o;
-    // SRAM interface
+   
+     // SRAM interface
     wire        usbdev_ram_req_o, usbdev_ram_we_o;
     wire [8:0]  usbdev_ram_addr_o;
     wire [31:0] usbdev_ram_wdata_o, usbdev_ram_wmask_o;
+
     // SW SRAM interface
     wire        usbdev_sw_mem_a_rvalid;
     wire [1:0]  usbdev_sw_mem_a_rerror;
     wire [31:0] usbdev_sw_mem_a_rdata;
+
     // Interrupts
     wire usbdev_intr_pkt_received, usbdev_intr_pkt_sent;
     wire usbdev_intr_powered, usbdev_intr_disconnected;
@@ -244,15 +253,18 @@ module chip_core #(
     wire usbdev_intr_link_out_err, usbdev_intr_rx_crc_err;
     wire usbdev_intr_rx_pid_err, usbdev_intr_rx_bitstuff_err;
     wire usbdev_intr_frame, usbdev_intr_av_setup_empty;
+
     (* keep, dont_touch *) usbdev u_usbdev (
         .clk_i                  (clk), //0
         .rst_ni                 (rst_n), //1
         .clk_aon_i              (1'b0),
         .rst_aon_ni             (1'b1),
+
         // data inputs tied low
         .cio_usb_dp_i           (1'b1),
         .cio_usb_dn_i           (1'b1),
         .usb_rx_d_i             (1'b1),
+
         // data outputs
         .cio_usb_dp_o           (usbdev_dp_o),
         .cio_usb_dp_en_o        (usbdev_dp_en_o),
@@ -260,12 +272,14 @@ module chip_core #(
         .cio_usb_dn_en_o        (usbdev_dn_en_o),
         .usb_tx_se0_o           (usbdev_tx_se0_o),
         .usb_tx_d_o             (usbdev_tx_d_o),
+
         // Non-data I/O
         .cio_sense_i            (1'b0),
         .usb_dp_pullup_o        (usbdev_dp_pullup_o),
         .usb_dn_pullup_o        (usbdev_dn_pullup_o),
         .usb_rx_enable_o        (usbdev_rx_enable_o),
         .usb_tx_use_d_se0_o     (usbdev_tx_use_d_se0_o),
+
         // AON pinmux
         .usb_aon_suspend_req_o  (usbdev_aon_suspend_req_o),
         .usb_aon_wake_ack_o     (usbdev_aon_wake_ack_o),
@@ -273,27 +287,33 @@ module chip_core #(
         .usb_aon_sense_lost_i   (1'b0),
         .usb_aon_bus_not_idle_i (1'b0),
         .usb_aon_wake_detect_active_i (1'b0),
+
         // SOF reference
         .usb_ref_val_o          (usbdev_ref_val_o),
         .usb_ref_pulse_o        (usbdev_ref_pulse_o),
+
         // Register bus
         .bus_i                  (usbdev_bus_i_tie),
         .bus_o                  (usbdev_bus_o),
-        // RX FIFO polling indicator
+
+        // RX FIFO
         .rx_fifo_rvalid         (usbdev_rx_fifo_rvalid),
+
         // SRAM interface, inputs tied of
-        .ram_rdata_i            (32'h0),
-        .ram_rvalid_i           (1'b0),
+        .ram_rdata_i            (sram_rdata_o),
+        .ram_rvalid_i           (sram_req_i & ~sram_we_i),
         .ram_rerror_i           (2'h0),
-        .ram_req_o              (usbdev_ram_req_o),
-        .ram_we_o               (usbdev_ram_we_o),
-        .ram_addr_o             (usbdev_ram_addr_o),
-        .ram_wdata_o            (usbdev_ram_wdata_o),
-        .ram_wmask_o            (usbdev_ram_wmask_o),
+        .ram_req_o              (sram_req_i),
+        .ram_we_o               (sram_we_i),
+        .ram_addr_o             (sram_addr_i),
+        .ram_wdata_o            (sram_wdata_i),
+        .ram_wmask_o            (sram_wmask_i),
+
         // SW SRAM read por
         .sw_mem_a_rvalid        (usbdev_sw_mem_a_rvalid),
         .sw_mem_a_rerror        (usbdev_sw_mem_a_rerror),
         .sw_mem_a_rdata         (usbdev_sw_mem_a_rdata),
+
         // Interrupts
         .intr_pkt_received_o    (usbdev_intr_pkt_received),
         .intr_pkt_sent_o        (usbdev_intr_pkt_sent),
