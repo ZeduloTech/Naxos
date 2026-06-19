@@ -7,9 +7,9 @@
 //`include "prim_assert.sv"
 
 module usbdev_reg_top #(
-        parameter int SramAw = 9,
-        parameter int SramDw = 32,
-        parameter int SramDepth = 512
+        parameter int SramDw = 8,
+        parameter int SramDepth = 1024,
+        parameter int SramAw = $clog2(SramDepth)
 ) (
         input clk_i,
         input rst_ni,
@@ -64,9 +64,9 @@ module usbdev_reg_top #(
 
         // also check for spurious write enables
         logic reg_we_err;
-        logic [42:0] reg_we_check;
+        logic [30:0] reg_we_check;
         prim_reg_we_check #(
-                .OneHotWidth(43)
+                .OneHotWidth(31)
         ) u_prim_reg_we_check (
                 .clk_i(clk_i),
                 .rst_ni(rst_ni),
@@ -87,7 +87,8 @@ module usbdev_reg_top #(
         // Steering logic
         always_comb begin
                 // Override for SRAM region
-                if ((bus_i.bus_addr >= USBDEV_BUFFER_OFFSET) && (bus_i.bus_addr < (USBDEV_BUFFER_OFFSET + (SramDepth * 4)))) begin
+                if ((bus_i.bus_addr >= USBDEV_BUFFER_OFFSET) && 
+                        (bus_i.bus_addr < (USBDEV_BUFFER_OFFSET + SramDepth))) begin
                         reg_steer = 1'b0;
                 end else begin
                         reg_steer = 1'b1;
@@ -115,8 +116,8 @@ module usbdev_reg_top #(
         //assign to sram
         assign ram_req_o   = sram_we | sram_re;
         assign ram_we_o    = bus_i.bus_we;
-        assign ram_addr_o  = bus_i.bus_addr[SramAw+1:2];  // [10:2] for SramAw=9
-        assign ram_wdata_o = bus_i.bus_wdata;
+        assign ram_addr_o  = bus_i.bus_addr[SramAw-1:0];  // [9:0] for SramAw=10
+        assign ram_wdata_o = bus_i.bus_wdata[SramDw-1:0];
 
         // integrity error output is permanent and should be used for alert generation
         // register errors are transactional
@@ -236,12 +237,6 @@ module usbdev_reg_top #(
         logic ep_out_enable_enable_1_wd;
         logic ep_out_enable_enable_2_qs;
         logic ep_out_enable_enable_2_wd;
-        logic ep_out_enable_enable_3_qs;
-        logic ep_out_enable_enable_3_wd;
-        logic ep_out_enable_enable_4_qs;
-        logic ep_out_enable_enable_4_wd;
-        logic ep_out_enable_enable_5_qs;
-        logic ep_out_enable_enable_5_wd;
 
         //enable in endpoints
         logic ep_in_enable_we;
@@ -251,12 +246,6 @@ module usbdev_reg_top #(
         logic ep_in_enable_enable_1_wd;
         logic ep_in_enable_enable_2_qs;
         logic ep_in_enable_enable_2_wd;
-        logic ep_in_enable_enable_3_qs;
-        logic ep_in_enable_enable_3_wd;
-        logic ep_in_enable_enable_4_qs;
-        logic ep_in_enable_enable_4_wd;
-        logic ep_in_enable_enable_5_qs;
-        logic ep_in_enable_enable_5_wd;
 
         //idk what these are for
         logic usbstat_re;
@@ -271,11 +260,11 @@ module usbdev_reg_top #(
         logic usbstat_av_setup_full_qs;
         logic usbstat_rx_empty_qs;
         logic avoutbuffer_we;
-        logic [4:0] avoutbuffer_wd;
+        logic [3:0] avoutbuffer_wd;
         logic avsetupbuffer_we;
-        logic [4:0] avsetupbuffer_wd;
+        logic [3:0] avsetupbuffer_wd;
         logic rxfifo_re;
-        logic [4:0] rxfifo_buffer_qs;
+        logic [3:0] rxfifo_buffer_qs;
         logic [6:0] rxfifo_size_qs;
         logic rxfifo_setup_qs;
         logic [3:0] rxfifo_ep_qs;
@@ -288,12 +277,6 @@ module usbdev_reg_top #(
         logic rxenable_setup_setup_1_wd;
         logic rxenable_setup_setup_2_qs;
         logic rxenable_setup_setup_2_wd;
-        logic rxenable_setup_setup_3_qs;
-        logic rxenable_setup_setup_3_wd;
-        logic rxenable_setup_setup_4_qs;
-        logic rxenable_setup_setup_4_wd;
-        logic rxenable_setup_setup_5_qs;
-        logic rxenable_setup_setup_5_wd;
 
         //rxenable out
         logic rxenable_out_we;
@@ -303,12 +286,6 @@ module usbdev_reg_top #(
         logic rxenable_out_out_1_wd;
         logic rxenable_out_out_2_qs;
         logic rxenable_out_out_2_wd;
-        logic rxenable_out_out_3_qs;
-        logic rxenable_out_out_3_wd;
-        logic rxenable_out_out_4_qs;
-        logic rxenable_out_out_4_wd;
-        logic rxenable_out_out_5_qs;
-        logic rxenable_out_out_5_wd;
 
         //set nak out
         logic set_nak_out_we;
@@ -318,12 +295,6 @@ module usbdev_reg_top #(
         logic set_nak_out_enable_1_wd;
         logic set_nak_out_enable_2_qs;
         logic set_nak_out_enable_2_wd;
-        logic set_nak_out_enable_3_qs;
-        logic set_nak_out_enable_3_wd;
-        logic set_nak_out_enable_4_qs;
-        logic set_nak_out_enable_4_wd;
-        logic set_nak_out_enable_5_qs;
-        logic set_nak_out_enable_5_wd;
 
         //in_sent_we
          logic in_sent_we;
@@ -333,12 +304,6 @@ module usbdev_reg_top #(
         logic in_sent_sent_1_wd;
         logic in_sent_sent_2_qs;
         logic in_sent_sent_2_wd;
-        logic in_sent_sent_3_qs;
-        logic in_sent_sent_3_wd;
-        logic in_sent_sent_4_qs;
-        logic in_sent_sent_4_wd;
-        logic in_sent_sent_5_qs;
-        logic in_sent_sent_5_wd;
 
         //out_stall
         logic out_stall_we;
@@ -348,12 +313,6 @@ module usbdev_reg_top #(
         logic out_stall_endpoint_1_wd;
         logic out_stall_endpoint_2_qs;
         logic out_stall_endpoint_2_wd;
-        logic out_stall_endpoint_3_qs;
-        logic out_stall_endpoint_3_wd;
-        logic out_stall_endpoint_4_qs;
-        logic out_stall_endpoint_4_wd;
-        logic out_stall_endpoint_5_qs;
-        logic out_stall_endpoint_5_wd;
 
         //in_stall
         logic in_stall_we;
@@ -363,17 +322,11 @@ module usbdev_reg_top #(
         logic in_stall_endpoint_1_wd;
         logic in_stall_endpoint_2_qs;
         logic in_stall_endpoint_2_wd;
-        logic in_stall_endpoint_3_qs;
-        logic in_stall_endpoint_3_wd;
-        logic in_stall_endpoint_4_qs;
-        logic in_stall_endpoint_4_wd;
-        logic in_stall_endpoint_5_qs;
-        logic in_stall_endpoint_5_wd;
 
         //configin_0
         logic configin_0_we;
-        logic [4:0] configin_0_buffer_0_qs;
-        logic [4:0] configin_0_buffer_0_wd;
+        logic [3:0] configin_0_buffer_0_qs;
+        logic [3:0] configin_0_buffer_0_wd;
         logic [6:0] configin_0_size_0_qs;
         logic [6:0] configin_0_size_0_wd;
         logic configin_0_sending_0_qs;
@@ -385,8 +338,8 @@ module usbdev_reg_top #(
 
         //configin_1
         logic configin_1_we;
-        logic [4:0] configin_1_buffer_1_qs;
-        logic [4:0] configin_1_buffer_1_wd;
+        logic [3:0] configin_1_buffer_1_qs;
+        logic [3:0] configin_1_buffer_1_wd;
         logic [6:0] configin_1_size_1_qs;
         logic [6:0] configin_1_size_1_wd;
         logic configin_1_sending_1_qs;
@@ -398,8 +351,8 @@ module usbdev_reg_top #(
 
         //config 2
         logic configin_2_we;
-        logic [4:0] configin_2_buffer_2_qs;
-        logic [4:0] configin_2_buffer_2_wd;
+        logic [3:0] configin_2_buffer_2_qs;
+        logic [3:0] configin_2_buffer_2_wd;
         logic [6:0] configin_2_size_2_qs;
         logic [6:0] configin_2_size_2_wd;
         logic configin_2_sending_2_qs;
@@ -409,60 +362,21 @@ module usbdev_reg_top #(
         logic configin_2_rdy_2_qs;
         logic configin_2_rdy_2_wd;
 
-        //config 3
-        logic configin_3_we;
-        logic [4:0] configin_3_buffer_3_qs;
-        logic [4:0] configin_3_buffer_3_wd;
-        logic [6:0] configin_3_size_3_qs;
-        logic [6:0] configin_3_size_3_wd;
-        logic configin_3_sending_3_qs;
-        logic configin_3_sending_3_wd;
-        logic configin_3_pend_3_qs;
-        logic configin_3_pend_3_wd;
-        logic configin_3_rdy_3_qs;
-        logic configin_3_rdy_3_wd;
-
-        //config 4
-        logic configin_4_we;
-        logic [4:0] configin_4_buffer_4_qs;
-        logic [4:0] configin_4_buffer_4_wd;
-        logic [6:0] configin_4_size_4_qs;
-        logic [6:0] configin_4_size_4_wd;
-        logic configin_4_sending_4_qs;
-        logic configin_4_sending_4_wd;
-        logic configin_4_pend_4_qs;
-        logic configin_4_pend_4_wd;
-        logic configin_4_rdy_4_qs;
-        logic configin_4_rdy_4_wd;
-
-        //config 5
-        logic configin_5_we;
-        logic [4:0] configin_5_buffer_5_qs;
-        logic [4:0] configin_5_buffer_5_wd;
-        logic [6:0] configin_5_size_5_qs;
-        logic [6:0] configin_5_size_5_wd;
-        logic configin_5_sending_5_qs;
-        logic configin_5_sending_5_wd;
-        logic configin_5_pend_5_qs;
-        logic configin_5_pend_5_wd;
-        logic configin_5_rdy_5_qs;
-        logic configin_5_rdy_5_wd;
-
         //out toggle data
         logic out_data_toggle_re;
         logic out_data_toggle_we;
-        logic [5:0] out_data_toggle_status_qs;
-        logic [5:0] out_data_toggle_status_wd;
-        logic [5:0] out_data_toggle_mask_qs;
-        logic [5:0] out_data_toggle_mask_wd;
+        logic [2:0] out_data_toggle_status_qs;
+        logic [2:0] out_data_toggle_status_wd;
+        logic [2:0] out_data_toggle_mask_qs;
+        logic [2:0] out_data_toggle_mask_wd;
 
         //in toggle data
         logic in_data_toggle_re;
         logic in_data_toggle_we;
-        logic [5:0] in_data_toggle_status_qs;
-        logic [5:0] in_data_toggle_status_wd;
-        logic [5:0] in_data_toggle_mask_qs;
-        logic [5:0] in_data_toggle_mask_wd;
+        logic [2:0] in_data_toggle_status_qs;
+        logic [2:0] in_data_toggle_status_wd;
+        logic [2:0] in_data_toggle_mask_qs;
+        logic [2:0] in_data_toggle_mask_wd;
 
         //phys sense pins
         logic phy_pins_sense_re;
@@ -537,8 +451,8 @@ module usbdev_reg_top #(
         logic count_out_drop_avout_wd;
         logic count_out_ign_avsetup_qs;
         logic count_out_ign_avsetup_wd;
-        logic [5:0] count_out_endpoints_qs;
-        logic [5:0] count_out_endpoints_wd;
+        logic [2:0] count_out_endpoints_qs;
+        logic [2:0] count_out_endpoints_wd;
         logic count_out_rst_wd;
 
         //count in
@@ -551,14 +465,14 @@ module usbdev_reg_top #(
         logic count_in_nak_wd;
         logic count_in_timeout_qs;
         logic count_in_timeout_wd;
-        logic [5:0] count_in_endpoints_qs;
-        logic [5:0] count_in_endpoints_wd;
+        logic [2:0] count_in_endpoints_qs;
+        logic [2:0] count_in_endpoints_wd;
         logic count_in_rst_wd;
         logic count_nodata_in_re;
         logic count_nodata_in_we;
         logic [7:0] count_nodata_in_count_qs;
-        logic [5:0] count_nodata_in_endpoints_qs;
-        logic [5:0] count_nodata_in_endpoints_wd;
+        logic [2:0] count_nodata_in_endpoints_qs;
+        logic [2:0] count_nodata_in_endpoints_wd;
         logic count_nodata_in_rst_wd;
 
         //count errors
@@ -2109,87 +2023,6 @@ module usbdev_reg_top #(
                 .qs     (ep_out_enable_enable_2_qs)
         );
 
-        //   F[enable_3]: 3:3
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_ep_out_enable_enable_3 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (ep_out_enable_we),
-                .wd     (ep_out_enable_enable_3_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.ep_out_enable_3.q/* reg2hw.ep_out_enable[3].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (ep_out_enable_enable_3_qs)
-        );
-
-        //   F[enable_4]: 4:4
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_ep_out_enable_enable_4 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (ep_out_enable_we),
-                .wd     (ep_out_enable_enable_4_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.ep_out_enable_4.q/* reg2hw.ep_out_enable[4].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (ep_out_enable_enable_4_qs)
-        );
-
-        //   F[enable_5]: 5:5
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_ep_out_enable_enable_5 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (ep_out_enable_we),
-                .wd     (ep_out_enable_enable_5_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.ep_out_enable_5.q/* reg2hw.ep_out_enable[5].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (ep_out_enable_enable_5_qs)
-        );
-
         // Subregister 0 of Multireg ep_in_enable
         // R[ep_in_enable]: V(False)
         //   F[enable_0]: 0:0
@@ -2271,87 +2104,6 @@ module usbdev_reg_top #(
 
                 // to register interface (read)
                 .qs     (ep_in_enable_enable_2_qs)
-        );
-
-        //   F[enable_3]: 3:3
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_ep_in_enable_enable_3 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (ep_in_enable_we),
-                .wd     (ep_in_enable_enable_3_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.ep_in_enable_3.q/* reg2hw.ep_in_enable[3].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (ep_in_enable_enable_3_qs)
-        );
-
-        //   F[enable_4]: 4:4
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_ep_in_enable_enable_4 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (ep_in_enable_we),
-                .wd     (ep_in_enable_enable_4_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.ep_in_enable_4.q/* reg2hw.ep_in_enable[4].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (ep_in_enable_enable_4_qs)
-        );
-
-        //   F[enable_5]: 5:5
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_ep_in_enable_enable_5 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (ep_in_enable_we),
-                .wd     (ep_in_enable_enable_5_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.ep_in_enable_5.q/* reg2hw.ep_in_enable[5].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (ep_in_enable_enable_5_qs)
         );
 
         // R[usbstat]: V(True)
@@ -2510,7 +2262,7 @@ module usbdev_reg_top #(
         logic [0:0] avoutbuffer_flds_we;
         assign avoutbuffer_qe = &avoutbuffer_flds_we;
         prim_subreg_ext #(
-                .DW    (5)
+                .DW    (4)
         ) u_avoutbuffer (
                 .re     (1'b0),
                 .we     (avoutbuffer_we),
@@ -2530,7 +2282,7 @@ module usbdev_reg_top #(
         logic [0:0] avsetupbuffer_flds_we;
         assign avsetupbuffer_qe = &avsetupbuffer_flds_we;
         prim_subreg_ext #(
-                .DW    (5)
+                .DW    (4)
         ) u_avsetupbuffer (
                 .re     (1'b0),
                 .we     (avsetupbuffer_we),
@@ -2547,7 +2299,7 @@ module usbdev_reg_top #(
         // R[rxfifo]: V(True)
         //   F[buffer]: 4:0
         prim_subreg_ext #(
-                .DW    (5)
+                .DW    (4)
         ) u_rxfifo_buffer (
                 .re     (rxfifo_re),
                 .we     (1'b0),
@@ -2688,87 +2440,6 @@ module usbdev_reg_top #(
                 .qs     (rxenable_setup_setup_2_qs)
         );
 
-        //   F[setup_3]: 3:3
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_rxenable_setup_setup_3 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (rxenable_setup_we),
-                .wd     (rxenable_setup_setup_3_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.rxenable_setup_3.q/* reg2hw.rxenable_setup[3].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (rxenable_setup_setup_3_qs)
-        );
-
-        //   F[setup_4]: 4:4
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_rxenable_setup_setup_4 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (rxenable_setup_we),
-                .wd     (rxenable_setup_setup_4_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.rxenable_setup_4.q/* reg2hw.rxenable_setup[4].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (rxenable_setup_setup_4_qs)
-        );
-
-        //   F[setup_5]: 5:5
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_rxenable_setup_setup_5 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (rxenable_setup_we),
-                .wd     (rxenable_setup_setup_5_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.rxenable_setup_5.q/* reg2hw.rxenable_setup[5].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (rxenable_setup_setup_5_qs)
-        );
-
         // Subregister 0 of Multireg rxenable_out
         // R[rxenable_out]: V(False)
         //   F[out_0]: 0:0
@@ -2850,87 +2521,6 @@ module usbdev_reg_top #(
 
                 // to register interface (read)
                 .qs     (rxenable_out_out_2_qs)
-        );
-
-        //   F[out_3]: 3:3
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_rxenable_out_out_3 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (rxenable_out_we),
-                .wd     (rxenable_out_out_3_wd),
-
-                // from internal hardware
-                .de     (rxenable_out._3_de/*hw2reg.rxenable_out[3].de*/),
-                .d      (rxenable_out._3_d/*hw2reg.rxenable_out[3].d*/),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.rxenable_out_3.q/* reg2hw.rxenable_out[3].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (rxenable_out_out_3_qs)
-        );
-
-        //   F[out_4]: 4:4
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_rxenable_out_out_4 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (rxenable_out_we),
-                .wd     (rxenable_out_out_4_wd),
-
-                // from internal hardware
-                .de     (rxenable_out._4_de/*hw2reg.rxenable_out[4].de*/),
-                .d      (rxenable_out._4_d/*hw2reg.rxenable_out[4].d*/),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.rxenable_out_4.q/* reg2hw.rxenable_out[4].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (rxenable_out_out_4_qs)
-        );
-
-        //   F[out_5]: 5:5
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_rxenable_out_out_5 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (rxenable_out_we),
-                .wd     (rxenable_out_out_5_wd),
-
-                // from internal hardware
-                .de     (rxenable_out._5_de/*hw2reg.rxenable_out[5].de*/),
-                .d      (rxenable_out._5_d/*hw2reg.rxenable_out[5].d*/),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.rxenable_out_5.q/* reg2hw.rxenable_out[5].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (rxenable_out_out_5_qs)
         );
 
         // Subregister 0 of Multireg set_nak_out
@@ -3016,88 +2606,7 @@ module usbdev_reg_top #(
                 .qs     (set_nak_out_enable_2_qs)
         );
 
-        //   F[enable_3]: 3:3
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_set_nak_out_enable_3 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (set_nak_out_we),
-                .wd     (set_nak_out_enable_3_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.set_nak_out_3.q/* reg2hw.set_nak_out[3].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (set_nak_out_enable_3_qs)
-        );
-
-        //   F[enable_4]: 4:4
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_set_nak_out_enable_4 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (set_nak_out_we),
-                .wd     (set_nak_out_enable_4_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.set_nak_out_4.q/* reg2hw.set_nak_out[4].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (set_nak_out_enable_4_qs)
-        );
-
-        //   F[enable_5]: 5:5
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_set_nak_out_enable_5 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (set_nak_out_we),
-                .wd     (set_nak_out_enable_5_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.set_nak_out_5.q/* reg2hw.set_nak_out[5].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (set_nak_out_enable_5_qs)
-        );
-
-         // Subregister 0 of Multireg in_sent
+        // Subregister 0 of Multireg in_sent
         // R[in_sent]: V(False)
         //   F[sent_0]: 0:0
         prim_subreg #(
@@ -3178,87 +2687,6 @@ module usbdev_reg_top #(
 
                 // to register interface (read)
                 .qs     (in_sent_sent_2_qs)
-        );
-
-        //   F[sent_3]: 3:3
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessW1C),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_in_sent_sent_3 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (in_sent_we),
-                .wd     (in_sent_sent_3_wd),
-
-                // from internal hardware
-                .de     (in_sent._3_de/*hw2reg.in_sent[3].de*/),
-                .d      (in_sent._3_d/*hw2reg.in_sent[3].d*/),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.in_sent_3.q/* reg2hw.in_sent[3].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (in_sent_sent_3_qs)
-        );
-
-        //   F[sent_4]: 4:4
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessW1C),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_in_sent_sent_4 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (in_sent_we),
-                .wd     (in_sent_sent_4_wd),
-
-                // from internal hardware
-                .de     (in_sent._4_de/*hw2reg.in_sent[4].de*/),
-                .d      (in_sent._4_d/*hw2reg.in_sent[4].d*/),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.in_sent_4.q/* reg2hw.in_sent[4].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (in_sent_sent_4_qs)
-        );
-
-        //   F[sent_5]: 5:5
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessW1C),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_in_sent_sent_5 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (in_sent_we),
-                .wd     (in_sent_sent_5_wd),
-
-                // from internal hardware
-                .de     (in_sent._5_de/* hw2reg.in_sent[5].de */),
-                .d      (in_sent._5_d/* hw2reg.in_sent[5].d */),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.in_sent_5.q/* reg2hw.in_sent[5].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (in_sent_sent_5_qs)
         );
 
         // Subregister 0 of Multireg out_stall
@@ -3344,87 +2772,6 @@ module usbdev_reg_top #(
                 .qs     (out_stall_endpoint_2_qs)
         );
 
-        //   F[endpoint_3]: 3:3
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_out_stall_endpoint_3 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (out_stall_we),
-                .wd     (out_stall_endpoint_3_wd),
-
-                // from internal hardware
-                .de     (out_stall._3_de/* hw2reg.out_stall[3].de */),
-                .d      (out_stall._3_d/* hw2reg.out_stall[3].d */),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.out_stall_3.q/* reg2hw.out_stall[3].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (out_stall_endpoint_3_qs)
-        );
-
-        //   F[endpoint_4]: 4:4
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_out_stall_endpoint_4 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (out_stall_we),
-                .wd     (out_stall_endpoint_4_wd),
-
-                // from internal hardware
-                .de     (out_stall._4_de/* hw2reg.out_stall[4].de */),
-                .d      (out_stall._4_d/* hw2reg.out_stall[4].d */),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.out_stall_4.q/* reg2hw.out_stall[4].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (out_stall_endpoint_4_qs)
-        );
-
-        //   F[endpoint_5]: 5:5
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_out_stall_endpoint_5 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (out_stall_we),
-                .wd     (out_stall_endpoint_5_wd),
-
-                // from internal hardware
-                .de     (out_stall._5_de/* hw2reg.out_stall[5].de */),
-                .d      (out_stall._5_d/* hw2reg.out_stall[5].d */),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.out_stall_5.q/* reg2hw.out_stall[5].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (out_stall_endpoint_5_qs)
-        );
-
         // Subregister 0 of Multireg in_stall
         // R[in_stall]: V(False)
         //   F[endpoint_0]: 0:0
@@ -3507,93 +2854,12 @@ module usbdev_reg_top #(
                 // to register interface (read)
                 .qs     (in_stall_endpoint_2_qs)
         );
-
-        //   F[endpoint_3]: 3:3
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_in_stall_endpoint_3 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (in_stall_we),
-                .wd     (in_stall_endpoint_3_wd),
-
-                // from internal hardware
-                .de     (in_stall._3_de/* hw2reg.in_stall[3].de */),
-                .d      (in_stall._3_d/* hw2reg.in_stall[3].d */),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.in_stall_3.q/* reg2hw.in_stall[3].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (in_stall_endpoint_3_qs)
-        );
-
-        //   F[endpoint_4]: 4:4
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_in_stall_endpoint_4 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (in_stall_we),
-                .wd     (in_stall_endpoint_4_wd),
-
-                // from internal hardware
-                .de     (in_stall._4_de/* hw2reg.in_stall[4].de */),
-                .d      (in_stall._4_d/* hw2reg.in_stall[4].d */),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.in_stall_4.q/* reg2hw.in_stall[4].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (in_stall_endpoint_4_qs)
-        );
-
-        //   F[endpoint_5]: 5:5
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_in_stall_endpoint_5 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (in_stall_we),
-                .wd     (in_stall_endpoint_5_wd),
-
-                // from internal hardware
-                .de     (in_stall._5_de/* hw2reg.in_stall[5].de */),
-                .d      (in_stall._5_d/* hw2reg.in_stall[5].d */),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.in_stall_5.q/* reg2hw.in_stall[5].q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (in_stall_endpoint_5_qs)
-        );
         
         // Subregister 0 of Multireg configin
         // R[configin_0]: V(False)
         //   F[buffer_0]: 4:0
         prim_subreg #(
-                .DW      (5),
+                .DW      (4),
                 .SwAccess(prim_subreg_pkg::SwAccessRW),
                 .RESVAL  (5'h0),
                 .Mubi    (1'b0)
@@ -3731,7 +2997,7 @@ module usbdev_reg_top #(
         // R[configin_1]: V(False)
         //   F[buffer_1]: 4:0
         prim_subreg #(
-                .DW      (5),
+                .DW      (4),
                 .SwAccess(prim_subreg_pkg::SwAccessRW),
                 .RESVAL  (5'h0),
                 .Mubi    (1'b0)
@@ -3749,7 +3015,7 @@ module usbdev_reg_top #(
 
                 // to internal hardware
                 .qe     (),
-                .q      (reg2hw.configin_1.buffer.q/* reg2hw.configin[1].buffer.q */),
+                .q      (reg2hw.configin_1.buffer.q),
                 .ds     (),
 
                 // to register interface (read)
@@ -3776,7 +3042,7 @@ module usbdev_reg_top #(
 
                 // to internal hardware
                 .qe     (),
-                .q      (reg2hw.configin_1.size.q/* reg2hw.configin[1].size.q */),
+                .q      (reg2hw.configin_1.size.q),
                 .ds     (),
 
                 // to register interface (read)
@@ -3798,8 +3064,8 @@ module usbdev_reg_top #(
                 .wd     (configin_1_sending_1_wd),
 
                 // from internal hardware
-                .de     (configin._1_sending_de/* hw2reg.configin[1].sending.de */),
-                .d      (configin._1_sending_d/* hw2reg.configin[1].sending.d */),
+                .de     (configin._1_sending_de),
+                .d      (configin._1_sending_d),
 
                 // to internal hardware
                 .qe     (),
@@ -3868,7 +3134,7 @@ module usbdev_reg_top #(
         // R[configin_2]: V(False)
         //   F[buffer_2]: 4:0
         prim_subreg #(
-                .DW      (5),
+                .DW      (4),
                 .SwAccess(prim_subreg_pkg::SwAccessRW),
                 .RESVAL  (5'h0),
                 .Mubi    (1'b0)
@@ -3886,7 +3152,7 @@ module usbdev_reg_top #(
 
                 // to internal hardware
                 .qe     (),
-                .q      (reg2hw.configin_2.buffer.q/* reg2hw.configin[2].buffer.q */),
+                .q      (reg2hw.configin_2.buffer.q),
                 .ds     (),
 
                 // to register interface (read)
@@ -4001,424 +3267,13 @@ module usbdev_reg_top #(
                 .qs     (configin_2_rdy_2_qs)
         );
 
-        // Subregister 3 of Multireg configin
-        // R[configin_3]: V(False)
-        //   F[buffer_3]: 4:0
-        prim_subreg #(
-                .DW      (5),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (5'h0),
-                .Mubi    (1'b0)
-        ) u_configin_3_buffer_3 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (configin_3_we),
-                .wd     (configin_3_buffer_3_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.configin_3.buffer.q/* reg2hw.configin[3].buffer.q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (configin_3_buffer_3_qs)
-        );
-
-        //   F[size_3]: 14:8
-        prim_subreg #(
-                .DW      (7),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (7'h0),
-                .Mubi    (1'b0)
-        ) u_configin_3_size_3 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (configin_3_we),
-                .wd     (configin_3_size_3_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.configin_3.size.q/* reg2hw.configin[3].size.q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (configin_3_size_3_qs)
-        );
-
-        //   F[sending_3]: 29:29
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessW1C),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_configin_3_sending_3 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (configin_3_we),
-                .wd     (configin_3_sending_3_wd),
-
-                // from internal hardware
-                .de     (configin._3_sending_de/* hw2reg.configin[3].sending.de */),
-                .d      (configin._3_sending_d/* hw2reg.configin[3].sending.d */),
-
-                // to internal hardware
-                .qe     (),
-                .q      (),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (configin_3_sending_3_qs)
-        );
-
-        //   F[pend_3]: 30:30
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessW1C),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_configin_3_pend_3 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (configin_3_we),
-                .wd     (configin_3_pend_3_wd),
-
-                // from internal hardware
-                .de     (configin._3_pend_de/* hw2reg.configin[3].pend.de */),
-                .d      (configin._3_pend_d/* hw2reg.configin[3].pend.d */),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.configin_3.pend.q/* reg2hw.configin[3].pend.q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (configin_3_pend_3_qs)
-        );
-
-        //   F[rdy_3]: 31:31
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_configin_3_rdy_3 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (configin_3_we),
-                .wd     (configin_3_rdy_3_wd),
-
-                // from internal hardware
-                .de     (configin._3_rdy_de/* hw2reg.configin[3].rdy.de */),
-                .d      (configin._3_rdy_d/* hw2reg.configin[3].rdy.d */),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.configin_3.rdy.q/* reg2hw.configin[3].rdy.q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (configin_3_rdy_3_qs)
-        );
-
-        // Subregister 4 of Multireg configin
-        // R[configin_4]: V(False)
-        //   F[buffer_4]: 4:0
-        prim_subreg #(
-                .DW      (5),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (5'h0),
-                .Mubi    (1'b0)
-        ) u_configin_4_buffer_4 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (configin_4_we),
-                .wd     (configin_4_buffer_4_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.configin_4.buffer.q/* reg2hw.configin[4].buffer.q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (configin_4_buffer_4_qs)
-        );
-
-        //   F[size_4]: 14:8
-        prim_subreg #(
-                .DW      (7),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (7'h0),
-                .Mubi    (1'b0)
-        ) u_configin_4_size_4 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (configin_4_we),
-                .wd     (configin_4_size_4_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.configin_4.size.q/* reg2hw.configin[4].size.q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (configin_4_size_4_qs)
-        );
-
-        //   F[sending_4]: 29:29
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessW1C),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_configin_4_sending_4 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (configin_4_we),
-                .wd     (configin_4_sending_4_wd),
-
-                // from internal hardware
-                .de     (configin._4_sending_de/* hw2reg.configin[4].sending.de */),
-                .d      (configin._4_sending_d/* hw2reg.configin[4].sending.d */),
-
-                // to internal hardware
-                .qe     (),
-                .q      (),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (configin_4_sending_4_qs)
-        );
-
-        //   F[pend_4]: 30:30
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessW1C),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_configin_4_pend_4 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (configin_4_we),
-                .wd     (configin_4_pend_4_wd),
-
-                // from internal hardware
-                .de     (configin._4_pend_de/* hw2reg.configin[4].pend.de */),
-                .d      (configin._4_pend_d/* hw2reg.configin[4].pend.d */),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.configin_4.pend.q/* reg2hw.configin[4].pend.q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (configin_4_pend_4_qs)
-        );
-
-        //   F[rdy_4]: 31:31
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_configin_4_rdy_4 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (configin_4_we),
-                .wd     (configin_4_rdy_4_wd),
-
-                // from internal hardware
-                .de     (configin._4_rdy_de/* hw2reg.configin[4].rdy.de */),
-                .d      (configin._4_rdy_d/* hw2reg.configin[4].rdy.d */),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.configin_4.rdy.q/* reg2hw.configin[4].rdy.q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (configin_4_rdy_4_qs)
-        );
-
-        // Subregister 5 of Multireg configin
-        // R[configin_5]: V(False)
-        //   F[buffer_5]: 4:0
-        prim_subreg #(
-                .DW      (5),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (5'h0),
-                .Mubi    (1'b0)
-        ) u_configin_5_buffer_5 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (configin_5_we),
-                .wd     (configin_5_buffer_5_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.configin_5.buffer.q/* reg2hw.configin[5].buffer.q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (configin_5_buffer_5_qs)
-        );
-
-        //   F[size_5]: 14:8
-        prim_subreg #(
-                .DW      (7),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (7'h0),
-                .Mubi    (1'b0)
-        ) u_configin_5_size_5 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (configin_5_we),
-                .wd     (configin_5_size_5_wd),
-
-                // from internal hardware
-                .de     (1'b0),
-                .d      ('0),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.configin_5.size.q/* reg2hw.configin[5].size.q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (configin_5_size_5_qs)
-        );
-
-        //   F[sending_5]: 29:29
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessW1C),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_configin_5_sending_5 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (configin_5_we),
-                .wd     (configin_5_sending_5_wd),
-
-                // from internal hardware
-                .de     (configin._5_sending_de/* hw2reg.configin[5].sending.de */),
-                .d      (configin._5_sending_d/* hw2reg.configin[5].sending.d */),
-
-                // to internal hardware
-                .qe     (),
-                .q      (),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (configin_5_sending_5_qs)
-        );
-
-        //   F[pend_5]: 30:30
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessW1C),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_configin_5_pend_5 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (configin_5_we),
-                .wd     (configin_5_pend_5_wd),
-
-                // from internal hardware
-                .de     (configin._5_pend_de/* hw2reg.configin[5].pend.de */),
-                .d      (configin._5_pend_d/* hw2reg.configin[5].pend.d */),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.configin_5.pend.q/* reg2hw.configin[5].pend.q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (configin_5_pend_5_qs)
-        );
-
-        //   F[rdy_5]: 31:31
-        prim_subreg #(
-                .DW      (1),
-                .SwAccess(prim_subreg_pkg::SwAccessRW),
-                .RESVAL  (1'h0),
-                .Mubi    (1'b0)
-        ) u_configin_5_rdy_5 (
-                .clk_i   (clk_i),
-                .rst_ni  (rst_ni),
-
-                // from register interface
-                .we     (configin_5_we),
-                .wd     (configin_5_rdy_5_wd),
-
-                // from internal hardware
-                .de     (configin._5_rdy_de/* hw2reg.configin[5].rdy.de */),
-                .d      (configin._5_rdy_d/* hw2reg.configin[5].rdy.d */),
-
-                // to internal hardware
-                .qe     (),
-                .q      (reg2hw.configin_5.rdy.q/* reg2hw.configin[5].rdy.q */),
-                .ds     (),
-
-                // to register interface (read)
-                .qs     (configin_5_rdy_5_qs)
-        );
-
         // R[out_data_toggle]: V(True)
         logic out_data_toggle_qe;
         logic [1:0] out_data_toggle_flds_we;
         assign out_data_toggle_qe = &out_data_toggle_flds_we;
         //   F[status]: 11:0
         prim_subreg_ext #(
-                .DW    (12)
+                .DW    (3)
         ) u_out_data_toggle_status (
                 .re     (out_data_toggle_re),
                 .we     (out_data_toggle_we),
@@ -4434,7 +3289,7 @@ module usbdev_reg_top #(
 
         //   F[mask]: 27:16
         prim_subreg_ext #(
-                .DW    (12)
+                .DW    (3)
         ) u_out_data_toggle_mask (
                 .re     (out_data_toggle_re),
                 .we     (out_data_toggle_we),
@@ -4455,7 +3310,7 @@ module usbdev_reg_top #(
         assign in_data_toggle_qe = &in_data_toggle_flds_we;
         //   F[status]: 11:0
         prim_subreg_ext #(
-                .DW    (12)
+                .DW    (3)
         ) u_in_data_toggle_status (
                 .re     (in_data_toggle_re),
                 .we     (in_data_toggle_we),
@@ -4471,7 +3326,7 @@ module usbdev_reg_top #(
 
         //   F[mask]: 27:16
         prim_subreg_ext #(
-                .DW    (12)
+                .DW    (3)
         ) u_in_data_toggle_mask (
                 .re     (in_data_toggle_re),
                 .we     (in_data_toggle_we),
@@ -5359,7 +4214,7 @@ module usbdev_reg_top #(
 
         //   F[endpoints]: 27:16
         prim_subreg_ext #(
-                .DW    (12)
+                .DW    (3)
         ) u_count_out_endpoints (
                 .re     (count_out_re),
                 .we     (count_out_we),
@@ -5461,7 +4316,7 @@ module usbdev_reg_top #(
 
         //   F[endpoints]: 27:16
         prim_subreg_ext #(
-                .DW    (12)
+                .DW    (3)
         ) u_count_in_endpoints (
                 .re     (count_in_re),
                 .we     (count_in_we),
@@ -5647,7 +4502,7 @@ module usbdev_reg_top #(
         );
         assign reg2hw.count_errors.rst.qe = count_errors_qe;
 
-        logic [33:0] addr_hit;
+        logic [30:0] addr_hit;
         always_comb begin
                 addr_hit[ 0] = (reg_addr == USBDEV_INTR_STATE_OFFSET);
                 addr_hit[ 1] = (reg_addr == USBDEV_INTR_ENABLE_OFFSET);
@@ -5668,21 +4523,18 @@ module usbdev_reg_top #(
                 addr_hit[16] = (reg_addr == USBDEV_CONFIGIN_0_OFFSET);
                 addr_hit[17] = (reg_addr == USBDEV_CONFIGIN_1_OFFSET);
                 addr_hit[18] = (reg_addr == USBDEV_CONFIGIN_2_OFFSET);
-                addr_hit[19] = (reg_addr == USBDEV_CONFIGIN_3_OFFSET);
-                addr_hit[20] = (reg_addr == USBDEV_CONFIGIN_4_OFFSET);
-                addr_hit[21] = (reg_addr == USBDEV_CONFIGIN_5_OFFSET);
-                addr_hit[22] = (reg_addr == USBDEV_OUT_DATA_TOGGLE_OFFSET);
-                addr_hit[23] = (reg_addr == USBDEV_IN_DATA_TOGGLE_OFFSET);
-                addr_hit[24] = (reg_addr == USBDEV_PHY_PINS_SENSE_OFFSET);
-                addr_hit[25] = (reg_addr == USBDEV_PHY_PINS_DRIVE_OFFSET);
-                addr_hit[26] = (reg_addr == USBDEV_PHY_CONFIG_OFFSET);
-                addr_hit[27] = (reg_addr == USBDEV_WAKE_CONTROL_OFFSET);
-                addr_hit[28] = (reg_addr == USBDEV_WAKE_EVENTS_OFFSET);
-                addr_hit[29] = (reg_addr == USBDEV_FIFO_CTRL_OFFSET);
-                addr_hit[30] = (reg_addr == USBDEV_COUNT_OUT_OFFSET);
-                addr_hit[31] = (reg_addr == USBDEV_COUNT_IN_OFFSET);
-                addr_hit[32] = (reg_addr == USBDEV_COUNT_NODATA_IN_OFFSET);
-                addr_hit[33] = (reg_addr == USBDEV_COUNT_ERRORS_OFFSET);
+                addr_hit[19] = (reg_addr == USBDEV_OUT_DATA_TOGGLE_OFFSET);
+                addr_hit[20] = (reg_addr == USBDEV_IN_DATA_TOGGLE_OFFSET);
+                addr_hit[21] = (reg_addr == USBDEV_PHY_PINS_SENSE_OFFSET);
+                addr_hit[22] = (reg_addr == USBDEV_PHY_PINS_DRIVE_OFFSET);
+                addr_hit[23] = (reg_addr == USBDEV_PHY_CONFIG_OFFSET);
+                addr_hit[24] = (reg_addr == USBDEV_WAKE_CONTROL_OFFSET);
+                addr_hit[25] = (reg_addr == USBDEV_WAKE_EVENTS_OFFSET);
+                addr_hit[26] = (reg_addr == USBDEV_FIFO_CTRL_OFFSET);
+                addr_hit[27] = (reg_addr == USBDEV_COUNT_OUT_OFFSET);
+                addr_hit[28] = (reg_addr == USBDEV_COUNT_IN_OFFSET);
+                addr_hit[29] = (reg_addr == USBDEV_COUNT_NODATA_IN_OFFSET);
+                addr_hit[30] = (reg_addr == USBDEV_COUNT_ERRORS_OFFSET);
         end
 
         assign addrmiss = (reg_re || reg_we) ? ~|addr_hit : 1'b0 ;
@@ -5720,10 +4572,7 @@ module usbdev_reg_top #(
                         (addr_hit[27] & (|(USBDEV_PERMIT_27 & ~reg_be))) |
                         (addr_hit[28] & (|(USBDEV_PERMIT_28 & ~reg_be))) |
                         (addr_hit[29] & (|(USBDEV_PERMIT_29 & ~reg_be))) |
-                        (addr_hit[30] & (|(USBDEV_PERMIT_30 & ~reg_be))) |
-                        (addr_hit[31] & (|(USBDEV_PERMIT_31 & ~reg_be))) |
-                        (addr_hit[32] & (|(USBDEV_PERMIT_32 & ~reg_be))) |
-                        (addr_hit[33] & (|(USBDEV_PERMIT_33 & ~reg_be)))));
+                        (addr_hit[30] & (|(USBDEV_PERMIT_30 & ~reg_be))) ));
         end
 
         // Generate write-enables
@@ -5855,12 +4704,6 @@ module usbdev_reg_top #(
 
         assign ep_out_enable_enable_2_wd = reg_wdata[2];
 
-        assign ep_out_enable_enable_3_wd = reg_wdata[3];
-
-        assign ep_out_enable_enable_4_wd = reg_wdata[4];
-
-        assign ep_out_enable_enable_5_wd = reg_wdata[5];
-
         // IN Endpoints
         assign ep_in_enable_we = (addr_hit[5] & reg_we & !reg_error);
 
@@ -5870,22 +4713,15 @@ module usbdev_reg_top #(
 
         assign ep_in_enable_enable_2_wd = reg_wdata[2];
 
-        assign ep_in_enable_enable_3_wd = reg_wdata[3];
-
-        assign ep_in_enable_enable_4_wd = reg_wdata[4];
-
-        assign ep_in_enable_enable_5_wd = reg_wdata[5];
-
         // usb stats read
         assign usbstat_re = addr_hit[6] & reg_re & !reg_error;
 
         // Buffer Mngmt
         assign avoutbuffer_we = addr_hit[7] & reg_we & !reg_error;
+        assign avoutbuffer_wd = reg_wdata[3:0];
 
-        assign avoutbuffer_wd = reg_wdata[4:0];
         assign avsetupbuffer_we = addr_hit[8] & reg_we & !reg_error;
-
-        assign avsetupbuffer_wd = reg_wdata[4:0];
+        assign avsetupbuffer_wd = reg_wdata[3:0];
 
         // rxfifo read
         assign rxfifo_re = addr_hit[9] & reg_re & !reg_error;
@@ -5900,12 +4736,6 @@ module usbdev_reg_top #(
 
         assign rxenable_setup_setup_2_wd = reg_wdata[2];
 
-        assign rxenable_setup_setup_3_wd = reg_wdata[3];
-
-        assign rxenable_setup_setup_4_wd = reg_wdata[4];
-
-        assign rxenable_setup_setup_5_wd = reg_wdata[5];
-
         // (OUT FIFO)
         assign rxenable_out_we = (addr_hit[11] & reg_we & !reg_error);
 
@@ -5914,12 +4744,6 @@ module usbdev_reg_top #(
         assign rxenable_out_out_1_wd = reg_wdata[1];
 
         assign rxenable_out_out_2_wd = reg_wdata[2];
-
-        assign rxenable_out_out_3_wd = reg_wdata[3];
-
-        assign rxenable_out_out_4_wd = reg_wdata[4];
-
-        assign rxenable_out_out_5_wd = reg_wdata[5];
 
         // Endpoint Configuration
         // Set NAK
@@ -5931,12 +4755,6 @@ module usbdev_reg_top #(
 
         assign set_nak_out_enable_2_wd = reg_wdata[2];
 
-        assign set_nak_out_enable_3_wd = reg_wdata[3];
-
-        assign set_nak_out_enable_4_wd = reg_wdata[4];
-
-        assign set_nak_out_enable_5_wd = reg_wdata[5];
-
         // IN Sent
         assign in_sent_we = (addr_hit[13] & reg_we & !reg_error);
 
@@ -5945,12 +4763,6 @@ module usbdev_reg_top #(
         assign in_sent_sent_1_wd = reg_wdata[1];
 
         assign in_sent_sent_2_wd = reg_wdata[2];
-
-        assign in_sent_sent_3_wd = reg_wdata[3];
-
-        assign in_sent_sent_4_wd = reg_wdata[4];
-
-        assign in_sent_sent_5_wd = reg_wdata[5];
 
         // OUT Stall
         assign out_stall_we = (addr_hit[14] & reg_we & !reg_error);
@@ -5961,12 +4773,6 @@ module usbdev_reg_top #(
 
         assign out_stall_endpoint_2_wd = reg_wdata[2];
 
-        assign out_stall_endpoint_3_wd = reg_wdata[3];
-
-        assign out_stall_endpoint_4_wd = reg_wdata[4];
-
-        assign out_stall_endpoint_5_wd = reg_wdata[5];
-
         // IN Stall
         assign in_stall_we = (addr_hit[15] & reg_we & !reg_error);
 
@@ -5976,17 +4782,11 @@ module usbdev_reg_top #(
 
         assign in_stall_endpoint_2_wd = reg_wdata[2];
 
-        assign in_stall_endpoint_3_wd = reg_wdata[3];
-
-        assign in_stall_endpoint_4_wd = reg_wdata[4];
-
-        assign in_stall_endpoint_5_wd = reg_wdata[5];
-
         // Configure IN Endpoints
         // IN Endpoint 0
         assign configin_0_we = addr_hit[16] & reg_we & !reg_error;
 
-        assign configin_0_buffer_0_wd = reg_wdata[4:0];
+        assign configin_0_buffer_0_wd = reg_wdata[3:0];
 
         assign configin_0_size_0_wd = reg_wdata[14:8];
 
@@ -5999,7 +4799,7 @@ module usbdev_reg_top #(
         // IN Endpoint 1
         assign configin_1_we = addr_hit[17] & reg_we & !reg_error;
 
-        assign configin_1_buffer_1_wd = reg_wdata[4:0];
+        assign configin_1_buffer_1_wd = reg_wdata[3:0];
 
         assign configin_1_size_1_wd = reg_wdata[14:8];
 
@@ -6012,7 +4812,7 @@ module usbdev_reg_top #(
         // IN Endpoint 2
         assign configin_2_we = addr_hit[18] & reg_we & !reg_error;
 
-        assign configin_2_buffer_2_wd = reg_wdata[4:0];
+        assign configin_2_buffer_2_wd = reg_wdata[3:0];
 
         assign configin_2_size_2_wd = reg_wdata[14:8];
 
@@ -6022,64 +4822,22 @@ module usbdev_reg_top #(
 
         assign configin_2_rdy_2_wd = reg_wdata[31];
 
-        // IN Endpoint 3
-        assign configin_3_we = addr_hit[19] & reg_we & !reg_error;
-
-        assign configin_3_buffer_3_wd = reg_wdata[4:0];
-
-        assign configin_3_size_3_wd = reg_wdata[14:8];
-
-        assign configin_3_sending_3_wd = reg_wdata[29];
-
-        assign configin_3_pend_3_wd = reg_wdata[30];
-
-        assign configin_3_rdy_3_wd = reg_wdata[31];
-
-        // IN Endpoint 4
-        assign configin_4_we = addr_hit[20] & reg_we & !reg_error;
-
-        assign configin_4_buffer_4_wd = reg_wdata[4:0];
-
-        assign configin_4_size_4_wd = reg_wdata[14:8];
-
-        assign configin_4_sending_4_wd = reg_wdata[29];
-
-        assign configin_4_pend_4_wd = reg_wdata[30];
-
-        assign configin_4_rdy_4_wd = reg_wdata[31];
-
-        // IN Endpoint 5
-        assign configin_5_we = addr_hit[21] & reg_we & !reg_error;
-
-        assign configin_5_buffer_5_wd = reg_wdata[4:0];
-
-        assign configin_5_size_5_wd = reg_wdata[14:8];
-
-        assign configin_5_sending_5_wd = reg_wdata[29];
-
-        assign configin_5_pend_5_wd = reg_wdata[30];
-
-        assign configin_5_rdy_5_wd = reg_wdata[31];
-
         // Manage DATA0/DATA1 sequencing per endpoint
-        assign out_data_toggle_re = addr_hit[22] & reg_re & !reg_error;
-        assign out_data_toggle_we = addr_hit[22] & reg_we & !reg_error;
-
-        assign out_data_toggle_status_wd = reg_wdata[11:0];
-
+        assign out_data_toggle_re = addr_hit[19] & reg_re & !reg_error;
+        assign out_data_toggle_we = addr_hit[19] & reg_we & !reg_error;
+        assign out_data_toggle_status_wd = reg_wdata[2:0];
         assign out_data_toggle_mask_wd = reg_wdata[27:16];
-        assign in_data_toggle_re = addr_hit[23] & reg_re & !reg_error;
-        assign in_data_toggle_we = addr_hit[23] & reg_we & !reg_error;
 
-        assign in_data_toggle_status_wd = reg_wdata[11:0];
-
+        assign in_data_toggle_re = addr_hit[20] & reg_re & !reg_error;
+        assign in_data_toggle_we = addr_hit[20] & reg_we & !reg_error;
+        assign in_data_toggle_status_wd = reg_wdata[2:0];
         assign in_data_toggle_mask_wd = reg_wdata[27:16];
 
         // PHY Control
-        assign phy_pins_sense_re = addr_hit[24] & reg_re & !reg_error; // Read USB PHY pin states (RO)
+        assign phy_pins_sense_re = addr_hit[21] & reg_re & !reg_error; // Read USB PHY pin states (RO)
         
         // Directly control PHY pins when enabled (RW)
-        assign phy_pins_drive_we = addr_hit[25] & reg_we & !reg_error;
+        assign phy_pins_drive_we = addr_hit[22] & reg_we & !reg_error;
 
         assign phy_pins_drive_dp_o_wd = reg_wdata[0];
 
@@ -6100,7 +4858,7 @@ module usbdev_reg_top #(
         assign phy_pins_drive_en_wd = reg_wdata[16];
 
         // Configure PHY behavior
-        assign phy_config_we = addr_hit[26] & reg_we & !reg_error;
+        assign phy_config_we = addr_hit[23] & reg_we & !reg_error;
 
         assign phy_config_use_diff_rcvr_wd = reg_wdata[0]; // Use differential receiver
 
@@ -6115,11 +4873,11 @@ module usbdev_reg_top #(
         assign phy_config_tx_osc_test_mode_wd = reg_wdata[7];
 
         // wake control
-        assign wake_control_we = addr_hit[27] & reg_we & !reg_error;
+        assign wake_control_we = addr_hit[24] & reg_we & !reg_error;
 
         // FIFO Control
         // Software reset for FIFOs
-        assign fifo_ctrl_we = addr_hit[29] & reg_we & !reg_error;
+        assign fifo_ctrl_we = addr_hit[26] & reg_we & !reg_error;
 
         assign fifo_ctrl_avout_rst_wd = reg_wdata[0];
 
@@ -6128,51 +4886,34 @@ module usbdev_reg_top #(
         assign fifo_ctrl_rx_rst_wd = reg_wdata[2];
 
         // Status/Diagnostics
-        assign count_out_re = addr_hit[30] & reg_re & !reg_error;
-        assign count_out_we = addr_hit[30] & reg_we & !reg_error;
-
+        assign count_out_re = addr_hit[27] & reg_re & !reg_error;
+        assign count_out_we = addr_hit[27] & reg_we & !reg_error;
         assign count_out_datatog_out_wd = reg_wdata[12];
-
         assign count_out_drop_rx_wd = reg_wdata[13];
-
         assign count_out_drop_avout_wd = reg_wdata[14];
-
         assign count_out_ign_avsetup_wd = reg_wdata[15];
-
-        assign count_out_endpoints_wd = reg_wdata[27:16];
-
+        assign count_out_endpoints_wd = reg_wdata[21:16];//change in uploaded DRIVE otUSB.06
         assign count_out_rst_wd = reg_wdata[31];
 
-        assign count_in_re = addr_hit[31] & reg_re & !reg_error;
-        assign count_in_we = addr_hit[31] & reg_we & !reg_error;
-
+        assign count_in_re = addr_hit[28] & reg_re & !reg_error;
+        assign count_in_we = addr_hit[28] & reg_we & !reg_error;
         assign count_in_nodata_wd = reg_wdata[13];
-
         assign count_in_nak_wd = reg_wdata[14];
-
         assign count_in_timeout_wd = reg_wdata[15];
-
-        assign count_in_endpoints_wd = reg_wdata[27:16];
-
+        assign count_in_endpoints_wd = reg_wdata[21:16];//change in uploaded DRIVE otUSB.06
         assign count_in_rst_wd = reg_wdata[31];
 
-        assign count_nodata_in_re = addr_hit[32] & reg_re & !reg_error;
-        assign count_nodata_in_we = addr_hit[32] & reg_we & !reg_error;
-
-        assign count_nodata_in_endpoints_wd = reg_wdata[27:16];
-
+        assign count_nodata_in_re = addr_hit[29] & reg_re & !reg_error;
+        assign count_nodata_in_we = addr_hit[29] & reg_we & !reg_error;
+        assign count_nodata_in_endpoints_wd = reg_wdata[21:16];//change in uploaded DRIVE otUSB.06
         assign count_nodata_in_rst_wd = reg_wdata[31];
-        assign count_errors_re = addr_hit[33] & reg_re & !reg_error;
-        assign count_errors_we = addr_hit[33] & reg_we & !reg_error;
 
+        assign count_errors_re = addr_hit[30] & reg_re & !reg_error;
+        assign count_errors_we = addr_hit[30] & reg_we & !reg_error;
         assign count_errors_pid_invalid_wd = reg_wdata[27];
-
         assign count_errors_bitstuff_wd = reg_wdata[28];
-
         assign count_errors_crc16_wd = reg_wdata[29];
-
         assign count_errors_crc5_wd = reg_wdata[30];
-
         assign count_errors_rst_wd = reg_wdata[31];
 
         // Assign write-enables to checker logic vector.
@@ -6196,21 +4937,18 @@ module usbdev_reg_top #(
                 reg_we_check[16] = configin_0_we;
                 reg_we_check[17] = configin_1_we;
                 reg_we_check[18] = configin_2_we;
-                reg_we_check[19] = configin_3_we;
-                reg_we_check[20] = configin_4_we;
-                reg_we_check[21] = configin_5_we;
-                reg_we_check[22] = out_data_toggle_we;
-                reg_we_check[23] = in_data_toggle_we;
-                reg_we_check[24] = 1'b0;
-                reg_we_check[25] = phy_pins_drive_we;
-                reg_we_check[26] = phy_config_we;
-                reg_we_check[27] = wake_control_we;
-                reg_we_check[28] = 1'b0;
-                reg_we_check[29] = fifo_ctrl_we;
-                reg_we_check[30] = count_out_we;
-                reg_we_check[31] = count_in_we;
-                reg_we_check[32] = count_nodata_in_we;
-                reg_we_check[33] = count_errors_we;
+                reg_we_check[19] = out_data_toggle_we;
+                reg_we_check[20] = in_data_toggle_we;
+                reg_we_check[21] = 1'b0;
+                reg_we_check[22] = phy_pins_drive_we;
+                reg_we_check[23] = phy_config_we;
+                reg_we_check[24] = wake_control_we;
+                reg_we_check[25] = 1'b0;
+                reg_we_check[26] = fifo_ctrl_we;
+                reg_we_check[27] = count_out_we;
+                reg_we_check[28] = count_in_we;
+                reg_we_check[29] = count_nodata_in_we;
+                reg_we_check[30] = count_errors_we;
         end
 
         // Read data return
@@ -6291,18 +5029,12 @@ module usbdev_reg_top #(
                                 reg_rdata_next[0] = ep_out_enable_enable_0_qs;
                                 reg_rdata_next[1] = ep_out_enable_enable_1_qs;
                                 reg_rdata_next[2] = ep_out_enable_enable_2_qs;
-                                reg_rdata_next[3] = ep_out_enable_enable_3_qs;
-                                reg_rdata_next[4] = ep_out_enable_enable_4_qs;
-                                reg_rdata_next[5] = ep_out_enable_enable_5_qs;
                         end
 
                         addr_hit[5]: begin
                                 reg_rdata_next[0] = ep_in_enable_enable_0_qs;
                                 reg_rdata_next[1] = ep_in_enable_enable_1_qs;
                                 reg_rdata_next[2] = ep_in_enable_enable_2_qs;
-                                reg_rdata_next[3] = ep_in_enable_enable_3_qs;
-                                reg_rdata_next[4] = ep_in_enable_enable_4_qs;
-                                reg_rdata_next[5] = ep_in_enable_enable_5_qs;
                         end
 
                         addr_hit[6]: begin
@@ -6327,7 +5059,7 @@ module usbdev_reg_top #(
                         end
 
                         addr_hit[9]: begin
-                                reg_rdata_next[4:0] = rxfifo_buffer_qs;
+                                reg_rdata_next[3:0] = rxfifo_buffer_qs;
                                 reg_rdata_next[14:8] = rxfifo_size_qs;
                                 reg_rdata_next[19] = rxfifo_setup_qs;
                                 reg_rdata_next[23:20] = rxfifo_ep_qs;
@@ -6337,58 +5069,40 @@ module usbdev_reg_top #(
                                 reg_rdata_next[0] = rxenable_setup_setup_0_qs;
                                 reg_rdata_next[1] = rxenable_setup_setup_1_qs;
                                 reg_rdata_next[2] = rxenable_setup_setup_2_qs;
-                                reg_rdata_next[3] = rxenable_setup_setup_3_qs;
-                                reg_rdata_next[4] = rxenable_setup_setup_4_qs;
-                                reg_rdata_next[5] = rxenable_setup_setup_5_qs;
                         end
 
                         addr_hit[11]: begin
                                 reg_rdata_next[0] = rxenable_out_out_0_qs;
                                 reg_rdata_next[1] = rxenable_out_out_1_qs;
                                 reg_rdata_next[2] = rxenable_out_out_2_qs;
-                                reg_rdata_next[3] = rxenable_out_out_3_qs;
-                                reg_rdata_next[4] = rxenable_out_out_4_qs;
-                                reg_rdata_next[5] = rxenable_out_out_5_qs;
                         end
 
                         addr_hit[12]: begin
                                 reg_rdata_next[0] = set_nak_out_enable_0_qs;
                                 reg_rdata_next[1] = set_nak_out_enable_1_qs;
                                 reg_rdata_next[2] = set_nak_out_enable_2_qs;
-                                reg_rdata_next[3] = set_nak_out_enable_3_qs;
-                                reg_rdata_next[4] = set_nak_out_enable_4_qs;
-                                reg_rdata_next[5] = set_nak_out_enable_5_qs;
                         end
 
                         addr_hit[13]: begin
                                 reg_rdata_next[0] = in_sent_sent_0_qs;
                                 reg_rdata_next[1] = in_sent_sent_1_qs;
                                 reg_rdata_next[2] = in_sent_sent_2_qs;
-                                reg_rdata_next[3] = in_sent_sent_3_qs;
-                                reg_rdata_next[4] = in_sent_sent_4_qs;
-                                reg_rdata_next[5] = in_sent_sent_5_qs;
                         end
 
                         addr_hit[14]: begin
                                 reg_rdata_next[0] = out_stall_endpoint_0_qs;
                                 reg_rdata_next[1] = out_stall_endpoint_1_qs;
                                 reg_rdata_next[2] = out_stall_endpoint_2_qs;
-                                reg_rdata_next[3] = out_stall_endpoint_3_qs;
-                                reg_rdata_next[4] = out_stall_endpoint_4_qs;
-                                reg_rdata_next[5] = out_stall_endpoint_5_qs;
                         end
 
                         addr_hit[15]: begin
                                 reg_rdata_next[0] = in_stall_endpoint_0_qs;
                                 reg_rdata_next[1] = in_stall_endpoint_1_qs;
                                 reg_rdata_next[2] = in_stall_endpoint_2_qs;
-                                reg_rdata_next[3] = in_stall_endpoint_3_qs;
-                                reg_rdata_next[4] = in_stall_endpoint_4_qs;
-                                reg_rdata_next[5] = in_stall_endpoint_5_qs;
                         end
 
                         addr_hit[16]: begin
-                                reg_rdata_next[4:0] = configin_0_buffer_0_qs;
+                                reg_rdata_next[3:0] = configin_0_buffer_0_qs;
                                 reg_rdata_next[14:8] = configin_0_size_0_qs;
                                 reg_rdata_next[29] = configin_0_sending_0_qs;
                                 reg_rdata_next[30] = configin_0_pend_0_qs;
@@ -6396,7 +5110,7 @@ module usbdev_reg_top #(
                         end
 
                         addr_hit[17]: begin
-                                reg_rdata_next[4:0] = configin_1_buffer_1_qs;
+                                reg_rdata_next[3:0] = configin_1_buffer_1_qs;
                                 reg_rdata_next[14:8] = configin_1_size_1_qs;
                                 reg_rdata_next[29] = configin_1_sending_1_qs;
                                 reg_rdata_next[30] = configin_1_pend_1_qs;
@@ -6404,7 +5118,7 @@ module usbdev_reg_top #(
                         end
 
                         addr_hit[18]: begin
-                                reg_rdata_next[4:0] = configin_2_buffer_2_qs;
+                                reg_rdata_next[3:0] = configin_2_buffer_2_qs;
                                 reg_rdata_next[14:8] = configin_2_size_2_qs;
                                 reg_rdata_next[29] = configin_2_sending_2_qs;
                                 reg_rdata_next[30] = configin_2_pend_2_qs;
@@ -6412,40 +5126,16 @@ module usbdev_reg_top #(
                         end
 
                         addr_hit[19]: begin
-                                reg_rdata_next[4:0] = configin_3_buffer_3_qs;
-                                reg_rdata_next[14:8] = configin_3_size_3_qs;
-                                reg_rdata_next[29] = configin_3_sending_3_qs;
-                                reg_rdata_next[30] = configin_3_pend_3_qs;
-                                reg_rdata_next[31] = configin_3_rdy_3_qs;
-                        end
-
-                        addr_hit[20]: begin
-                                reg_rdata_next[4:0] = configin_4_buffer_4_qs;
-                                reg_rdata_next[14:8] = configin_4_size_4_qs;
-                                reg_rdata_next[29] = configin_4_sending_4_qs;
-                                reg_rdata_next[30] = configin_4_pend_4_qs;
-                                reg_rdata_next[31] = configin_4_rdy_4_qs;
-                        end
-
-                        addr_hit[21]: begin
-                                reg_rdata_next[4:0] = configin_5_buffer_5_qs;
-                                reg_rdata_next[14:8] = configin_5_size_5_qs;
-                                reg_rdata_next[29] = configin_5_sending_5_qs;
-                                reg_rdata_next[30] = configin_5_pend_5_qs;
-                                reg_rdata_next[31] = configin_5_rdy_5_qs;
-                        end
-
-                        addr_hit[22]: begin
-                                reg_rdata_next[11:0] = out_data_toggle_status_qs;
+                                reg_rdata_next[2:0] = out_data_toggle_status_qs;
                                 reg_rdata_next[27:16] = out_data_toggle_mask_qs;
                         end
 
-                        addr_hit[23]: begin
-                                reg_rdata_next[11:0] = in_data_toggle_status_qs;
+                        addr_hit[20]: begin
+                                reg_rdata_next[2:0] = in_data_toggle_status_qs;
                                 reg_rdata_next[27:16] = in_data_toggle_mask_qs;
                         end
 
-                        addr_hit[24]: begin
+                        addr_hit[21]: begin
                                 reg_rdata_next[0] = phy_pins_sense_rx_dp_i_qs;
                                 reg_rdata_next[1] = phy_pins_sense_rx_dn_i_qs;
                                 reg_rdata_next[2] = phy_pins_sense_rx_d_i_qs;
@@ -6457,7 +5147,7 @@ module usbdev_reg_top #(
                                 reg_rdata_next[16] = phy_pins_sense_pwr_sense_qs;
                         end
 
-                        addr_hit[25]: begin
+                        addr_hit[22]: begin
                                 reg_rdata_next[0] = phy_pins_drive_dp_o_qs;
                                 reg_rdata_next[1] = phy_pins_drive_dn_o_qs;
                                 reg_rdata_next[2] = phy_pins_drive_d_o_qs;
@@ -6469,7 +5159,7 @@ module usbdev_reg_top #(
                                 reg_rdata_next[16] = phy_pins_drive_en_qs;
                         end
 
-                        addr_hit[26]: begin
+                        addr_hit[23]: begin
                                 reg_rdata_next[0] = phy_config_use_diff_rcvr_qs;
                                 reg_rdata_next[1] = phy_config_tx_use_d_se0_qs;
                                 reg_rdata_next[2] = phy_config_eop_single_bit_qs;
@@ -6478,19 +5168,20 @@ module usbdev_reg_top #(
                                 reg_rdata_next[7] = phy_config_tx_osc_test_mode_qs;
                         end
 
-                        addr_hit[27]: begin
+                        addr_hit[24]: begin
                                 reg_rdata_next = DW'(wake_control_qs);
                         end
-                        addr_hit[28]: begin
+                        addr_hit[25]: begin
                                 reg_rdata_next = DW'(wake_events_qs);
                         end
-                        addr_hit[29]: begin
+
+                        addr_hit[26]: begin
                                 reg_rdata_next[0] = '0;
                                 reg_rdata_next[1] = '0;
                                 reg_rdata_next[2] = '0;
                         end
 
-                        addr_hit[30]: begin
+                        addr_hit[27]: begin
                                 reg_rdata_next[7:0] = count_out_count_qs;
                                 reg_rdata_next[12] = count_out_datatog_out_qs;
                                 reg_rdata_next[13] = count_out_drop_rx_qs;
@@ -6500,7 +5191,7 @@ module usbdev_reg_top #(
                                 reg_rdata_next[31] = '0;
                         end
 
-                        addr_hit[31]: begin
+                        addr_hit[28]: begin
                                 reg_rdata_next[7:0] = count_in_count_qs;
                                 reg_rdata_next[13] = count_in_nodata_qs;
                                 reg_rdata_next[14] = count_in_nak_qs;
@@ -6509,13 +5200,13 @@ module usbdev_reg_top #(
                                 reg_rdata_next[31] = '0;
                         end
 
-                        addr_hit[32]: begin
+                        addr_hit[29]: begin
                                 reg_rdata_next[7:0] = count_nodata_in_count_qs;
                                 reg_rdata_next[27:16] = count_nodata_in_endpoints_qs;
                                 reg_rdata_next[31] = '0;
                         end
 
-                        addr_hit[33]: begin
+                        addr_hit[30]: begin
                                 reg_rdata_next[7:0] = count_errors_count_qs;
                                 reg_rdata_next[27] = count_errors_pid_invalid_qs;
                                 reg_rdata_next[28] = count_errors_bitstuff_qs;
@@ -6540,10 +5231,10 @@ module usbdev_reg_top #(
         always_comb begin
                 reg_busy_sel = '0;
                 unique case (1'b1)
-                        addr_hit[27]: begin
+                        addr_hit[24]: begin
                                 reg_busy_sel = wake_control_busy;
                         end
-                        addr_hit[28]: begin
+                        addr_hit[25]: begin
                                 reg_busy_sel = wake_events_busy;
                         end
                         default: begin

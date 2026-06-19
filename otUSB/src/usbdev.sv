@@ -13,8 +13,8 @@ import bus_reg_pkg::*;
 
 module usbdev #(
         parameter int unsigned RcvrWakeTimeUs = 1,
-        parameter int SramDw = 32,
-        parameter int SramDepth = 512,
+        parameter int SramDw = 8,
+        parameter int SramDepth = 1024,
         parameter int SramAw = $clog2(SramDepth)
 ) (
         input  logic       clk_i,
@@ -79,7 +79,7 @@ module usbdev #(
         //SW RAM Request Output SRAM -> SW
         output logic              sw_mem_a_rvalid,
         output logic [1:0]        sw_mem_a_rerror,
-        output logic [31:0]       sw_mem_a_rdata,
+        output logic [SramDw-1:0] sw_mem_a_rdata,
 
         // Interrupts
         output logic       intr_pkt_received_o, // Packet received
@@ -114,7 +114,7 @@ module usbdev #(
         localparam int AVOutFifoDepth = 8;
 
         // RX fifo stores              buf# +  size(0-MaxPktSizeByte)  + EP# + Type
-        localparam int RXFifoWidth = NBufWidth + (1+SizeWidth) +  4  + 1;
+        localparam int RXFifoWidth = NBufWidth + (1+SizeWidth) +  4  + 1;//
         localparam int RXFifoDepth = 8;
         // derived parameter
         localparam int RXFifoDepthW = prim_util_pkg::vbits(RXFifoDepth+1);
@@ -351,10 +351,10 @@ module usbdev #(
                 .err_o     ()
         );
 
-        assign hw2reg.rxfifo.ep.d = rx_rdata[16:13];
-        assign hw2reg.rxfifo.setup.d = rx_rdata[12];
-        assign hw2reg.rxfifo.size.d = rx_rdata[11:5];
-        assign hw2reg.rxfifo.buffer.d = rx_rdata[4:0];
+        assign hw2reg.rxfifo.ep.d = rx_rdata[15:12];
+        assign hw2reg.rxfifo.setup.d = rx_rdata[11];
+        assign hw2reg.rxfifo.size.d = rx_rdata[10:4];
+        assign hw2reg.rxfifo.buffer.d = rx_rdata[3:0];
         assign event_pkt_received = rx_fifo_rvalid;
         
 
@@ -382,115 +382,65 @@ module usbdev #(
 
         // Endpoint enables
         always_comb begin : proc_map_ep_enable
-                /* for (int i = 0; i < NEndpoints; i++) begin
-                        ep_in_enable[i] = reg2hw.ep_in_enable[i].q;
-                        ep_out_enable[i] = reg2hw.ep_out_enable[i].q;
-                end */
                 //ep_in_enable
                 ep_in_enable[0] = reg2hw.ep_in_enable_0.q;
                 ep_in_enable[1] = reg2hw.ep_in_enable_1.q;
                 ep_in_enable[2] = reg2hw.ep_in_enable_2.q;
-                ep_in_enable[3] = reg2hw.ep_in_enable_3.q;
-                ep_in_enable[4] = reg2hw.ep_in_enable_4.q;
-                ep_in_enable[5] = reg2hw.ep_in_enable_5.q;
 
                 //ep_out_enable
                 ep_out_enable[0] = reg2hw.ep_out_enable_0.q;
                 ep_out_enable[1] = reg2hw.ep_out_enable_1.q;
                 ep_out_enable[2] = reg2hw.ep_out_enable_2.q;
-                ep_out_enable[3] = reg2hw.ep_out_enable_3.q;
-                ep_out_enable[4] = reg2hw.ep_out_enable_4.q;
-                ep_out_enable[5] = reg2hw.ep_out_enable_5.q;
         end
 
         // RX enables
         always_comb begin : proc_map_rxenable
-                /* for (int i = 0; i < NEndpoints; i++) begin
-                        //enable_setup[i] = reg2hw.rxenable_setup[i].q;
-                        //enable_out[i]   = reg2hw.rxenable_out[i].q;
-                        //ep_set_nak_on_out[i] = reg2hw.set_nak_out[i].q;
-                end */
                 //rxenable_setup
                 enable_setup[0] = reg2hw.rxenable_setup_0.q;
                 enable_setup[1] = reg2hw.rxenable_setup_1.q;
                 enable_setup[2] = reg2hw.rxenable_setup_2.q;
-                enable_setup[3] = reg2hw.rxenable_setup_3.q;
-                enable_setup[4] = reg2hw.rxenable_setup_4.q;
-                enable_setup[5] = reg2hw.rxenable_setup_5.q;
 
                 //enable_out
                 enable_out[0]   = reg2hw.rxenable_out_0.q;
                 enable_out[1]   = reg2hw.rxenable_out_1.q;
                 enable_out[2]   = reg2hw.rxenable_out_2.q;
-                enable_out[3]   = reg2hw.rxenable_out_3.q;
-                enable_out[4]   = reg2hw.rxenable_out_4.q;
-                enable_out[5]   = reg2hw.rxenable_out_5.q;
 
                 //ep_set_nak_on_out
                 ep_set_nak_on_out[0] = reg2hw.set_nak_out_0.q;
                 ep_set_nak_on_out[1] = reg2hw.set_nak_out_1.q;
                 ep_set_nak_on_out[2] = reg2hw.set_nak_out_2.q;
-                ep_set_nak_on_out[3] = reg2hw.set_nak_out_3.q;
-                ep_set_nak_on_out[4] = reg2hw.set_nak_out_4.q;
-                ep_set_nak_on_out[5] = reg2hw.set_nak_out_5.q;
         end
 
         // STALL for both directions
         always_comb begin : proc_map_stall
-                /* for (int i = 0; i < NEndpoints; i++) begin
-                        in_ep_stall[i] = reg2hw.in_stall[i];
-                        out_ep_stall[i] = reg2hw.out_stall[i];
-                end */
                 //in_ep_stall
                 in_ep_stall[0] = reg2hw.in_stall_0;
                 in_ep_stall[1] = reg2hw.in_stall_1;
                 in_ep_stall[2] = reg2hw.in_stall_2;
-                in_ep_stall[3] = reg2hw.in_stall_3;
-                in_ep_stall[4] = reg2hw.in_stall_4;
-                in_ep_stall[5] = reg2hw.in_stall_5;
 
                 //out_ep_stall
                 out_ep_stall[0] = reg2hw.out_stall_0;
                 out_ep_stall[1] = reg2hw.out_stall_1;
                 out_ep_stall[2] = reg2hw.out_stall_2;
-                out_ep_stall[3] = reg2hw.out_stall_3;
-                out_ep_stall[4] = reg2hw.out_stall_4;
-                out_ep_stall[5] = reg2hw.out_stall_5;
         end
 
         always_comb begin : proc_map_buf_size
-                /* for (int i = 0; i < NEndpoints; i++) begin
-                        in_buf[i]  = reg2hw.configin[i].buffer.q;
-                        in_size[i] = reg2hw.configin[i].size.q;
-                end */
                 //configin.buffer
                 in_buf[0]  = reg2hw.configin_0.buffer.q;
                 in_buf[1]  = reg2hw.configin_1.buffer.q;
                 in_buf[2]  = reg2hw.configin_2.buffer.q;
-                in_buf[3]  = reg2hw.configin_3.buffer.q;
-                in_buf[4]  = reg2hw.configin_4.buffer.q;
-                in_buf[5]  = reg2hw.configin_5.buffer.q;
 
                 //configin.size
                 in_size[0]  = reg2hw.configin_0.size.q;
                 in_size[1]  = reg2hw.configin_1.size.q;
                 in_size[2]  = reg2hw.configin_2.size.q;
-                in_size[3]  = reg2hw.configin_3.size.q;
-                in_size[4]  = reg2hw.configin_4.size.q;
-                in_size[5]  = reg2hw.configin_5.size.q;
         end
 
         always_comb begin : proc_map_rdy_reg2hw
-                /* for (int i = 0; i < NEndpoints; i++) begin
-                        in_rdy[i] = reg2hw.configin[i].rdy.q;
-                end */
                 //configin.rdy
                 in_rdy[0] = reg2hw.configin_0.rdy.q;
                 in_rdy[1] = reg2hw.configin_1.rdy.q;
                 in_rdy[2] = reg2hw.configin_2.rdy.q;
-                in_rdy[3] = reg2hw.configin_3.rdy.q;
-                in_rdy[4] = reg2hw.configin_4.rdy.q;
-                in_rdy[5] = reg2hw.configin_5.rdy.q;
         end
 
         // Captured properties of current IN buffer, maintained throughout packet collection as
@@ -538,10 +488,6 @@ module usbdev #(
         end
 
         always_comb begin : proc_map_sent
-                /* for (int i = 0; i < NEndpoints; i++) begin
-                        hw2reg.in_sent[i].de = set_sentbit[i];
-                        hw2reg.in_sent[i].d  = 1'b1;
-                end */
                 in_sent._0_de = set_sentbit[0];
                 in_sent._0_d  = 1'b1;
 
@@ -550,30 +496,16 @@ module usbdev #(
 
                 in_sent._2_de = set_sentbit[2];
                 in_sent._2_d  = 1'b1;
-
-                in_sent._3_de = set_sentbit[3];
-                in_sent._3_d  = 1'b1;
-
-                in_sent._4_de = set_sentbit[4];
-                in_sent._4_d  = 1'b1;
-
-                in_sent._5_de = set_sentbit[5];
-                in_sent._5_d  = 1'b1;
         end
 
         // This must be held level for the interrupt, so no sent packets are missed.
         logic sent_event_pending;
         always_comb begin
                 sent_event_pending = 1'b0;
-                /* for (int i = 0; i < NEndpoints; i++) begin
-                        sent_event_pending |= reg2hw.in_sent[i].q;
-                end */
+
                 sent_event_pending |= reg2hw.in_sent_0.q;
                 sent_event_pending |= reg2hw.in_sent_1.q;
                 sent_event_pending |= reg2hw.in_sent_2.q;
-                sent_event_pending |= reg2hw.in_sent_3.q;
-                sent_event_pending |= reg2hw.in_sent_4.q;
-                sent_event_pending |= reg2hw.in_sent_5.q;
         end
 
         // Clear of rxenable_out bit
@@ -589,10 +521,6 @@ module usbdev #(
         end
 
         always_comb begin
-                /* for (int i = 0; i < NEndpoints; i++) begin
-                        hw2reg.rxenable_out[i].d = 1'b0;
-                        hw2reg.rxenable_out[i].de = clear_rxenable_out[i];
-                end */
                 rxenable_out._0_d = 1'b0;
                 rxenable_out._0_de = clear_rxenable_out[0];
                 
@@ -601,15 +529,6 @@ module usbdev #(
                 
                 rxenable_out._2_d = 1'b0;
                 rxenable_out._2_de = clear_rxenable_out[2];
-                
-                rxenable_out._3_d = 1'b0;
-                rxenable_out._3_de = clear_rxenable_out[3];
-                
-                rxenable_out._4_d = 1'b0;
-                rxenable_out._4_de = clear_rxenable_out[4];
-                
-                rxenable_out._5_d = 1'b0;
-                rxenable_out._5_de = clear_rxenable_out[5];
         end
 
         always_comb begin
@@ -639,10 +558,6 @@ module usbdev #(
         // Clearing of rdy bit in response to successful IN packet transmission or packet cancellation
         // through link reset or SETUP packet reception.
         always_comb begin : proc_map_rdy_hw2reg
-                /* for (int i = 0; i < NEndpoints; i++) begin
-                        hw2reg.configin[i].rdy.de = clear_rdybit[i];
-                        hw2reg.configin[i].rdy.d  = 1'b0;
-                end */
                 configin._0_rdy_de = clear_rdybit[0];
                 configin._0_rdy_d  = 1'b0;
 
@@ -651,46 +566,23 @@ module usbdev #(
 
                 configin._2_rdy_de = clear_rdybit[2];
                 configin._2_rdy_d  = 1'b0;
-
-                configin._3_rdy_de = clear_rdybit[3];
-                configin._3_rdy_d  = 1'b0;
-
-                configin._4_rdy_de = clear_rdybit[4];
-                configin._4_rdy_d  = 1'b0;
-
-                configin._5_rdy_de = clear_rdybit[5];
-                configin._5_rdy_d  = 1'b0;
         end
 
         // Update the pending bit by copying the ready bit that is about to clear
         always_comb begin : proc_map_pend
-                /* for (int i = 0; i < NEndpoints; i++) begin
-                        hw2reg.configin[i].pend.de = update_pend[i];
-                        hw2reg.configin[i].pend.d  = reg2hw.configin[i].rdy.q | reg2hw.configin[i].pend.q;
-                end */
 
                 configin._0_pend_de = update_pend[0];
                 configin._1_pend_de = update_pend[1];
                 configin._2_pend_de = update_pend[2];
-                configin._3_pend_de = update_pend[3];
-                configin._4_pend_de = update_pend[4];
-                configin._5_pend_de = update_pend[5];
 
                 configin._0_pend_d  = reg2hw.configin_0.rdy.q | reg2hw.configin_0.pend.q;
                 configin._1_pend_d  = reg2hw.configin_1.rdy.q | reg2hw.configin_1.pend.q;
                 configin._2_pend_d  = reg2hw.configin_2.rdy.q | reg2hw.configin_2.pend.q;
-                configin._3_pend_d  = reg2hw.configin_3.rdy.q | reg2hw.configin_3.pend.q;
-                configin._4_pend_d  = reg2hw.configin_4.rdy.q | reg2hw.configin_4.pend.q;
-                configin._5_pend_d  = reg2hw.configin_5.rdy.q | reg2hw.configin_5.pend.q;
         end
 
         // Update the sending bit to mark that collection of the packet by the USB host has been
         // attempted and FW shall not attempt retraction of the packet.
         always_comb begin : proc_map_sending
-                /* for (int i = 0; i < NEndpoints; i++) begin
-                        hw2reg.configin[i].sending.de = set_sending[i] | set_sentbit[i] | update_pend[i];
-                        hw2reg.configin[i].sending.d  = ~set_sentbit[i] & ~update_pend[i];
-                end */
                 configin._0_sending_de = set_sending[0] | set_sentbit[0] | update_pend[0];
                 configin._0_sending_d  = ~set_sentbit[0] & ~update_pend[0];
 
@@ -699,15 +591,6 @@ module usbdev #(
 
                 configin._2_sending_de = set_sending[2] | set_sentbit[2] | update_pend[2];
                 configin._2_sending_d  = ~set_sentbit[2] & ~update_pend[2];
-
-                configin._3_sending_de = set_sending[3] | set_sentbit[3] | update_pend[3];
-                configin._3_sending_d  = ~set_sentbit[3] & ~update_pend[3];
-
-                configin._4_sending_de = set_sending[4] | set_sentbit[4] | update_pend[4];
-                configin._4_sending_d  = ~set_sentbit[4] & ~update_pend[4];
-
-                configin._5_sending_de = set_sending[5] | set_sentbit[5] | update_pend[5];
-                configin._5_sending_d  = ~set_sentbit[5] & ~update_pend[5];
         end
 
         ////////////////////////////////////////////////////////
@@ -867,17 +750,6 @@ module usbdev #(
 
         // Clear the stall flag when a SETUP is received
         always_comb begin : proc_stall_tieoff
-                /* for (int i = 0; i < NEndpoints; i++) begin
-                        hw2reg.in_stall[i].d  = 1'b0;
-                        hw2reg.out_stall[i].d  = 1'b0;
-                        if (setup_received && out_endpoint_val && out_endpoint == 4'(unsigned'(i))) begin
-                                hw2reg.out_stall[i].de = 1'b1;
-                                hw2reg.in_stall[i].de = 1'b1;
-                        end else begin
-                                hw2reg.out_stall[i].de = 1'b0;
-                                hw2reg.in_stall[i].de = 1'b0;
-                        end
-                end */
                 in_stall._0_d  = 1'b0;
                 out_stall._0_d  = 1'b0;
 
@@ -886,15 +758,6 @@ module usbdev #(
 
                 in_stall._2_d  = 1'b0;
                 out_stall._2_d  = 1'b0;
-
-                in_stall._3_d  = 1'b0;
-                out_stall._3_d  = 1'b0;
-
-                in_stall._4_d  = 1'b0;
-                out_stall._4_d  = 1'b0;
-
-                in_stall._5_d  = 1'b0;
-                out_stall._5_d  = 1'b0;
 
                 if (setup_received && out_endpoint_val && out_endpoint == 4'(unsigned'(0))) begin
                         in_stall._0_de  = 1'b1;
@@ -918,30 +781,6 @@ module usbdev #(
                 end else begin
                         in_stall._2_de  = 1'b0;
                         out_stall._2_de  = 1'b0;
-                end
-
-                if (setup_received && out_endpoint_val && out_endpoint == 4'(unsigned'(3))) begin
-                        in_stall._3_de  = 1'b1;
-                        out_stall._3_de  = 1'b1;
-                end else begin
-                        in_stall._3_de  = 1'b0;
-                        out_stall._3_de  = 1'b0;
-                end
-
-                if (setup_received && out_endpoint_val && out_endpoint == 4'(unsigned'(4))) begin
-                        in_stall._4_de  = 1'b1;
-                        out_stall._4_de  = 1'b1;
-                end else begin
-                        in_stall._4_de  = 1'b0;
-                        out_stall._4_de  = 1'b0;
-                end
-
-                if (setup_received && out_endpoint_val && out_endpoint == 4'(unsigned'(5))) begin
-                        in_stall._5_de  = 1'b1;
-                        out_stall._5_de  = 1'b1;
-                end else begin
-                        in_stall._5_de  = 1'b0;
-                        out_stall._5_de  = 1'b0;
                 end
         end
 
@@ -992,7 +831,7 @@ module usbdev #(
         end
 
         // Read responses.
-        assign sw_mem_a_rdata  = sw_mem_a_gnt ? ram_rdata_i : 32'h0;
+        assign sw_mem_a_rdata  =  sw_mem_a_gnt ? ram_rdata_i : 8'h0;
         assign sw_mem_a_rvalid  = ram_rvalid_i & !mem_rsteering & sw_mem_a_gnt;
         assign sw_mem_a_rerror  = {2{sw_mem_a_rvalid}} & ram_rerror_i;
 

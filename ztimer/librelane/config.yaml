@@ -1,0 +1,125 @@
+############################## General #################################
+
+meta:
+  version: 2
+  flow: Classic
+  substituting_steps:
+    Checker.YosysSynthChecks: null  # Fails due to multisources in OpenTitan IPs
+    Checker.SetupViolations: null   # Demoted to warning while timing is being >
+    Checker.MaxSlewViolations: null # Demoted to warning while timing is being >
+    Checker.MaxCapViolations: null
+
+DESIGN_NAME: rosc_spi_bridge
+VERILOG_FILES:
+- dir::../src/inverter.v
+- dir::../src/not_rosc.v
+- dir::../src/rosc_timer.v
+- dir::../src/spi_byte_sm.sv
+- dir::../src/spi_core.sv
+- dir::../src/spi_device.sv
+- dir::../src/rosc_spi_bridge.sv
+
+# 3.3V CELL LIBRABRY
+STD_CELL_LIBRARY: gf180mcu_as_sc_mcu7t3v3
+STD_CELL_LIBRARY_OPT: gf180mcu_as_sc_mcu7t3v3
+
+# Slightly smaller file sizes
+PRIMARY_GDSII_STREAMOUT_TOOL: klayout
+
+# USE_SLANG enabled
+USE_SLANG: True 
+
+# SDC files
+#PNR_SDC_FILE: dir::constraint.sdc
+#SIGNOFF_SDC_FILE: dir::constraint.sdc
+#FALLBACK_SDC: dir::constraint.sdc
+
+# Power / ground nets
+VDD_NETS:
+- VDD
+GND_NETS:
+- VSS
+
+# Clock
+CLOCK_PORT: clk_i
+CLOCK_PERIOD: 50 #20MHz
+
+############################ Floorplanning ############################# 
+
+FP_SIZING: absolute
+#DIE_AREA: [0, 0, 750, 750]
+#CORE_AREA: [50, 50, 700, 700]
+
+DIE_AREA: [0, 0, 185, 185]
+CORE_AREA: [10, 10, 175, 175]
+############################### Placement ############################## 
+
+PL_TARGET_DENSITY_PCT: 70 #55
+PL_KEEP_RESIZE_BELOW_OVERFLOW: 0
+PL_RESIZER_HOLD_SLACK_MARGIN: 0.7
+PL_RESIZER_SETUP_SLACK_MARGIN: 0.1 #0.2
+
+# Wire length control - critical for antenna prevention
+DESIGN_REPAIR_MAX_WIRE_LENGTH: 1000 #500
+DESIGN_REPAIR_MAX_SLEW_PCT: 25
+
+RUN_POST_CTS_RESIZER_TIMING: False
+DESIGN_REPAIR_BUFFER_INPUT_PORTS: False
+DESIGN_REPAIR_BUFFER_OUTPUT_PORTS: False
+
+############################### Routing ################################
+
+RUN_HEURISTIC_DIODE_INSERTION: False #True
+HEURISTIC_ANTENNA_THRESHOLD: 90 #50 #90
+GRT_ANTENNA_ITERS: 3 #50 #25
+DIODE_ON_PORTS: none #in
+RUN_ANTENNA_REPAIR: True
+
+# Routing adjustments to reduce congestion and long wires
+GRT_ALLOW_CONGESTION: False
+GRT_ADJUSTMENT: 0.3 #0.25
+
+GPL_CELL_PADDING: 0
+DPL_CELL_PADDING: 0
+############################### DRC/LVS ################################
+
+ERROR_ON_MAGIC_DRC: False
+
+# Prevent false positive DRC errors
+MAGIC_GDS_FLATGLOB:
+# For contacts
+- "*_CDNS_*"
+# COMP and Poly2 filler cells need to be 
+# flattened to form a "filltrans" layer
+- "COMP_fill_cell"
+- "Poly2_fill_cell"
+# Foundry provided SRAMs
+- "*$$*"
+- "M1_N*"
+- "M1_P*"
+- "M2_M1*"
+- "M3_M2*"
+- "nmos_5p0*"
+- "nmos_1p2*"
+- "pmos_5p0*"
+- "pmos_1p2*"
+- "via1_*"
+- "ypass_gate*"
+- "G_ring_*"
+# These additional cells must be flattened to get rid of 3.3V devices
+# (DUALGATE drawn into high-level cells)
+- "dcap_103*"
+- "din_*"
+- "mux821_*"
+- "rdummy_*"
+- "pmoscap_*"
+- "xdec_*"
+- "ypredec*"
+- "xpredec*"
+- "xdec8_*"
+- "prexdec_*"
+- "xdec32_*"
+- "sa_*"
+
+# Because we have multiple power pads for one power domain
+MAGIC_EXT_UNIQUE: notopports

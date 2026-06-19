@@ -8,6 +8,11 @@
 `timescale 1ns / 1ps
 
 module usb2sram (
+`ifdef USE_POWER_PINS
+    inout  wire VDD,
+    inout  wire VSS,
+`endif
+
     	input  logic clk_i,
     	input  logic rst_ni,
 
@@ -42,10 +47,10 @@ module usb2sram (
 	);
 
 `else
-   	gf180_ram_1024x8_wrapper u_sram (
+   (* keep, dont_touch *) gf180_ram_1024x8_wrapper u_sram_0 (
   	`ifdef USE_POWER_PINS
-        	.VDD (1'b1),
-        	.VSS (1'b0),
+        	.VDD (VDD),
+        	.VSS (VSS),
   	`endif
         	.CLK (clk_i),
         	.CEN (macro_cen),

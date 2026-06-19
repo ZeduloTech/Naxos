@@ -253,12 +253,28 @@ MACROS:
     vh:
       - dir::../otUSB/final/vh/usbdev.vh
     lib:
-      "*tt*" : [ dir::../otUSB/final/lib/nom_tt_025C_5v00/usbdev__nom_tt_025C_5v00.lib ]
-      "*ss*" : [ dir::../otUSB/final/lib/nom_ss_125C_4v50/usbdev__nom_ss_125C_4v50.lib ]
-      "*ff*" : [ dir::../otUSB/final/lib/nom_ff_n40C_5v50/usbdev__nom_ff_n40C_5v50.lib ]
+      "*tt*" : [ dir::../otUSB/final/lib/nom_tt_025C_3v30/usbdev__nom_tt_025C_3v30.lib ]
+      "*ss*" : [ dir::../otUSB/final/lib/nom_ss_125C_3v00/usbdev__nom_ss_125C_3v00.lib ]
+      "*ff*" : [ dir::../otUSB/final/lib/nom_ff_n40C_3v60/usbdev__nom_ff_n40C_3v60.lib ]
     instances:
       i_chip_core.u_usbdev:
         location: [2580, 1515] #900 
+        orientation: N
+
+  rosc_spi_bridge:
+    gds:
+      - dir::../ztimer/final/gds/rosc_spi_bridge.gds
+    lef:
+      - dir::../ztimer/final/lef/rosc_spi_bridge.lef
+    vh:
+      - dir::../ztimer/final/vh/rosc_spi_bridge.vh
+    lib:
+      "*tt*" : [ dir::../ztimer/final/lib/nom_tt_025C_3v30/rosc_spi_bridge__nom_tt_025C_3v30.lib ]
+      "*ff*" : [ dir::../ztimer/final/lib/min_ff_n40C_3v60/rosc_spi_bridge__min_ff_n40C_3v60.lib ]
+      "*ss*" : [ dir::../ztimer/final/lib/max_ss_125C_3v00/rosc_spi_bridge__max_ss_125C_3v00.lib ]
+    instances:
+      i_chip_core.u_ztimer:
+        location: [490, 1515]
         orientation: N
 
         

@@ -59,6 +59,10 @@ VERILOG_FILES:
 - dir::../src/usbdev_reg_top.sv
 - dir::../src/usbdev.sv
 
+# 3.3V CELL LIBRABRY
+STD_CELL_LIBRARY: gf180mcu_as_sc_mcu7t3v3
+STD_CELL_LIBRARY_OPT: gf180mcu_as_sc_mcu7t3v3
+
 # Slightly smaller file sizes
 PRIMARY_GDSII_STREAMOUT_TOOL: klayout
 
@@ -88,8 +92,8 @@ CLOCK_PERIOD: 20.83  # 48 MHz
 ############################ Floorplanning #############################
 
 FP_SIZING: absolute
-DIE_AREA: [0, 0, 500, 500]
-CORE_AREA: [25, 25, 475, 475]
+DIE_AREA: [0, 0, 470, 470]
+CORE_AREA: [30, 30, 450, 450]
 
 ############################### Placement ##############################
 
