@@ -1,0 +1,22 @@
+* Xyce testbench for t_latch
+.option TEMP=25
+
+VVSS VSS 0 0
+VVDD VDD 0 3.3
+
+
+.lib "/home/egor/proj/waferspace/gf180mcu-caravel-template/gf180mcu/gf180mcuD/libs.tech/xyce/design.xyce" typical
+.lib "/home/egor/proj/waferspace/gf180mcu-caravel-template/gf180mcu/gf180mcuD/libs.tech/xyce/sm141064.xyce" typical
+
+.include shrinking_tdc.spice
+
+VRST RST 0 PWL 0ps 0V 5080ps 0V 5090ps 3.3V
+VIN IN 0 PWL 0ps 3.3V 5100ps 3.3V 5110ps 0V 5610ps 0V 5620ps 3.3V 
+
+*Xshrink VSS VDD RST IN Q0 Q1 Q2 Q3 Q4 Q5 Q6 Q7 shrinking_tdc
+Xshrink VSS VDD RST IN Q0 Q1 Q2 Q3 Q4 Q5 Q6 Q7 Q8 Q9 Q10 Q11 Q12 shrinking_tdc
+
+.tran 5ps 5000n
+.IC V(Q0)=0 V(Q1)=0 V(Q2)=0 V(Q3)=0 V(Q4)=0 V(Q5)=0 V(Q6)=0 V(Q7)=0 V(Q8)=0 V(Q9)=0 V(Q10)=0 V(Q11)=0 V(Q12)=0 V(IN)=3.3V V(RST)=0
+
+.print tran format=csv file=shrink.csv V(IN) V(RST) V(Q*)

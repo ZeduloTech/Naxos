@@ -1,0 +1,2670 @@
+* NGSPICE file created from shrinking_tdc.ext - technology: gf180mcuD
+
+* Black-box entry subcircuit for gf180mcu_as_sc_mcu7t3v3__fill_1 abstract view
+.subckt gf180mcu_as_sc_mcu7t3v3__fill_1 VDD VNW VPW VSS
+.ends
+
+* Black-box entry subcircuit for gf180mcu_as_sc_mcu7t3v3__inv_2 abstract view
+.subckt gf180mcu_as_sc_mcu7t3v3__inv_2 VDD VNW VPW VSS Y A
+.ends
+
+* Black-box entry subcircuit for gf180mcu_as_sc_mcu7t3v3__fill_2 abstract view
+.subckt gf180mcu_as_sc_mcu7t3v3__fill_2 VDD VNW VPW VSS
+.ends
+
+* Black-box entry subcircuit for gf180mcu_as_sc_mcu7t3v3__buff_4 abstract view
+.subckt gf180mcu_as_sc_mcu7t3v3__buff_4 VDD VNW VPW VSS A Y
+.ends
+
+* Black-box entry subcircuit for gf180mcu_as_sc_mcu7t3v3__tap_2 abstract view
+.subckt gf180mcu_as_sc_mcu7t3v3__tap_2 VDD VSS
+.ends
+
+* Black-box entry subcircuit for gf180mcu_as_sc_mcu7t3v3__dfsrtp_2 abstract view
+.subckt gf180mcu_as_sc_mcu7t3v3__dfsrtp_2 VDD VNW VPW VSS CLK Q RN SN D
+.ends
+
+* Black-box entry subcircuit for gf180mcu_as_sc_mcu7t3v3__fillcap_8 abstract view
+.subckt gf180mcu_as_sc_mcu7t3v3__fillcap_8 VDD VNW VPW VSS
+.ends
+
+* Black-box entry subcircuit for gf180mcu_as_sc_mcu7t3v3__tieh_4 abstract view
+.subckt gf180mcu_as_sc_mcu7t3v3__tieh_4 VDD VNW VPW VSS ONE
+.ends
+
+* Black-box entry subcircuit for gf180mcu_as_sc_mcu7t3v3__fillcap_4 abstract view
+.subckt gf180mcu_as_sc_mcu7t3v3__fillcap_4 VDD VNW VPW VSS
+.ends
+
+* Black-box entry subcircuit for gf180mcu_as_sc_mcu7t3v3__nand2_4 abstract view
+.subckt gf180mcu_as_sc_mcu7t3v3__nand2_4 VDD VNW VPW VSS Y A B
+.ends
+
+.subckt shrinking_tdc VDD VSS count[0] count[10] count[11] count[12] count[1] count[2]
++ count[3] count[4] count[5] count[6] count[7] count[8] count[9] pulse_in rst_n
+XFILLER_22_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[581\].inv VDD VDD VSS VSS shrink.pulse_dly\[582\] shrink.pulse_dly\[581\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[596\].inv VDD VDD VSS VSS shrink.pulse_dly\[597\] shrink.pulse_dly\[596\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_26_63 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[534\].inv VDD VDD VSS VSS shrink.pulse_dly\[535\] shrink.pulse_dly\[534\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[549\].inv VDD VDD VSS VSS shrink.pulse_dly\[550\] shrink.pulse_dly\[549\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_9_137 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_12_98 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xcounter.dly\[12\].Qbuf VDD VDD VSS VSS counter.Q\[12\] count[12] gf180mcu_as_sc_mcu7t3v3__buff_4
+Xshrink.dly\[488\].inv VDD VDD VSS VSS shrink.pulse_dly\[489\] shrink.pulse_dly\[488\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[473\].inv VDD VDD VSS VSS shrink.pulse_dly\[474\] shrink.pulse_dly\[473\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[411\].inv VDD VDD VSS VSS shrink.pulse_dly\[412\] shrink.pulse_dly\[411\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[426\].inv VDD VDD VSS VSS shrink.pulse_dly\[427\] shrink.pulse_dly\[426\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[54\].inv VDD VDD VSS VSS shrink.pulse_dly\[55\] shrink.pulse_dly\[54\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[69\].inv VDD VDD VSS VSS shrink.pulse_dly\[70\] shrink.pulse_dly\[69\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_0_24 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[350\].inv VDD VDD VSS VSS shrink.pulse_dly\[351\] shrink.pulse_dly\[350\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[980\].inv VDD VDD VSS VSS shrink.pulse_dly\[981\] shrink.pulse_dly\[980\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[365\].inv VDD VDD VSS VSS shrink.pulse_dly\[366\] shrink.pulse_dly\[365\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[995\].inv VDD VDD VSS VSS shrink.pulse_dly\[996\] shrink.pulse_dly\[995\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[933\].inv VDD VDD VSS VSS shrink.pulse_dly\[934\] shrink.pulse_dly\[933\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[303\].inv VDD VDD VSS VSS shrink.pulse_dly\[304\] shrink.pulse_dly\[303\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[948\].inv VDD VDD VSS VSS shrink.pulse_dly\[949\] shrink.pulse_dly\[948\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1005\].inv VDD VDD VSS VSS shrink.pulse_dly\[1006\] shrink.pulse_dly\[1005\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[318\].inv VDD VDD VSS VSS shrink.pulse_dly\[319\] shrink.pulse_dly\[318\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_8_Left_36 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xcounter.dly\[4\].dff VDD VDD VSS VSS counter.ripple_clk\[4\] counter.Q\[4\] rst_n
++ _04_ counter.ripple_clk\[5\] gf180mcu_as_sc_mcu7t3v3__dfsrtp_2
+Xshrink.dly\[242\].inv VDD VDD VSS VSS shrink.pulse_dly\[243\] shrink.pulse_dly\[242\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[872\].inv VDD VDD VSS VSS shrink.pulse_dly\[873\] shrink.pulse_dly\[872\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[887\].inv VDD VDD VSS VSS shrink.pulse_dly\[888\] shrink.pulse_dly\[887\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[257\].inv VDD VDD VSS VSS shrink.pulse_dly\[258\] shrink.pulse_dly\[257\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[810\].inv VDD VDD VSS VSS shrink.pulse_dly\[811\] shrink.pulse_dly\[810\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[825\].inv VDD VDD VSS VSS shrink.pulse_dly\[826\] shrink.pulse_dly\[825\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_6_56 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_19_183 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_26_109 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XTAP_TAPCELL_ROW_27_126 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[181\].inv VDD VDD VSS VSS shrink.pulse_dly\[182\] shrink.pulse_dly\[181\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_25_142 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[196\].inv VDD VDD VSS VSS shrink.pulse_dly\[197\] shrink.pulse_dly\[196\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_15_65 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_25_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[134\].inv VDD VDD VSS VSS shrink.pulse_dly\[135\] shrink.pulse_dly\[134\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[764\].inv VDD VDD VSS VSS shrink.pulse_dly\[765\] shrink.pulse_dly\[764\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[149\].inv VDD VDD VSS VSS shrink.pulse_dly\[150\] shrink.pulse_dly\[149\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[779\].inv VDD VDD VSS VSS shrink.pulse_dly\[780\] shrink.pulse_dly\[779\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_18_104 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[702\].inv VDD VDD VSS VSS shrink.pulse_dly\[703\] shrink.pulse_dly\[702\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_16_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xcounter.dly\[9\].Qbuf VDD VDD VSS VSS counter.Q\[9\] count[9] gf180mcu_as_sc_mcu7t3v3__buff_4
+Xshrink.dly\[717\].inv VDD VDD VSS VSS shrink.pulse_dly\[718\] shrink.pulse_dly\[717\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_22_123 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_22_189 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XTAP_TAPCELL_ROW_24_118 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_13_112 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XPHY_EDGE_ROW_21_Left_49 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[641\].inv VDD VDD VSS VSS shrink.pulse_dly\[642\] shrink.pulse_dly\[641\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[656\].inv VDD VDD VSS VSS shrink.pulse_dly\[657\] shrink.pulse_dly\[656\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_12_88 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[609\].inv VDD VDD VSS VSS shrink.pulse_dly\[610\] shrink.pulse_dly\[609\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_10_104 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XTAP_TAPCELL_ROW_20_110 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XTAP_TAPCELL_ROW_8_78 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[580\].inv VDD VDD VSS VSS shrink.pulse_dly\[581\] shrink.pulse_dly\[580\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[595\].inv VDD VDD VSS VSS shrink.pulse_dly\[596\] shrink.pulse_dly\[595\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_12_Right_12 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[533\].inv VDD VDD VSS VSS shrink.pulse_dly\[534\] shrink.pulse_dly\[533\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[548\].inv VDD VDD VSS VSS shrink.pulse_dly\[549\] shrink.pulse_dly\[548\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_21_Right_21 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_23_65 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_3_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_2_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_0_14 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_0_36 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_9_89 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XPHY_EDGE_ROW_24_Left_52 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[472\].inv VDD VDD VSS VSS shrink.pulse_dly\[473\] shrink.pulse_dly\[472\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[487\].inv VDD VDD VSS VSS shrink.pulse_dly\[488\] shrink.pulse_dly\[487\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[410\].inv VDD VDD VSS VSS shrink.pulse_dly\[411\] shrink.pulse_dly\[410\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[425\].inv VDD VDD VSS VSS shrink.pulse_dly\[426\] shrink.pulse_dly\[425\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[53\].inv VDD VDD VSS VSS shrink.pulse_dly\[54\] shrink.pulse_dly\[53\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[68\].inv VDD VDD VSS VSS shrink.pulse_dly\[69\] shrink.pulse_dly\[68\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[364\].inv VDD VDD VSS VSS shrink.pulse_dly\[365\] shrink.pulse_dly\[364\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[994\].inv VDD VDD VSS VSS shrink.pulse_dly\[995\] shrink.pulse_dly\[994\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[379\].inv VDD VDD VSS VSS shrink.pulse_dly\[380\] shrink.pulse_dly\[379\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_6_68 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[932\].inv VDD VDD VSS VSS shrink.pulse_dly\[933\] shrink.pulse_dly\[932\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[302\].inv VDD VDD VSS VSS shrink.pulse_dly\[303\] shrink.pulse_dly\[302\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[947\].inv VDD VDD VSS VSS shrink.pulse_dly\[948\] shrink.pulse_dly\[947\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1004\].inv VDD VDD VSS VSS shrink.pulse_dly\[1005\] shrink.pulse_dly\[1004\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[317\].inv VDD VDD VSS VSS shrink.pulse_dly\[318\] shrink.pulse_dly\[317\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1019\].inv VDD VDD VSS VSS shrink.pulse_dly\[1020\] shrink.pulse_dly\[1019\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_6_Right_6 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xcounter.dly\[3\].dff VDD VDD VSS VSS counter.ripple_clk\[3\] counter.Q\[3\] rst_n
++ _03_ counter.ripple_clk\[4\] gf180mcu_as_sc_mcu7t3v3__dfsrtp_2
+XTAP_TAPCELL_ROW_27_127 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_25_176 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XTAP_TAPCELL_ROW_18_105 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[871\].inv VDD VDD VSS VSS shrink.pulse_dly\[872\] shrink.pulse_dly\[871\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[241\].inv VDD VDD VSS VSS shrink.pulse_dly\[242\] shrink.pulse_dly\[241\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[886\].inv VDD VDD VSS VSS shrink.pulse_dly\[887\] shrink.pulse_dly\[886\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[256\].inv VDD VDD VSS VSS shrink.pulse_dly\[257\] shrink.pulse_dly\[256\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_24_119 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[824\].inv VDD VDD VSS VSS shrink.pulse_dly\[825\] shrink.pulse_dly\[824\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[839\].inv VDD VDD VSS VSS shrink.pulse_dly\[840\] shrink.pulse_dly\[839\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[209\].inv VDD VDD VSS VSS shrink.pulse_dly\[210\] shrink.pulse_dly\[209\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_9_139 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_3_69 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[195\].inv VDD VDD VSS VSS shrink.pulse_dly\[196\] shrink.pulse_dly\[195\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[180\].inv VDD VDD VSS VSS shrink.pulse_dly\[181\] shrink.pulse_dly\[180\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_12_89 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[133\].inv VDD VDD VSS VSS shrink.pulse_dly\[134\] shrink.pulse_dly\[133\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[763\].inv VDD VDD VSS VSS shrink.pulse_dly\[764\] shrink.pulse_dly\[763\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[148\].inv VDD VDD VSS VSS shrink.pulse_dly\[149\] shrink.pulse_dly\[148\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[778\].inv VDD VDD VSS VSS shrink.pulse_dly\[779\] shrink.pulse_dly\[778\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[701\].inv VDD VDD VSS VSS shrink.pulse_dly\[702\] shrink.pulse_dly\[701\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_8_79 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[716\].inv VDD VDD VSS VSS shrink.pulse_dly\[717\] shrink.pulse_dly\[716\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_5_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_23_11 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_23_77 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[640\].inv VDD VDD VSS VSS shrink.pulse_dly\[641\] shrink.pulse_dly\[640\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[655\].inv VDD VDD VSS VSS shrink.pulse_dly\[656\] shrink.pulse_dly\[655\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_9_46 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[608\].inv VDD VDD VSS VSS shrink.pulse_dly\[609\] shrink.pulse_dly\[608\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[594\].inv VDD VDD VSS VSS shrink.pulse_dly\[595\] shrink.pulse_dly\[594\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[532\].inv VDD VDD VSS VSS shrink.pulse_dly\[533\] shrink.pulse_dly\[532\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[547\].inv VDD VDD VSS VSS shrink.pulse_dly\[548\] shrink.pulse_dly\[547\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[471\].inv VDD VDD VSS VSS shrink.pulse_dly\[472\] shrink.pulse_dly\[471\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[486\].inv VDD VDD VSS VSS shrink.pulse_dly\[487\] shrink.pulse_dly\[486\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[424\].inv VDD VDD VSS VSS shrink.pulse_dly\[425\] shrink.pulse_dly\[424\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_27_128 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[439\].inv VDD VDD VSS VSS shrink.pulse_dly\[440\] shrink.pulse_dly\[439\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_15_89 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_25_144 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_25_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[52\].inv VDD VDD VSS VSS shrink.pulse_dly\[53\] shrink.pulse_dly\[52\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[67\].inv VDD VDD VSS VSS shrink.pulse_dly\[68\] shrink.pulse_dly\[67\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_16_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_11_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_22_169 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[993\].inv VDD VDD VSS VSS shrink.pulse_dly\[994\] shrink.pulse_dly\[993\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[363\].inv VDD VDD VSS VSS shrink.pulse_dly\[364\] shrink.pulse_dly\[363\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[378\].inv VDD VDD VSS VSS shrink.pulse_dly\[379\] shrink.pulse_dly\[378\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[931\].inv VDD VDD VSS VSS shrink.pulse_dly\[932\] shrink.pulse_dly\[931\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_9_107 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_13_114 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[301\].inv VDD VDD VSS VSS shrink.pulse_dly\[302\] shrink.pulse_dly\[301\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[946\].inv VDD VDD VSS VSS shrink.pulse_dly\[947\] shrink.pulse_dly\[946\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1003\].inv VDD VDD VSS VSS shrink.pulse_dly\[1004\] shrink.pulse_dly\[1003\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[316\].inv VDD VDD VSS VSS shrink.pulse_dly\[317\] shrink.pulse_dly\[316\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1018\].inv VDD VDD VSS VSS shrink.pulse_dly\[1019\] shrink.pulse_dly\[1018\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[2\].dff VDD VDD VSS VSS counter.ripple_clk\[2\] counter.Q\[2\] rst_n
++ _02_ counter.ripple_clk\[3\] gf180mcu_as_sc_mcu7t3v3__dfsrtp_2
+Xshrink.dly\[870\].inv VDD VDD VSS VSS shrink.pulse_dly\[871\] shrink.pulse_dly\[870\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[240\].inv VDD VDD VSS VSS shrink.pulse_dly\[241\] shrink.pulse_dly\[240\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_5_121 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[885\].inv VDD VDD VSS VSS shrink.pulse_dly\[886\] shrink.pulse_dly\[885\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[255\].inv VDD VDD VSS VSS shrink.pulse_dly\[256\] shrink.pulse_dly\[255\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[823\].inv VDD VDD VSS VSS shrink.pulse_dly\[824\] shrink.pulse_dly\[823\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[838\].inv VDD VDD VSS VSS shrink.pulse_dly\[839\] shrink.pulse_dly\[838\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[208\].inv VDD VDD VSS VSS shrink.pulse_dly\[209\] shrink.pulse_dly\[208\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_0_38 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[194\].inv VDD VDD VSS VSS shrink.pulse_dly\[195\] shrink.pulse_dly\[194\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[132\].inv VDD VDD VSS VSS shrink.pulse_dly\[133\] shrink.pulse_dly\[132\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[762\].inv VDD VDD VSS VSS shrink.pulse_dly\[763\] shrink.pulse_dly\[762\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[147\].inv VDD VDD VSS VSS shrink.pulse_dly\[148\] shrink.pulse_dly\[147\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[777\].inv VDD VDD VSS VSS shrink.pulse_dly\[778\] shrink.pulse_dly\[777\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[700\].inv VDD VDD VSS VSS shrink.pulse_dly\[701\] shrink.pulse_dly\[700\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[715\].inv VDD VDD VSS VSS shrink.pulse_dly\[716\] shrink.pulse_dly\[715\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[654\].inv VDD VDD VSS VSS shrink.pulse_dly\[655\] shrink.pulse_dly\[654\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[669\].inv VDD VDD VSS VSS shrink.pulse_dly\[670\] shrink.pulse_dly\[669\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[607\].inv VDD VDD VSS VSS shrink.pulse_dly\[608\] shrink.pulse_dly\[607\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_19_142 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_19_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XTAP_TAPCELL_ROW_27_129 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[593\].inv VDD VDD VSS VSS shrink.pulse_dly\[594\] shrink.pulse_dly\[593\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_25_178 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[531\].inv VDD VDD VSS VSS shrink.pulse_dly\[532\] shrink.pulse_dly\[531\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_16_189 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fillcap_8
+Xshrink.dly\[546\].inv VDD VDD VSS VSS shrink.pulse_dly\[547\] shrink.pulse_dly\[546\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[470\].inv VDD VDD VSS VSS shrink.pulse_dly\[471\] shrink.pulse_dly\[470\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[485\].inv VDD VDD VSS VSS shrink.pulse_dly\[486\] shrink.pulse_dly\[485\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_8_174 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_12_192 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[423\].inv VDD VDD VSS VSS shrink.pulse_dly\[424\] shrink.pulse_dly\[423\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[438\].inv VDD VDD VSS VSS shrink.pulse_dly\[439\] shrink.pulse_dly\[438\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_10_129 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[51\].inv VDD VDD VSS VSS shrink.pulse_dly\[52\] shrink.pulse_dly\[51\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[66\].inv VDD VDD VSS VSS shrink.pulse_dly\[67\] shrink.pulse_dly\[66\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_5_100 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[19\].inv VDD VDD VSS VSS shrink.pulse_dly\[20\] shrink.pulse_dly\[19\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_5_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[992\].inv VDD VDD VSS VSS shrink.pulse_dly\[993\] shrink.pulse_dly\[992\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[362\].inv VDD VDD VSS VSS shrink.pulse_dly\[363\] shrink.pulse_dly\[362\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[377\].inv VDD VDD VSS VSS shrink.pulse_dly\[378\] shrink.pulse_dly\[377\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[930\].inv VDD VDD VSS VSS shrink.pulse_dly\[931\] shrink.pulse_dly\[930\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[300\].inv VDD VDD VSS VSS shrink.pulse_dly\[301\] shrink.pulse_dly\[300\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[945\].inv VDD VDD VSS VSS shrink.pulse_dly\[946\] shrink.pulse_dly\[945\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1002\].inv VDD VDD VSS VSS shrink.pulse_dly\[1003\] shrink.pulse_dly\[1002\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[315\].inv VDD VDD VSS VSS shrink.pulse_dly\[316\] shrink.pulse_dly\[315\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1017\].inv VDD VDD VSS VSS shrink.pulse_dly\[1018\] shrink.pulse_dly\[1017\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_2_125 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xcounter.dly\[1\].dff VDD VDD VSS VSS counter.ripple_clk\[1\] counter.Q\[1\] rst_n
++ _01_ counter.ripple_clk\[2\] gf180mcu_as_sc_mcu7t3v3__dfsrtp_2
+XTAP_TAPCELL_ROW_0_60 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[884\].inv VDD VDD VSS VSS shrink.pulse_dly\[885\] shrink.pulse_dly\[884\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[254\].inv VDD VDD VSS VSS shrink.pulse_dly\[255\] shrink.pulse_dly\[254\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[899\].inv VDD VDD VSS VSS shrink.pulse_dly\[900\] shrink.pulse_dly\[899\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[269\].inv VDD VDD VSS VSS shrink.pulse_dly\[270\] shrink.pulse_dly\[269\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[822\].inv VDD VDD VSS VSS shrink.pulse_dly\[823\] shrink.pulse_dly\[822\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[207\].inv VDD VDD VSS VSS shrink.pulse_dly\[208\] shrink.pulse_dly\[207\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[837\].inv VDD VDD VSS VSS shrink.pulse_dly\[838\] shrink.pulse_dly\[837\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_1_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[193\].inv VDD VDD VSS VSS shrink.pulse_dly\[194\] shrink.pulse_dly\[193\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[131\].inv VDD VDD VSS VSS shrink.pulse_dly\[132\] shrink.pulse_dly\[131\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[761\].inv VDD VDD VSS VSS shrink.pulse_dly\[762\] shrink.pulse_dly\[761\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[146\].inv VDD VDD VSS VSS shrink.pulse_dly\[147\] shrink.pulse_dly\[146\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[776\].inv VDD VDD VSS VSS shrink.pulse_dly\[777\] shrink.pulse_dly\[776\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_19_165 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[714\].inv VDD VDD VSS VSS shrink.pulse_dly\[715\] shrink.pulse_dly\[714\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[729\].inv VDD VDD VSS VSS shrink.pulse_dly\[730\] shrink.pulse_dly\[729\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[4\].Qbuf VDD VDD VSS VSS counter.Q\[4\] count[4] gf180mcu_as_sc_mcu7t3v3__buff_4
+XFILLER_15_14 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_25_157 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XPHY_EDGE_ROW_19_Right_19 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[653\].inv VDD VDD VSS VSS shrink.pulse_dly\[654\] shrink.pulse_dly\[653\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[668\].inv VDD VDD VSS VSS shrink.pulse_dly\[669\] shrink.pulse_dly\[668\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_22_116 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XPHY_EDGE_ROW_15_Left_43 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[606\].inv VDD VDD VSS VSS shrink.pulse_dly\[607\] shrink.pulse_dly\[606\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_8_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[592\].inv VDD VDD VSS VSS shrink.pulse_dly\[593\] shrink.pulse_dly\[592\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_12_26 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_12_37 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[530\].inv VDD VDD VSS VSS shrink.pulse_dly\[531\] shrink.pulse_dly\[530\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_0_Left_28 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[545\].inv VDD VDD VSS VSS shrink.pulse_dly\[546\] shrink.pulse_dly\[545\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_2_104 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[484\].inv VDD VDD VSS VSS shrink.pulse_dly\[485\] shrink.pulse_dly\[484\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_13_91 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[499\].inv VDD VDD VSS VSS shrink.pulse_dly\[500\] shrink.pulse_dly\[499\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[422\].inv VDD VDD VSS VSS shrink.pulse_dly\[423\] shrink.pulse_dly\[422\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[437\].inv VDD VDD VSS VSS shrink.pulse_dly\[438\] shrink.pulse_dly\[437\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[50\].inv VDD VDD VSS VSS shrink.pulse_dly\[51\] shrink.pulse_dly\[50\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_9_81 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[65\].inv VDD VDD VSS VSS shrink.pulse_dly\[66\] shrink.pulse_dly\[65\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[18\].inv VDD VDD VSS VSS shrink.pulse_dly\[19\] shrink.pulse_dly\[18\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_3_Left_31 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[991\].inv VDD VDD VSS VSS shrink.pulse_dly\[992\] shrink.pulse_dly\[991\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[361\].inv VDD VDD VSS VSS shrink.pulse_dly\[362\] shrink.pulse_dly\[361\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[376\].inv VDD VDD VSS VSS shrink.pulse_dly\[377\] shrink.pulse_dly\[376\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[314\].inv VDD VDD VSS VSS shrink.pulse_dly\[315\] shrink.pulse_dly\[314\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[944\].inv VDD VDD VSS VSS shrink.pulse_dly\[945\] shrink.pulse_dly\[944\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1001\].inv VDD VDD VSS VSS shrink.pulse_dly\[1002\] shrink.pulse_dly\[1001\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[329\].inv VDD VDD VSS VSS shrink.pulse_dly\[330\] shrink.pulse_dly\[329\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1016\].inv VDD VDD VSS VSS shrink.pulse_dly\[1017\] shrink.pulse_dly\[1016\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[959\].inv VDD VDD VSS VSS shrink.pulse_dly\[960\] shrink.pulse_dly\[959\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[0\].dff VDD VDD VSS VSS counter.clk counter.Q\[0\] rst_n _10_ counter.ripple_clk\[1\]
++ gf180mcu_as_sc_mcu7t3v3__dfsrtp_2
+XFILLER_19_144 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_19_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[883\].inv VDD VDD VSS VSS shrink.pulse_dly\[884\] shrink.pulse_dly\[883\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[253\].inv VDD VDD VSS VSS shrink.pulse_dly\[254\] shrink.pulse_dly\[253\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[898\].inv VDD VDD VSS VSS shrink.pulse_dly\[899\] shrink.pulse_dly\[898\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[268\].inv VDD VDD VSS VSS shrink.pulse_dly\[269\] shrink.pulse_dly\[268\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[206\].inv VDD VDD VSS VSS shrink.pulse_dly\[207\] shrink.pulse_dly\[206\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[821\].inv VDD VDD VSS VSS shrink.pulse_dly\[822\] shrink.pulse_dly\[821\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_25_103 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[836\].inv VDD VDD VSS VSS shrink.pulse_dly\[837\] shrink.pulse_dly\[836\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[192\].inv VDD VDD VSS VSS shrink.pulse_dly\[193\] shrink.pulse_dly\[192\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[130\].inv VDD VDD VSS VSS shrink.pulse_dly\[131\] shrink.pulse_dly\[130\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[760\].inv VDD VDD VSS VSS shrink.pulse_dly\[761\] shrink.pulse_dly\[760\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[145\].inv VDD VDD VSS VSS shrink.pulse_dly\[146\] shrink.pulse_dly\[145\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_13_139 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[775\].inv VDD VDD VSS VSS shrink.pulse_dly\[776\] shrink.pulse_dly\[775\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[713\].inv VDD VDD VSS VSS shrink.pulse_dly\[714\] shrink.pulse_dly\[713\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[728\].inv VDD VDD VSS VSS shrink.pulse_dly\[729\] shrink.pulse_dly\[728\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_8_132 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_12_172 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_8_165 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_8_187 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[652\].inv VDD VDD VSS VSS shrink.pulse_dly\[653\] shrink.pulse_dly\[652\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[667\].inv VDD VDD VSS VSS shrink.pulse_dly\[668\] shrink.pulse_dly\[667\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[605\].inv VDD VDD VSS VSS shrink.pulse_dly\[606\] shrink.pulse_dly\[605\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_23_26 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XTAP_TAPCELL_ROW_13_92 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[591\].inv VDD VDD VSS VSS shrink.pulse_dly\[592\] shrink.pulse_dly\[591\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_9_82 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[544\].inv VDD VDD VSS VSS shrink.pulse_dly\[545\] shrink.pulse_dly\[544\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[559\].inv VDD VDD VSS VSS shrink.pulse_dly\[560\] shrink.pulse_dly\[559\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_18_37 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[483\].inv VDD VDD VSS VSS shrink.pulse_dly\[484\] shrink.pulse_dly\[483\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[498\].inv VDD VDD VSS VSS shrink.pulse_dly\[499\] shrink.pulse_dly\[498\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[421\].inv VDD VDD VSS VSS shrink.pulse_dly\[422\] shrink.pulse_dly\[421\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[436\].inv VDD VDD VSS VSS shrink.pulse_dly\[437\] shrink.pulse_dly\[436\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[64\].inv VDD VDD VSS VSS shrink.pulse_dly\[65\] shrink.pulse_dly\[64\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[79\].inv VDD VDD VSS VSS shrink.pulse_dly\[80\] shrink.pulse_dly\[79\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[17\].inv VDD VDD VSS VSS shrink.pulse_dly\[18\] shrink.pulse_dly\[17\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_25_159 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[990\].inv VDD VDD VSS VSS shrink.pulse_dly\[991\] shrink.pulse_dly\[990\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[360\].inv VDD VDD VSS VSS shrink.pulse_dly\[361\] shrink.pulse_dly\[360\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_1_Right_1 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[375\].inv VDD VDD VSS VSS shrink.pulse_dly\[376\] shrink.pulse_dly\[375\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[313\].inv VDD VDD VSS VSS shrink.pulse_dly\[314\] shrink.pulse_dly\[313\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[943\].inv VDD VDD VSS VSS shrink.pulse_dly\[944\] shrink.pulse_dly\[943\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1000\].inv VDD VDD VSS VSS shrink.pulse_dly\[1001\] shrink.pulse_dly\[1000\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[958\].inv VDD VDD VSS VSS shrink.pulse_dly\[959\] shrink.pulse_dly\[958\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[328\].inv VDD VDD VSS VSS shrink.pulse_dly\[329\] shrink.pulse_dly\[328\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1015\].inv VDD VDD VSS VSS shrink.pulse_dly\[1016\] shrink.pulse_dly\[1015\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_22_107 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_22_118 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_7_72 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_26_37 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[882\].inv VDD VDD VSS VSS shrink.pulse_dly\[883\] shrink.pulse_dly\[882\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[252\].inv VDD VDD VSS VSS shrink.pulse_dly\[253\] shrink.pulse_dly\[252\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[897\].inv VDD VDD VSS VSS shrink.pulse_dly\[898\] shrink.pulse_dly\[897\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_8_177 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[267\].inv VDD VDD VSS VSS shrink.pulse_dly\[268\] shrink.pulse_dly\[267\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[205\].inv VDD VDD VSS VSS shrink.pulse_dly\[206\] shrink.pulse_dly\[205\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[820\].inv VDD VDD VSS VSS shrink.pulse_dly\[821\] shrink.pulse_dly\[820\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[835\].inv VDD VDD VSS VSS shrink.pulse_dly\[836\] shrink.pulse_dly\[835\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_8_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[191\].inv VDD VDD VSS VSS shrink.pulse_dly\[192\] shrink.pulse_dly\[191\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[144\].inv VDD VDD VSS VSS shrink.pulse_dly\[145\] shrink.pulse_dly\[144\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[159\].inv VDD VDD VSS VSS shrink.pulse_dly\[160\] shrink.pulse_dly\[159\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[774\].inv VDD VDD VSS VSS shrink.pulse_dly\[775\] shrink.pulse_dly\[774\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[712\].inv VDD VDD VSS VSS shrink.pulse_dly\[713\] shrink.pulse_dly\[712\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[789\].inv VDD VDD VSS VSS shrink.pulse_dly\[790\] shrink.pulse_dly\[789\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[727\].inv VDD VDD VSS VSS shrink.pulse_dly\[728\] shrink.pulse_dly\[727\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_23_16 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_13_60 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[651\].inv VDD VDD VSS VSS shrink.pulse_dly\[652\] shrink.pulse_dly\[651\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[666\].inv VDD VDD VSS VSS shrink.pulse_dly\[667\] shrink.pulse_dly\[666\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[604\].inv VDD VDD VSS VSS shrink.pulse_dly\[605\] shrink.pulse_dly\[604\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[619\].inv VDD VDD VSS VSS shrink.pulse_dly\[620\] shrink.pulse_dly\[619\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+X_25_ VDD VDD VSS VSS _11_ gf180mcu_as_sc_mcu7t3v3__tieh_4
+XTAP_TAPCELL_ROW_10_83 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[590\].inv VDD VDD VSS VSS shrink.pulse_dly\[591\] shrink.pulse_dly\[590\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[558\].inv VDD VDD VSS VSS shrink.pulse_dly\[559\] shrink.pulse_dly\[558\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[543\].inv VDD VDD VSS VSS shrink.pulse_dly\[544\] shrink.pulse_dly\[543\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_6_73 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_15_28 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_25_116 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_16_127 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_16_138 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[482\].inv VDD VDD VSS VSS shrink.pulse_dly\[483\] shrink.pulse_dly\[482\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[420\].inv VDD VDD VSS VSS shrink.pulse_dly\[421\] shrink.pulse_dly\[420\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[497\].inv VDD VDD VSS VSS shrink.pulse_dly\[498\] shrink.pulse_dly\[497\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[435\].inv VDD VDD VSS VSS shrink.pulse_dly\[436\] shrink.pulse_dly\[435\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_15_Right_15 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XPHY_EDGE_ROW_24_Right_24 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[63\].inv VDD VDD VSS VSS shrink.pulse_dly\[64\] shrink.pulse_dly\[63\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[78\].inv VDD VDD VSS VSS shrink.pulse_dly\[79\] shrink.pulse_dly\[78\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[16\].inv VDD VDD VSS VSS shrink.pulse_dly\[17\] shrink.pulse_dly\[16\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_8_134 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_12_130 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_12_174 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XPHY_EDGE_ROW_19_Left_47 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[374\].inv VDD VDD VSS VSS shrink.pulse_dly\[375\] shrink.pulse_dly\[374\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[942\].inv VDD VDD VSS VSS shrink.pulse_dly\[943\] shrink.pulse_dly\[942\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[312\].inv VDD VDD VSS VSS shrink.pulse_dly\[313\] shrink.pulse_dly\[312\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[389\].inv VDD VDD VSS VSS shrink.pulse_dly\[390\] shrink.pulse_dly\[389\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[957\].inv VDD VDD VSS VSS shrink.pulse_dly\[958\] shrink.pulse_dly\[957\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[327\].inv VDD VDD VSS VSS shrink.pulse_dly\[328\] shrink.pulse_dly\[327\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1014\].inv VDD VDD VSS VSS shrink.pulse_dly\[1015\] shrink.pulse_dly\[1014\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_5_159 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_23_28 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[881\].inv VDD VDD VSS VSS shrink.pulse_dly\[882\] shrink.pulse_dly\[881\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[266\].inv VDD VDD VSS VSS shrink.pulse_dly\[267\] shrink.pulse_dly\[266\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[251\].inv VDD VDD VSS VSS shrink.pulse_dly\[252\] shrink.pulse_dly\[251\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[896\].inv VDD VDD VSS VSS shrink.pulse_dly\[897\] shrink.pulse_dly\[896\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[204\].inv VDD VDD VSS VSS shrink.pulse_dly\[205\] shrink.pulse_dly\[204\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[834\].inv VDD VDD VSS VSS shrink.pulse_dly\[835\] shrink.pulse_dly\[834\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[849\].inv VDD VDD VSS VSS shrink.pulse_dly\[850\] shrink.pulse_dly\[849\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[219\].inv VDD VDD VSS VSS shrink.pulse_dly\[220\] shrink.pulse_dly\[219\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_18_39 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[190\].inv VDD VDD VSS VSS shrink.pulse_dly\[191\] shrink.pulse_dly\[190\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[143\].inv VDD VDD VSS VSS shrink.pulse_dly\[144\] shrink.pulse_dly\[143\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[158\].inv VDD VDD VSS VSS shrink.pulse_dly\[159\] shrink.pulse_dly\[158\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[773\].inv VDD VDD VSS VSS shrink.pulse_dly\[774\] shrink.pulse_dly\[773\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[711\].inv VDD VDD VSS VSS shrink.pulse_dly\[712\] shrink.pulse_dly\[711\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[788\].inv VDD VDD VSS VSS shrink.pulse_dly\[789\] shrink.pulse_dly\[788\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+X_24_ VDD VDD VSS VSS _10_ gf180mcu_as_sc_mcu7t3v3__tieh_4
+Xshrink.dly\[726\].inv VDD VDD VSS VSS shrink.pulse_dly\[727\] shrink.pulse_dly\[726\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_10_84 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XPHY_EDGE_ROW_7_Left_35 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_10_51 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_19_114 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XTAP_TAPCELL_ROW_6_74 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[650\].inv VDD VDD VSS VSS shrink.pulse_dly\[651\] shrink.pulse_dly\[650\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[665\].inv VDD VDD VSS VSS shrink.pulse_dly\[666\] shrink.pulse_dly\[665\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_25_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_25_139 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[603\].inv VDD VDD VSS VSS shrink.pulse_dly\[604\] shrink.pulse_dly\[603\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[618\].inv VDD VDD VSS VSS shrink.pulse_dly\[619\] shrink.pulse_dly\[618\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_24_150 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XTAP_TAPCELL_ROW_26_123 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_21_72 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XTAP_TAPCELL_ROW_17_101 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_7_74 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[542\].inv VDD VDD VSS VSS shrink.pulse_dly\[543\] shrink.pulse_dly\[542\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_21_142 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_21_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[557\].inv VDD VDD VSS VSS shrink.pulse_dly\[558\] shrink.pulse_dly\[557\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_12_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_7_190 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[481\].inv VDD VDD VSS VSS shrink.pulse_dly\[482\] shrink.pulse_dly\[481\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_5_138 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[496\].inv VDD VDD VSS VSS shrink.pulse_dly\[497\] shrink.pulse_dly\[496\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[434\].inv VDD VDD VSS VSS shrink.pulse_dly\[435\] shrink.pulse_dly\[434\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[449\].inv VDD VDD VSS VSS shrink.pulse_dly\[450\] shrink.pulse_dly\[449\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_20_Left_48 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[62\].inv VDD VDD VSS VSS shrink.pulse_dly\[63\] shrink.pulse_dly\[62\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[77\].inv VDD VDD VSS VSS shrink.pulse_dly\[78\] shrink.pulse_dly\[77\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[15\].inv VDD VDD VSS VSS shrink.pulse_dly\[16\] shrink.pulse_dly\[15\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_2_119 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[373\].inv VDD VDD VSS VSS shrink.pulse_dly\[374\] shrink.pulse_dly\[373\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[388\].inv VDD VDD VSS VSS shrink.pulse_dly\[389\] shrink.pulse_dly\[388\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[941\].inv VDD VDD VSS VSS shrink.pulse_dly\[942\] shrink.pulse_dly\[941\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[311\].inv VDD VDD VSS VSS shrink.pulse_dly\[312\] shrink.pulse_dly\[311\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1013\].inv VDD VDD VSS VSS shrink.pulse_dly\[1014\] shrink.pulse_dly\[1013\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[956\].inv VDD VDD VSS VSS shrink.pulse_dly\[957\] shrink.pulse_dly\[956\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[326\].inv VDD VDD VSS VSS shrink.pulse_dly\[327\] shrink.pulse_dly\[326\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[909\].inv VDD VDD VSS VSS shrink.pulse_dly\[910\] shrink.pulse_dly\[909\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+X_23_ VDD VDD VSS VSS _09_ gf180mcu_as_sc_mcu7t3v3__tieh_4
+Xshrink.dly\[250\].inv VDD VDD VSS VSS shrink.pulse_dly\[251\] shrink.pulse_dly\[250\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[880\].inv VDD VDD VSS VSS shrink.pulse_dly\[881\] shrink.pulse_dly\[880\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[265\].inv VDD VDD VSS VSS shrink.pulse_dly\[266\] shrink.pulse_dly\[265\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_23_Left_51 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[895\].inv VDD VDD VSS VSS shrink.pulse_dly\[896\] shrink.pulse_dly\[895\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[203\].inv VDD VDD VSS VSS shrink.pulse_dly\[204\] shrink.pulse_dly\[203\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[833\].inv VDD VDD VSS VSS shrink.pulse_dly\[834\] shrink.pulse_dly\[833\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[848\].inv VDD VDD VSS VSS shrink.pulse_dly\[849\] shrink.pulse_dly\[848\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_10_85 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[218\].inv VDD VDD VSS VSS shrink.pulse_dly\[219\] shrink.pulse_dly\[218\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_19_72 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XTAP_TAPCELL_ROW_6_75 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_18_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_25_118 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[142\].inv VDD VDD VSS VSS shrink.pulse_dly\[143\] shrink.pulse_dly\[142\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[157\].inv VDD VDD VSS VSS shrink.pulse_dly\[158\] shrink.pulse_dly\[157\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[787\].inv VDD VDD VSS VSS shrink.pulse_dly\[788\] shrink.pulse_dly\[787\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[772\].inv VDD VDD VSS VSS shrink.pulse_dly\[773\] shrink.pulse_dly\[772\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[710\].inv VDD VDD VSS VSS shrink.pulse_dly\[711\] shrink.pulse_dly\[710\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_16_129 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XTAP_TAPCELL_ROW_26_124 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[725\].inv VDD VDD VSS VSS shrink.pulse_dly\[726\] shrink.pulse_dly\[725\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_17_102 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_7_42 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XPHY_EDGE_ROW_5_Right_5 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XTAP_TAPCELL_ROW_23_116 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_8_103 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[664\].inv VDD VDD VSS VSS shrink.pulse_dly\[665\] shrink.pulse_dly\[664\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[679\].inv VDD VDD VSS VSS shrink.pulse_dly\[680\] shrink.pulse_dly\[679\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[602\].inv VDD VDD VSS VSS shrink.pulse_dly\[603\] shrink.pulse_dly\[602\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[617\].inv VDD VDD VSS VSS shrink.pulse_dly\[618\] shrink.pulse_dly\[617\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_20_108 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_7_180 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_5_106 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[541\].inv VDD VDD VSS VSS shrink.pulse_dly\[542\] shrink.pulse_dly\[541\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_4_21 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[556\].inv VDD VDD VSS VSS shrink.pulse_dly\[557\] shrink.pulse_dly\[556\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[509\].inv VDD VDD VSS VSS shrink.pulse_dly\[510\] shrink.pulse_dly\[509\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[495\].inv VDD VDD VSS VSS shrink.pulse_dly\[496\] shrink.pulse_dly\[495\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[480\].inv VDD VDD VSS VSS shrink.pulse_dly\[481\] shrink.pulse_dly\[480\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[433\].inv VDD VDD VSS VSS shrink.pulse_dly\[434\] shrink.pulse_dly\[433\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[448\].inv VDD VDD VSS VSS shrink.pulse_dly\[449\] shrink.pulse_dly\[448\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_1_8 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[76\].inv VDD VDD VSS VSS shrink.pulse_dly\[77\] shrink.pulse_dly\[76\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[61\].inv VDD VDD VSS VSS shrink.pulse_dly\[62\] shrink.pulse_dly\[61\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+X_22_ VDD VDD VSS VSS _08_ gf180mcu_as_sc_mcu7t3v3__tieh_4
+Xshrink.dly\[14\].inv VDD VDD VSS VSS shrink.pulse_dly\[15\] shrink.pulse_dly\[14\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[29\].inv VDD VDD VSS VSS shrink.pulse_dly\[30\] shrink.pulse_dly\[29\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[372\].inv VDD VDD VSS VSS shrink.pulse_dly\[373\] shrink.pulse_dly\[372\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[387\].inv VDD VDD VSS VSS shrink.pulse_dly\[388\] shrink.pulse_dly\[387\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[940\].inv VDD VDD VSS VSS shrink.pulse_dly\[941\] shrink.pulse_dly\[940\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_10_53 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[310\].inv VDD VDD VSS VSS shrink.pulse_dly\[311\] shrink.pulse_dly\[310\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1012\].inv VDD VDD VSS VSS shrink.pulse_dly\[1013\] shrink.pulse_dly\[1012\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[955\].inv VDD VDD VSS VSS shrink.pulse_dly\[956\] shrink.pulse_dly\[955\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[325\].inv VDD VDD VSS VSS shrink.pulse_dly\[326\] shrink.pulse_dly\[325\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_19_116 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_19_138 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[908\].inv VDD VDD VSS VSS shrink.pulse_dly\[909\] shrink.pulse_dly\[908\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_24_174 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XTAP_TAPCELL_ROW_26_125 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_21_74 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[894\].inv VDD VDD VSS VSS shrink.pulse_dly\[895\] shrink.pulse_dly\[894\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[264\].inv VDD VDD VSS VSS shrink.pulse_dly\[265\] shrink.pulse_dly\[264\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[279\].inv VDD VDD VSS VSS shrink.pulse_dly\[280\] shrink.pulse_dly\[279\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[202\].inv VDD VDD VSS VSS shrink.pulse_dly\[203\] shrink.pulse_dly\[202\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[832\].inv VDD VDD VSS VSS shrink.pulse_dly\[833\] shrink.pulse_dly\[832\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_15_163 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[847\].inv VDD VDD VSS VSS shrink.pulse_dly\[848\] shrink.pulse_dly\[847\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[217\].inv VDD VDD VSS VSS shrink.pulse_dly\[218\] shrink.pulse_dly\[217\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_23_117 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_21_155 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_21_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_8_159 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_12_100 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_12_177 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_12_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XPHY_EDGE_ROW_11_Right_11 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XTAP_TAPCELL_ROW_3_66 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XPHY_EDGE_ROW_20_Right_20 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[141\].inv VDD VDD VSS VSS shrink.pulse_dly\[142\] shrink.pulse_dly\[141\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[771\].inv VDD VDD VSS VSS shrink.pulse_dly\[772\] shrink.pulse_dly\[771\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_7_192 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[156\].inv VDD VDD VSS VSS shrink.pulse_dly\[157\] shrink.pulse_dly\[156\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[786\].inv VDD VDD VSS VSS shrink.pulse_dly\[787\] shrink.pulse_dly\[786\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_20_109 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[724\].inv VDD VDD VSS VSS shrink.pulse_dly\[725\] shrink.pulse_dly\[724\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[739\].inv VDD VDD VSS VSS shrink.pulse_dly\[740\] shrink.pulse_dly\[739\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[109\].inv VDD VDD VSS VSS shrink.pulse_dly\[110\] shrink.pulse_dly\[109\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[5\].Qbuf VDD VDD VSS VSS counter.Q\[5\] count[5] gf180mcu_as_sc_mcu7t3v3__buff_4
+Xshrink.dly\[663\].inv VDD VDD VSS VSS shrink.pulse_dly\[664\] shrink.pulse_dly\[663\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[678\].inv VDD VDD VSS VSS shrink.pulse_dly\[679\] shrink.pulse_dly\[678\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[601\].inv VDD VDD VSS VSS shrink.pulse_dly\[602\] shrink.pulse_dly\[601\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_8_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XTAP_TAPCELL_ROW_0_56 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[616\].inv VDD VDD VSS VSS shrink.pulse_dly\[617\] shrink.pulse_dly\[616\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[540\].inv VDD VDD VSS VSS shrink.pulse_dly\[541\] shrink.pulse_dly\[540\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[555\].inv VDD VDD VSS VSS shrink.pulse_dly\[556\] shrink.pulse_dly\[555\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+X_21_ VDD VDD VSS VSS _07_ gf180mcu_as_sc_mcu7t3v3__tieh_4
+Xshrink.dly\[508\].inv VDD VDD VSS VSS shrink.pulse_dly\[509\] shrink.pulse_dly\[508\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_10_76 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_19_52 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_19_85 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[494\].inv VDD VDD VSS VSS shrink.pulse_dly\[495\] shrink.pulse_dly\[494\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[432\].inv VDD VDD VSS VSS shrink.pulse_dly\[433\] shrink.pulse_dly\[432\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[447\].inv VDD VDD VSS VSS shrink.pulse_dly\[448\] shrink.pulse_dly\[447\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[60\].inv VDD VDD VSS VSS shrink.pulse_dly\[61\] shrink.pulse_dly\[60\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[75\].inv VDD VDD VSS VSS shrink.pulse_dly\[76\] shrink.pulse_dly\[75\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_24_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[13\].inv VDD VDD VSS VSS shrink.pulse_dly\[14\] shrink.pulse_dly\[13\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[28\].inv VDD VDD VSS VSS shrink.pulse_dly\[29\] shrink.pulse_dly\[28\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[371\].inv VDD VDD VSS VSS shrink.pulse_dly\[372\] shrink.pulse_dly\[371\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_23_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[386\].inv VDD VDD VSS VSS shrink.pulse_dly\[387\] shrink.pulse_dly\[386\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[954\].inv VDD VDD VSS VSS shrink.pulse_dly\[955\] shrink.pulse_dly\[954\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1011\].inv VDD VDD VSS VSS shrink.pulse_dly\[1012\] shrink.pulse_dly\[1011\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[324\].inv VDD VDD VSS VSS shrink.pulse_dly\[325\] shrink.pulse_dly\[324\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[969\].inv VDD VDD VSS VSS shrink.pulse_dly\[970\] shrink.pulse_dly\[969\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[339\].inv VDD VDD VSS VSS shrink.pulse_dly\[340\] shrink.pulse_dly\[339\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_3_67 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[907\].inv VDD VDD VSS VSS shrink.pulse_dly\[908\] shrink.pulse_dly\[907\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_12_123 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xcounter.dly\[9\].inv VDD VDD VSS VSS counter.ripple_clk\[10\] counter.Q\[9\] gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[893\].inv VDD VDD VSS VSS shrink.pulse_dly\[894\] shrink.pulse_dly\[893\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_5_119 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[263\].inv VDD VDD VSS VSS shrink.pulse_dly\[264\] shrink.pulse_dly\[263\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[278\].inv VDD VDD VSS VSS shrink.pulse_dly\[279\] shrink.pulse_dly\[278\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[201\].inv VDD VDD VSS VSS shrink.pulse_dly\[202\] shrink.pulse_dly\[201\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[831\].inv VDD VDD VSS VSS shrink.pulse_dly\[832\] shrink.pulse_dly\[831\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[846\].inv VDD VDD VSS VSS shrink.pulse_dly\[847\] shrink.pulse_dly\[846\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[216\].inv VDD VDD VSS VSS shrink.pulse_dly\[217\] shrink.pulse_dly\[216\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_13_10 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_13_54 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_13_76 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[140\].inv VDD VDD VSS VSS shrink.pulse_dly\[141\] shrink.pulse_dly\[140\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_0_57 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_1_133 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_1_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[770\].inv VDD VDD VSS VSS shrink.pulse_dly\[771\] shrink.pulse_dly\[770\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[155\].inv VDD VDD VSS VSS shrink.pulse_dly\[156\] shrink.pulse_dly\[155\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[785\].inv VDD VDD VSS VSS shrink.pulse_dly\[786\] shrink.pulse_dly\[785\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[108\].inv VDD VDD VSS VSS shrink.pulse_dly\[109\] shrink.pulse_dly\[108\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[723\].inv VDD VDD VSS VSS shrink.pulse_dly\[724\] shrink.pulse_dly\[723\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[738\].inv VDD VDD VSS VSS shrink.pulse_dly\[739\] shrink.pulse_dly\[738\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+X_20_ VDD VDD VSS VSS _06_ gf180mcu_as_sc_mcu7t3v3__tieh_4
+Xshrink.dly\[662\].inv VDD VDD VSS VSS shrink.pulse_dly\[663\] shrink.pulse_dly\[662\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[677\].inv VDD VDD VSS VSS shrink.pulse_dly\[678\] shrink.pulse_dly\[677\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[600\].inv VDD VDD VSS VSS shrink.pulse_dly\[601\] shrink.pulse_dly\[600\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[615\].inv VDD VDD VSS VSS shrink.pulse_dly\[616\] shrink.pulse_dly\[615\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_10_33 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_10_66 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_19_129 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_27_162 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XPHY_EDGE_ROW_27_Left_55 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XPHY_EDGE_ROW_11_Left_39 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_24_143 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[554\].inv VDD VDD VSS VSS shrink.pulse_dly\[555\] shrink.pulse_dly\[554\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[569\].inv VDD VDD VSS VSS shrink.pulse_dly\[570\] shrink.pulse_dly\[569\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_21_87 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[507\].inv VDD VDD VSS VSS shrink.pulse_dly\[508\] shrink.pulse_dly\[507\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_15_176 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_15_198 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_7_67 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_7_56 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_16_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XTAP_TAPCELL_ROW_16_98 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[493\].inv VDD VDD VSS VSS shrink.pulse_dly\[494\] shrink.pulse_dly\[493\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_12_179 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[431\].inv VDD VDD VSS VSS shrink.pulse_dly\[432\] shrink.pulse_dly\[431\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[446\].inv VDD VDD VSS VSS shrink.pulse_dly\[447\] shrink.pulse_dly\[446\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_9_Right_9 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[74\].inv VDD VDD VSS VSS shrink.pulse_dly\[75\] shrink.pulse_dly\[74\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_11_190 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[89\].inv VDD VDD VSS VSS shrink.pulse_dly\[90\] shrink.pulse_dly\[89\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_14_Left_42 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[12\].inv VDD VDD VSS VSS shrink.pulse_dly\[13\] shrink.pulse_dly\[12\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[27\].inv VDD VDD VSS VSS shrink.pulse_dly\[28\] shrink.pulse_dly\[27\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[370\].inv VDD VDD VSS VSS shrink.pulse_dly\[371\] shrink.pulse_dly\[370\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[385\].inv VDD VDD VSS VSS shrink.pulse_dly\[386\] shrink.pulse_dly\[385\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_4_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[1010\].inv VDD VDD VSS VSS shrink.pulse_dly\[1011\] shrink.pulse_dly\[1010\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[953\].inv VDD VDD VSS VSS shrink.pulse_dly\[954\] shrink.pulse_dly\[953\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[323\].inv VDD VDD VSS VSS shrink.pulse_dly\[324\] shrink.pulse_dly\[323\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[968\].inv VDD VDD VSS VSS shrink.pulse_dly\[969\] shrink.pulse_dly\[968\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[338\].inv VDD VDD VSS VSS shrink.pulse_dly\[339\] shrink.pulse_dly\[338\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[906\].inv VDD VDD VSS VSS shrink.pulse_dly\[907\] shrink.pulse_dly\[906\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_13_33 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_13_99 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_8_4 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XTAP_TAPCELL_ROW_0_58 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xcounter.dly\[8\].inv VDD VDD VSS VSS counter.ripple_clk\[9\] counter.Q\[8\] gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[892\].inv VDD VDD VSS VSS shrink.pulse_dly\[893\] shrink.pulse_dly\[892\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[262\].inv VDD VDD VSS VSS shrink.pulse_dly\[263\] shrink.pulse_dly\[262\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[277\].inv VDD VDD VSS VSS shrink.pulse_dly\[278\] shrink.pulse_dly\[277\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[200\].inv VDD VDD VSS VSS shrink.pulse_dly\[201\] shrink.pulse_dly\[200\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[830\].inv VDD VDD VSS VSS shrink.pulse_dly\[831\] shrink.pulse_dly\[830\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[845\].inv VDD VDD VSS VSS shrink.pulse_dly\[846\] shrink.pulse_dly\[845\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[215\].inv VDD VDD VSS VSS shrink.pulse_dly\[216\] shrink.pulse_dly\[215\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_24_65 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[154\].inv VDD VDD VSS VSS shrink.pulse_dly\[155\] shrink.pulse_dly\[154\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[784\].inv VDD VDD VSS VSS shrink.pulse_dly\[785\] shrink.pulse_dly\[784\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[799\].inv VDD VDD VSS VSS shrink.pulse_dly\[800\] shrink.pulse_dly\[799\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[169\].inv VDD VDD VSS VSS shrink.pulse_dly\[170\] shrink.pulse_dly\[169\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[722\].inv VDD VDD VSS VSS shrink.pulse_dly\[723\] shrink.pulse_dly\[722\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[107\].inv VDD VDD VSS VSS shrink.pulse_dly\[108\] shrink.pulse_dly\[107\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_2_Left_30 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[737\].inv VDD VDD VSS VSS shrink.pulse_dly\[738\] shrink.pulse_dly\[737\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_18_174 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_21_44 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_24_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[661\].inv VDD VDD VSS VSS shrink.pulse_dly\[662\] shrink.pulse_dly\[661\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[676\].inv VDD VDD VSS VSS shrink.pulse_dly\[677\] shrink.pulse_dly\[676\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[629\].inv VDD VDD VSS VSS shrink.pulse_dly\[630\] shrink.pulse_dly\[629\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_23_4 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[614\].inv VDD VDD VSS VSS shrink.pulse_dly\[615\] shrink.pulse_dly\[614\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_16_99 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[553\].inv VDD VDD VSS VSS shrink.pulse_dly\[554\] shrink.pulse_dly\[553\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[568\].inv VDD VDD VSS VSS shrink.pulse_dly\[569\] shrink.pulse_dly\[568\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[506\].inv VDD VDD VSS VSS shrink.pulse_dly\[507\] shrink.pulse_dly\[506\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_4_154 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_4_47 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[492\].inv VDD VDD VSS VSS shrink.pulse_dly\[493\] shrink.pulse_dly\[492\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[430\].inv VDD VDD VSS VSS shrink.pulse_dly\[431\] shrink.pulse_dly\[430\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[445\].inv VDD VDD VSS VSS shrink.pulse_dly\[446\] shrink.pulse_dly\[445\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_13_12 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_13_78 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XTAP_TAPCELL_ROW_0_59 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_1_135 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[73\].inv VDD VDD VSS VSS shrink.pulse_dly\[74\] shrink.pulse_dly\[73\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[88\].inv VDD VDD VSS VSS shrink.pulse_dly\[89\] shrink.pulse_dly\[88\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[11\].inv VDD VDD VSS VSS shrink.pulse_dly\[12\] shrink.pulse_dly\[11\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_0_190 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[26\].inv VDD VDD VSS VSS shrink.pulse_dly\[27\] shrink.pulse_dly\[26\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[384\].inv VDD VDD VSS VSS shrink.pulse_dly\[385\] shrink.pulse_dly\[384\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[399\].inv VDD VDD VSS VSS shrink.pulse_dly\[400\] shrink.pulse_dly\[399\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_24_99 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[952\].inv VDD VDD VSS VSS shrink.pulse_dly\[953\] shrink.pulse_dly\[952\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[322\].inv VDD VDD VSS VSS shrink.pulse_dly\[323\] shrink.pulse_dly\[322\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[967\].inv VDD VDD VSS VSS shrink.pulse_dly\[968\] shrink.pulse_dly\[967\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[337\].inv VDD VDD VSS VSS shrink.pulse_dly\[338\] shrink.pulse_dly\[337\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[905\].inv VDD VDD VSS VSS shrink.pulse_dly\[906\] shrink.pulse_dly\[905\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_18_Right_18 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XPHY_EDGE_ROW_27_Right_27 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xcounter.dly\[7\].inv VDD VDD VSS VSS counter.ripple_clk\[8\] counter.Q\[7\] gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_27_164 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[891\].inv VDD VDD VSS VSS shrink.pulse_dly\[892\] shrink.pulse_dly\[891\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[261\].inv VDD VDD VSS VSS shrink.pulse_dly\[262\] shrink.pulse_dly\[261\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[276\].inv VDD VDD VSS VSS shrink.pulse_dly\[277\] shrink.pulse_dly\[276\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[214\].inv VDD VDD VSS VSS shrink.pulse_dly\[215\] shrink.pulse_dly\[214\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_18_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[844\].inv VDD VDD VSS VSS shrink.pulse_dly\[845\] shrink.pulse_dly\[844\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[229\].inv VDD VDD VSS VSS shrink.pulse_dly\[230\] shrink.pulse_dly\[229\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[859\].inv VDD VDD VSS VSS shrink.pulse_dly\[860\] shrink.pulse_dly\[859\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_24_145 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_15_189 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_7_69 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_7_58 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[153\].inv VDD VDD VSS VSS shrink.pulse_dly\[154\] shrink.pulse_dly\[153\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[783\].inv VDD VDD VSS VSS shrink.pulse_dly\[784\] shrink.pulse_dly\[783\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[798\].inv VDD VDD VSS VSS shrink.pulse_dly\[799\] shrink.pulse_dly\[798\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[168\].inv VDD VDD VSS VSS shrink.pulse_dly\[169\] shrink.pulse_dly\[168\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[721\].inv VDD VDD VSS VSS shrink.pulse_dly\[722\] shrink.pulse_dly\[721\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[106\].inv VDD VDD VSS VSS shrink.pulse_dly\[107\] shrink.pulse_dly\[106\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[736\].inv VDD VDD VSS VSS shrink.pulse_dly\[737\] shrink.pulse_dly\[736\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_0_Right_0 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_8_119 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_12_159 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xcounter.dly\[0\].Qbuf VDD VDD VSS VSS counter.Q\[0\] count[0] gf180mcu_as_sc_mcu7t3v3__buff_4
+XFILLER_11_192 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[660\].inv VDD VDD VSS VSS shrink.pulse_dly\[661\] shrink.pulse_dly\[660\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[675\].inv VDD VDD VSS VSS shrink.pulse_dly\[676\] shrink.pulse_dly\[675\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[12\].dff VDD VDD VSS VSS counter.ripple_clk\[12\] counter.Q\[12\] rst_n
++ _00_ counter.ripple_clk\[13\] gf180mcu_as_sc_mcu7t3v3__dfsrtp_2
+Xshrink.dly\[613\].inv VDD VDD VSS VSS shrink.pulse_dly\[614\] shrink.pulse_dly\[613\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[628\].inv VDD VDD VSS VSS shrink.pulse_dly\[629\] shrink.pulse_dly\[628\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_4_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_4_37 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_4_15 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[552\].inv VDD VDD VSS VSS shrink.pulse_dly\[553\] shrink.pulse_dly\[552\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[567\].inv VDD VDD VSS VSS shrink.pulse_dly\[568\] shrink.pulse_dly\[567\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[505\].inv VDD VDD VSS VSS shrink.pulse_dly\[506\] shrink.pulse_dly\[505\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_24_78 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[491\].inv VDD VDD VSS VSS shrink.pulse_dly\[492\] shrink.pulse_dly\[491\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[444\].inv VDD VDD VSS VSS shrink.pulse_dly\[445\] shrink.pulse_dly\[444\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[459\].inv VDD VDD VSS VSS shrink.pulse_dly\[460\] shrink.pulse_dly\[459\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[72\].inv VDD VDD VSS VSS shrink.pulse_dly\[73\] shrink.pulse_dly\[72\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[87\].inv VDD VDD VSS VSS shrink.pulse_dly\[88\] shrink.pulse_dly\[87\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[25\].inv VDD VDD VSS VSS shrink.pulse_dly\[26\] shrink.pulse_dly\[25\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[10\].inv VDD VDD VSS VSS shrink.pulse_dly\[11\] shrink.pulse_dly\[10\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[383\].inv VDD VDD VSS VSS shrink.pulse_dly\[384\] shrink.pulse_dly\[383\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[398\].inv VDD VDD VSS VSS shrink.pulse_dly\[399\] shrink.pulse_dly\[398\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[951\].inv VDD VDD VSS VSS shrink.pulse_dly\[952\] shrink.pulse_dly\[951\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[336\].inv VDD VDD VSS VSS shrink.pulse_dly\[337\] shrink.pulse_dly\[336\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[321\].inv VDD VDD VSS VSS shrink.pulse_dly\[322\] shrink.pulse_dly\[321\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_24_168 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[966\].inv VDD VDD VSS VSS shrink.pulse_dly\[967\] shrink.pulse_dly\[966\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1023\].inv VDD VDD VSS VSS counter.clk shrink.pulse_dly\[1023\] gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[904\].inv VDD VDD VSS VSS shrink.pulse_dly\[905\] shrink.pulse_dly\[904\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[919\].inv VDD VDD VSS VSS shrink.pulse_dly\[920\] shrink.pulse_dly\[919\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_15_124 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_15_146 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xcounter.dly\[6\].inv VDD VDD VSS VSS counter.ripple_clk\[7\] counter.Q\[6\] gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[890\].inv VDD VDD VSS VSS shrink.pulse_dly\[891\] shrink.pulse_dly\[890\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[260\].inv VDD VDD VSS VSS shrink.pulse_dly\[261\] shrink.pulse_dly\[260\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[275\].inv VDD VDD VSS VSS shrink.pulse_dly\[276\] shrink.pulse_dly\[275\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[213\].inv VDD VDD VSS VSS shrink.pulse_dly\[214\] shrink.pulse_dly\[213\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[843\].inv VDD VDD VSS VSS shrink.pulse_dly\[844\] shrink.pulse_dly\[843\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[858\].inv VDD VDD VSS VSS shrink.pulse_dly\[859\] shrink.pulse_dly\[858\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[228\].inv VDD VDD VSS VSS shrink.pulse_dly\[229\] shrink.pulse_dly\[228\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_7_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_14_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[152\].inv VDD VDD VSS VSS shrink.pulse_dly\[153\] shrink.pulse_dly\[152\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[782\].inv VDD VDD VSS VSS shrink.pulse_dly\[783\] shrink.pulse_dly\[782\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[797\].inv VDD VDD VSS VSS shrink.pulse_dly\[798\] shrink.pulse_dly\[797\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[167\].inv VDD VDD VSS VSS shrink.pulse_dly\[168\] shrink.pulse_dly\[167\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[735\].inv VDD VDD VSS VSS shrink.pulse_dly\[736\] shrink.pulse_dly\[735\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[720\].inv VDD VDD VSS VSS shrink.pulse_dly\[721\] shrink.pulse_dly\[720\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[105\].inv VDD VDD VSS VSS shrink.pulse_dly\[106\] shrink.pulse_dly\[105\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_4_70 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XPHY_EDGE_ROW_18_Left_46 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[674\].inv VDD VDD VSS VSS shrink.pulse_dly\[675\] shrink.pulse_dly\[674\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[11\].dff VDD VDD VSS VSS counter.ripple_clk\[11\] counter.Q\[11\] rst_n
++ _12_ counter.ripple_clk\[12\] gf180mcu_as_sc_mcu7t3v3__dfsrtp_2
+Xshrink.dly\[689\].inv VDD VDD VSS VSS shrink.pulse_dly\[690\] shrink.pulse_dly\[689\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[612\].inv VDD VDD VSS VSS shrink.pulse_dly\[613\] shrink.pulse_dly\[612\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[627\].inv VDD VDD VSS VSS shrink.pulse_dly\[628\] shrink.pulse_dly\[627\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_10_37 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[551\].inv VDD VDD VSS VSS shrink.pulse_dly\[552\] shrink.pulse_dly\[551\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_19_13 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_19_57 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[566\].inv VDD VDD VSS VSS shrink.pulse_dly\[567\] shrink.pulse_dly\[566\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[504\].inv VDD VDD VSS VSS shrink.pulse_dly\[505\] shrink.pulse_dly\[504\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[519\].inv VDD VDD VSS VSS shrink.pulse_dly\[520\] shrink.pulse_dly\[519\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_18_111 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_18_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[490\].inv VDD VDD VSS VSS shrink.pulse_dly\[491\] shrink.pulse_dly\[490\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_6_Left_34 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[443\].inv VDD VDD VSS VSS shrink.pulse_dly\[444\] shrink.pulse_dly\[443\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_15_114 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[458\].inv VDD VDD VSS VSS shrink.pulse_dly\[459\] shrink.pulse_dly\[458\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[71\].inv VDD VDD VSS VSS shrink.pulse_dly\[72\] shrink.pulse_dly\[71\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[86\].inv VDD VDD VSS VSS shrink.pulse_dly\[87\] shrink.pulse_dly\[86\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[24\].inv VDD VDD VSS VSS shrink.pulse_dly\[25\] shrink.pulse_dly\[24\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[39\].inv VDD VDD VSS VSS shrink.pulse_dly\[40\] shrink.pulse_dly\[39\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_12_128 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[382\].inv VDD VDD VSS VSS shrink.pulse_dly\[383\] shrink.pulse_dly\[382\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[320\].inv VDD VDD VSS VSS shrink.pulse_dly\[321\] shrink.pulse_dly\[320\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[397\].inv VDD VDD VSS VSS shrink.pulse_dly\[398\] shrink.pulse_dly\[397\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[950\].inv VDD VDD VSS VSS shrink.pulse_dly\[951\] shrink.pulse_dly\[950\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[335\].inv VDD VDD VSS VSS shrink.pulse_dly\[336\] shrink.pulse_dly\[335\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1022\].inv VDD VDD VSS VSS shrink.pulse_dly\[1023\] shrink.pulse_dly\[1022\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[965\].inv VDD VDD VSS VSS shrink.pulse_dly\[966\] shrink.pulse_dly\[965\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[903\].inv VDD VDD VSS VSS shrink.pulse_dly\[904\] shrink.pulse_dly\[903\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[918\].inv VDD VDD VSS VSS shrink.pulse_dly\[919\] shrink.pulse_dly\[918\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[5\].inv VDD VDD VSS VSS counter.ripple_clk\[6\] counter.Q\[5\] gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[274\].inv VDD VDD VSS VSS shrink.pulse_dly\[275\] shrink.pulse_dly\[274\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[842\].inv VDD VDD VSS VSS shrink.pulse_dly\[843\] shrink.pulse_dly\[842\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[212\].inv VDD VDD VSS VSS shrink.pulse_dly\[213\] shrink.pulse_dly\[212\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[289\].inv VDD VDD VSS VSS shrink.pulse_dly\[290\] shrink.pulse_dly\[289\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[857\].inv VDD VDD VSS VSS shrink.pulse_dly\[858\] shrink.pulse_dly\[857\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[227\].inv VDD VDD VSS VSS shrink.pulse_dly\[228\] shrink.pulse_dly\[227\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_5_82 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[151\].inv VDD VDD VSS VSS shrink.pulse_dly\[152\] shrink.pulse_dly\[151\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[166\].inv VDD VDD VSS VSS shrink.pulse_dly\[167\] shrink.pulse_dly\[166\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[781\].inv VDD VDD VSS VSS shrink.pulse_dly\[782\] shrink.pulse_dly\[781\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[796\].inv VDD VDD VSS VSS shrink.pulse_dly\[797\] shrink.pulse_dly\[796\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[734\].inv VDD VDD VSS VSS shrink.pulse_dly\[735\] shrink.pulse_dly\[734\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[104\].inv VDD VDD VSS VSS shrink.pulse_dly\[105\] shrink.pulse_dly\[104\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[119\].inv VDD VDD VSS VSS shrink.pulse_dly\[120\] shrink.pulse_dly\[119\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[749\].inv VDD VDD VSS VSS shrink.pulse_dly\[750\] shrink.pulse_dly\[749\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_1_61 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xcounter.dly\[6\].Qbuf VDD VDD VSS VSS counter.Q\[6\] count[6] gf180mcu_as_sc_mcu7t3v3__buff_4
+XPHY_EDGE_ROW_14_Right_14 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_4_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XPHY_EDGE_ROW_23_Right_23 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xcounter.dly\[10\].dff VDD VDD VSS VSS counter.ripple_clk\[10\] counter.Q\[10\] rst_n
++ _11_ counter.ripple_clk\[11\] gf180mcu_as_sc_mcu7t3v3__dfsrtp_2
+Xshrink.dly\[688\].inv VDD VDD VSS VSS shrink.pulse_dly\[689\] shrink.pulse_dly\[688\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[673\].inv VDD VDD VSS VSS shrink.pulse_dly\[674\] shrink.pulse_dly\[673\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[611\].inv VDD VDD VSS VSS shrink.pulse_dly\[612\] shrink.pulse_dly\[611\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[626\].inv VDD VDD VSS VSS shrink.pulse_dly\[627\] shrink.pulse_dly\[626\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_2_61 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XPHY_EDGE_ROW_22_Left_50 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_21_15 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_15_126 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XTAP_TAPCELL_ROW_25_121 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[550\].inv VDD VDD VSS VSS shrink.pulse_dly\[551\] shrink.pulse_dly\[550\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_14_181 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[565\].inv VDD VDD VSS VSS shrink.pulse_dly\[566\] shrink.pulse_dly\[565\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[503\].inv VDD VDD VSS VSS shrink.pulse_dly\[504\] shrink.pulse_dly\[503\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_22_113 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[518\].inv VDD VDD VSS VSS shrink.pulse_dly\[519\] shrink.pulse_dly\[518\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_7_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[442\].inv VDD VDD VSS VSS shrink.pulse_dly\[443\] shrink.pulse_dly\[442\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_4_Right_4 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[457\].inv VDD VDD VSS VSS shrink.pulse_dly\[458\] shrink.pulse_dly\[457\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_4_136 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[70\].inv VDD VDD VSS VSS shrink.pulse_dly\[71\] shrink.pulse_dly\[70\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[85\].inv VDD VDD VSS VSS shrink.pulse_dly\[86\] shrink.pulse_dly\[85\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[23\].inv VDD VDD VSS VSS shrink.pulse_dly\[24\] shrink.pulse_dly\[23\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[38\].inv VDD VDD VSS VSS shrink.pulse_dly\[39\] shrink.pulse_dly\[38\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_8_9 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[381\].inv VDD VDD VSS VSS shrink.pulse_dly\[382\] shrink.pulse_dly\[381\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[396\].inv VDD VDD VSS VSS shrink.pulse_dly\[397\] shrink.pulse_dly\[396\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[964\].inv VDD VDD VSS VSS shrink.pulse_dly\[965\] shrink.pulse_dly\[964\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[334\].inv VDD VDD VSS VSS shrink.pulse_dly\[335\] shrink.pulse_dly\[334\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1021\].inv VDD VDD VSS VSS shrink.pulse_dly\[1022\] shrink.pulse_dly\[1021\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[979\].inv VDD VDD VSS VSS shrink.pulse_dly\[980\] shrink.pulse_dly\[979\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[349\].inv VDD VDD VSS VSS shrink.pulse_dly\[350\] shrink.pulse_dly\[349\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_0_172 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[902\].inv VDD VDD VSS VSS shrink.pulse_dly\[903\] shrink.pulse_dly\[902\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[917\].inv VDD VDD VSS VSS shrink.pulse_dly\[918\] shrink.pulse_dly\[917\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_5_72 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_24_15 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_24_26 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xcounter.dly\[4\].inv VDD VDD VSS VSS counter.ripple_clk\[5\] counter.Q\[4\] gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[288\].inv VDD VDD VSS VSS shrink.pulse_dly\[289\] shrink.pulse_dly\[288\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[273\].inv VDD VDD VSS VSS shrink.pulse_dly\[274\] shrink.pulse_dly\[273\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[841\].inv VDD VDD VSS VSS shrink.pulse_dly\[842\] shrink.pulse_dly\[841\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_1_62 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[211\].inv VDD VDD VSS VSS shrink.pulse_dly\[212\] shrink.pulse_dly\[211\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[856\].inv VDD VDD VSS VSS shrink.pulse_dly\[857\] shrink.pulse_dly\[856\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[226\].inv VDD VDD VSS VSS shrink.pulse_dly\[227\] shrink.pulse_dly\[226\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_27_135 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[809\].inv VDD VDD VSS VSS shrink.pulse_dly\[810\] shrink.pulse_dly\[809\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_19_37 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[150\].inv VDD VDD VSS VSS shrink.pulse_dly\[151\] shrink.pulse_dly\[150\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[165\].inv VDD VDD VSS VSS shrink.pulse_dly\[166\] shrink.pulse_dly\[165\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[780\].inv VDD VDD VSS VSS shrink.pulse_dly\[781\] shrink.pulse_dly\[780\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[795\].inv VDD VDD VSS VSS shrink.pulse_dly\[796\] shrink.pulse_dly\[795\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[733\].inv VDD VDD VSS VSS shrink.pulse_dly\[734\] shrink.pulse_dly\[733\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[103\].inv VDD VDD VSS VSS shrink.pulse_dly\[104\] shrink.pulse_dly\[103\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[118\].inv VDD VDD VSS VSS shrink.pulse_dly\[119\] shrink.pulse_dly\[118\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[748\].inv VDD VDD VSS VSS shrink.pulse_dly\[749\] shrink.pulse_dly\[748\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_25_122 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_23_9 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XTAP_TAPCELL_ROW_16_100 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[672\].inv VDD VDD VSS VSS shrink.pulse_dly\[673\] shrink.pulse_dly\[672\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_22_114 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[687\].inv VDD VDD VSS VSS shrink.pulse_dly\[688\] shrink.pulse_dly\[687\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[610\].inv VDD VDD VSS VSS shrink.pulse_dly\[611\] shrink.pulse_dly\[610\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[625\].inv VDD VDD VSS VSS shrink.pulse_dly\[626\] shrink.pulse_dly\[625\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_8_94 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[564\].inv VDD VDD VSS VSS shrink.pulse_dly\[565\] shrink.pulse_dly\[564\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[579\].inv VDD VDD VSS VSS shrink.pulse_dly\[580\] shrink.pulse_dly\[579\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[502\].inv VDD VDD VSS VSS shrink.pulse_dly\[503\] shrink.pulse_dly\[502\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[517\].inv VDD VDD VSS VSS shrink.pulse_dly\[518\] shrink.pulse_dly\[517\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_12_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[441\].inv VDD VDD VSS VSS shrink.pulse_dly\[442\] shrink.pulse_dly\[441\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[456\].inv VDD VDD VSS VSS shrink.pulse_dly\[457\] shrink.pulse_dly\[456\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[409\].inv VDD VDD VSS VSS shrink.pulse_dly\[410\] shrink.pulse_dly\[409\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[84\].inv VDD VDD VSS VSS shrink.pulse_dly\[85\] shrink.pulse_dly\[84\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_14_93 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[99\].inv VDD VDD VSS VSS shrink.pulse_dly\[100\] shrink.pulse_dly\[99\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[22\].inv VDD VDD VSS VSS shrink.pulse_dly\[23\] shrink.pulse_dly\[22\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[37\].inv VDD VDD VSS VSS shrink.pulse_dly\[38\] shrink.pulse_dly\[37\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[380\].inv VDD VDD VSS VSS shrink.pulse_dly\[381\] shrink.pulse_dly\[380\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[395\].inv VDD VDD VSS VSS shrink.pulse_dly\[396\] shrink.pulse_dly\[395\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[963\].inv VDD VDD VSS VSS shrink.pulse_dly\[964\] shrink.pulse_dly\[963\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[333\].inv VDD VDD VSS VSS shrink.pulse_dly\[334\] shrink.pulse_dly\[333\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_27_169 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[978\].inv VDD VDD VSS VSS shrink.pulse_dly\[979\] shrink.pulse_dly\[978\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1020\].inv VDD VDD VSS VSS shrink.pulse_dly\[1021\] shrink.pulse_dly\[1020\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[348\].inv VDD VDD VSS VSS shrink.pulse_dly\[349\] shrink.pulse_dly\[348\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[901\].inv VDD VDD VSS VSS shrink.pulse_dly\[902\] shrink.pulse_dly\[901\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[916\].inv VDD VDD VSS VSS shrink.pulse_dly\[917\] shrink.pulse_dly\[916\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_18_125 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xcounter.dly\[3\].inv VDD VDD VSS VSS counter.ripple_clk\[4\] counter.Q\[3\] gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[272\].inv VDD VDD VSS VSS shrink.pulse_dly\[273\] shrink.pulse_dly\[272\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_15_139 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[287\].inv VDD VDD VSS VSS shrink.pulse_dly\[288\] shrink.pulse_dly\[287\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[840\].inv VDD VDD VSS VSS shrink.pulse_dly\[841\] shrink.pulse_dly\[840\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[210\].inv VDD VDD VSS VSS shrink.pulse_dly\[211\] shrink.pulse_dly\[210\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[855\].inv VDD VDD VSS VSS shrink.pulse_dly\[856\] shrink.pulse_dly\[855\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_11_72 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[225\].inv VDD VDD VSS VSS shrink.pulse_dly\[226\] shrink.pulse_dly\[225\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[808\].inv VDD VDD VSS VSS shrink.pulse_dly\[809\] shrink.pulse_dly\[808\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_22_115 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_20_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_7_146 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_7_124 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[164\].inv VDD VDD VSS VSS shrink.pulse_dly\[165\] shrink.pulse_dly\[164\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[794\].inv VDD VDD VSS VSS shrink.pulse_dly\[795\] shrink.pulse_dly\[794\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_11_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[179\].inv VDD VDD VSS VSS shrink.pulse_dly\[180\] shrink.pulse_dly\[179\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[732\].inv VDD VDD VSS VSS shrink.pulse_dly\[733\] shrink.pulse_dly\[732\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[102\].inv VDD VDD VSS VSS shrink.pulse_dly\[103\] shrink.pulse_dly\[102\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[117\].inv VDD VDD VSS VSS shrink.pulse_dly\[118\] shrink.pulse_dly\[117\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_8_51 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[747\].inv VDD VDD VSS VSS shrink.pulse_dly\[748\] shrink.pulse_dly\[747\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_17_60 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[671\].inv VDD VDD VSS VSS shrink.pulse_dly\[672\] shrink.pulse_dly\[671\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[686\].inv VDD VDD VSS VSS shrink.pulse_dly\[687\] shrink.pulse_dly\[686\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[624\].inv VDD VDD VSS VSS shrink.pulse_dly\[625\] shrink.pulse_dly\[624\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[639\].inv VDD VDD VSS VSS shrink.pulse_dly\[640\] shrink.pulse_dly\[639\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_0_174 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_24_17 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[563\].inv VDD VDD VSS VSS shrink.pulse_dly\[564\] shrink.pulse_dly\[563\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[578\].inv VDD VDD VSS VSS shrink.pulse_dly\[579\] shrink.pulse_dly\[578\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_14_94 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[501\].inv VDD VDD VSS VSS shrink.pulse_dly\[502\] shrink.pulse_dly\[501\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[516\].inv VDD VDD VSS VSS shrink.pulse_dly\[517\] shrink.pulse_dly\[516\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_27_104 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_19_39 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[440\].inv VDD VDD VSS VSS shrink.pulse_dly\[441\] shrink.pulse_dly\[440\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[455\].inv VDD VDD VSS VSS shrink.pulse_dly\[456\] shrink.pulse_dly\[455\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_10_Right_10 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[83\].inv VDD VDD VSS VSS shrink.pulse_dly\[84\] shrink.pulse_dly\[83\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[408\].inv VDD VDD VSS VSS shrink.pulse_dly\[409\] shrink.pulse_dly\[408\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[98\].inv VDD VDD VSS VSS shrink.pulse_dly\[99\] shrink.pulse_dly\[98\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[21\].inv VDD VDD VSS VSS shrink.pulse_dly\[22\] shrink.pulse_dly\[21\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[36\].inv VDD VDD VSS VSS shrink.pulse_dly\[37\] shrink.pulse_dly\[36\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_2_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[394\].inv VDD VDD VSS VSS shrink.pulse_dly\[395\] shrink.pulse_dly\[394\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_26_Left_54 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XPHY_EDGE_ROW_10_Left_38 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[962\].inv VDD VDD VSS VSS shrink.pulse_dly\[963\] shrink.pulse_dly\[962\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[332\].inv VDD VDD VSS VSS shrink.pulse_dly\[333\] shrink.pulse_dly\[332\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[977\].inv VDD VDD VSS VSS shrink.pulse_dly\[978\] shrink.pulse_dly\[977\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[347\].inv VDD VDD VSS VSS shrink.pulse_dly\[348\] shrink.pulse_dly\[347\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[900\].inv VDD VDD VSS VSS shrink.pulse_dly\[901\] shrink.pulse_dly\[900\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[915\].inv VDD VDD VSS VSS shrink.pulse_dly\[916\] shrink.pulse_dly\[915\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_20_143 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xcounter.dly\[2\].inv VDD VDD VSS VSS counter.ripple_clk\[3\] counter.Q\[2\] gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[271\].inv VDD VDD VSS VSS shrink.pulse_dly\[272\] shrink.pulse_dly\[271\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[286\].inv VDD VDD VSS VSS shrink.pulse_dly\[287\] shrink.pulse_dly\[286\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[854\].inv VDD VDD VSS VSS shrink.pulse_dly\[855\] shrink.pulse_dly\[854\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[224\].inv VDD VDD VSS VSS shrink.pulse_dly\[225\] shrink.pulse_dly\[224\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[869\].inv VDD VDD VSS VSS shrink.pulse_dly\[870\] shrink.pulse_dly\[869\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[239\].inv VDD VDD VSS VSS shrink.pulse_dly\[240\] shrink.pulse_dly\[239\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[807\].inv VDD VDD VSS VSS shrink.pulse_dly\[808\] shrink.pulse_dly\[807\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_8_Right_8 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XPHY_EDGE_ROW_13_Left_41 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[163\].inv VDD VDD VSS VSS shrink.pulse_dly\[164\] shrink.pulse_dly\[163\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[793\].inv VDD VDD VSS VSS shrink.pulse_dly\[794\] shrink.pulse_dly\[793\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[178\].inv VDD VDD VSS VSS shrink.pulse_dly\[179\] shrink.pulse_dly\[178\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[731\].inv VDD VDD VSS VSS shrink.pulse_dly\[732\] shrink.pulse_dly\[731\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[101\].inv VDD VDD VSS VSS shrink.pulse_dly\[102\] shrink.pulse_dly\[101\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[116\].inv VDD VDD VSS VSS shrink.pulse_dly\[117\] shrink.pulse_dly\[116\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[746\].inv VDD VDD VSS VSS shrink.pulse_dly\[747\] shrink.pulse_dly\[746\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[1\].Qbuf VDD VDD VSS VSS counter.Q\[1\] count[1] gf180mcu_as_sc_mcu7t3v3__buff_4
+XTAP_TAPCELL_ROW_14_95 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[670\].inv VDD VDD VSS VSS shrink.pulse_dly\[671\] shrink.pulse_dly\[670\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[685\].inv VDD VDD VSS VSS shrink.pulse_dly\[686\] shrink.pulse_dly\[685\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[9\].inv VDD VDD VSS VSS shrink.pulse_dly\[10\] shrink.pulse_dly\[9\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[623\].inv VDD VDD VSS VSS shrink.pulse_dly\[624\] shrink.pulse_dly\[623\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[638\].inv VDD VDD VSS VSS shrink.pulse_dly\[639\] shrink.pulse_dly\[638\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_25_72 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_2_54 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[562\].inv VDD VDD VSS VSS shrink.pulse_dly\[563\] shrink.pulse_dly\[562\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_17_193 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fillcap_4
+Xshrink.dly\[577\].inv VDD VDD VSS VSS shrink.pulse_dly\[578\] shrink.pulse_dly\[577\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[500\].inv VDD VDD VSS VSS shrink.pulse_dly\[501\] shrink.pulse_dly\[500\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[515\].inv VDD VDD VSS VSS shrink.pulse_dly\[516\] shrink.pulse_dly\[515\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_23_130 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_23_163 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_14_141 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_14_174 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_20_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[454\].inv VDD VDD VSS VSS shrink.pulse_dly\[455\] shrink.pulse_dly\[454\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[469\].inv VDD VDD VSS VSS shrink.pulse_dly\[470\] shrink.pulse_dly\[469\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_11_100 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[407\].inv VDD VDD VSS VSS shrink.pulse_dly\[408\] shrink.pulse_dly\[407\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_7_159 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_7_126 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[82\].inv VDD VDD VSS VSS shrink.pulse_dly\[83\] shrink.pulse_dly\[82\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_11_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[97\].inv VDD VDD VSS VSS shrink.pulse_dly\[98\] shrink.pulse_dly\[97\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[20\].inv VDD VDD VSS VSS shrink.pulse_dly\[21\] shrink.pulse_dly\[20\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[35\].inv VDD VDD VSS VSS shrink.pulse_dly\[36\] shrink.pulse_dly\[35\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_4_107 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[393\].inv VDD VDD VSS VSS shrink.pulse_dly\[394\] shrink.pulse_dly\[393\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[961\].inv VDD VDD VSS VSS shrink.pulse_dly\[962\] shrink.pulse_dly\[961\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_17_51 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[331\].inv VDD VDD VSS VSS shrink.pulse_dly\[332\] shrink.pulse_dly\[331\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[976\].inv VDD VDD VSS VSS shrink.pulse_dly\[977\] shrink.pulse_dly\[976\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[346\].inv VDD VDD VSS VSS shrink.pulse_dly\[347\] shrink.pulse_dly\[346\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[914\].inv VDD VDD VSS VSS shrink.pulse_dly\[915\] shrink.pulse_dly\[914\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[929\].inv VDD VDD VSS VSS shrink.pulse_dly\[930\] shrink.pulse_dly\[929\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[1\].inv VDD VDD VSS VSS counter.ripple_clk\[2\] counter.Q\[1\] gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_0_110 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[270\].inv VDD VDD VSS VSS shrink.pulse_dly\[271\] shrink.pulse_dly\[270\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[285\].inv VDD VDD VSS VSS shrink.pulse_dly\[286\] shrink.pulse_dly\[285\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[853\].inv VDD VDD VSS VSS shrink.pulse_dly\[854\] shrink.pulse_dly\[853\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[223\].inv VDD VDD VSS VSS shrink.pulse_dly\[224\] shrink.pulse_dly\[223\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[868\].inv VDD VDD VSS VSS shrink.pulse_dly\[869\] shrink.pulse_dly\[868\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_10_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[238\].inv VDD VDD VSS VSS shrink.pulse_dly\[239\] shrink.pulse_dly\[238\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[806\].inv VDD VDD VSS VSS shrink.pulse_dly\[807\] shrink.pulse_dly\[806\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[162\].inv VDD VDD VSS VSS shrink.pulse_dly\[163\] shrink.pulse_dly\[162\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[792\].inv VDD VDD VSS VSS shrink.pulse_dly\[793\] shrink.pulse_dly\[792\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_27_106 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[177\].inv VDD VDD VSS VSS shrink.pulse_dly\[178\] shrink.pulse_dly\[177\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_19_19 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[730\].inv VDD VDD VSS VSS shrink.pulse_dly\[731\] shrink.pulse_dly\[730\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[100\].inv VDD VDD VSS VSS shrink.pulse_dly\[101\] shrink.pulse_dly\[100\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[115\].inv VDD VDD VSS VSS shrink.pulse_dly\[116\] shrink.pulse_dly\[115\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[745\].inv VDD VDD VSS VSS shrink.pulse_dly\[746\] shrink.pulse_dly\[745\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_2_33 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XTAP_TAPCELL_ROW_11_86 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[684\].inv VDD VDD VSS VSS shrink.pulse_dly\[685\] shrink.pulse_dly\[684\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_23_142 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_11_53 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[699\].inv VDD VDD VSS VSS shrink.pulse_dly\[700\] shrink.pulse_dly\[699\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[8\].inv VDD VDD VSS VSS shrink.pulse_dly\[9\] shrink.pulse_dly\[8\] gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[622\].inv VDD VDD VSS VSS shrink.pulse_dly\[623\] shrink.pulse_dly\[622\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[637\].inv VDD VDD VSS VSS shrink.pulse_dly\[638\] shrink.pulse_dly\[637\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_7_76 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.rst_nand VDD VDD VSS VSS shrink.to_start rst_n counter.clk gf180mcu_as_sc_mcu7t3v3__nand2_4
+XFILLER_22_30 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[561\].inv VDD VDD VSS VSS shrink.pulse_dly\[562\] shrink.pulse_dly\[561\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[576\].inv VDD VDD VSS VSS shrink.pulse_dly\[577\] shrink.pulse_dly\[576\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_8_65 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[514\].inv VDD VDD VSS VSS shrink.pulse_dly\[515\] shrink.pulse_dly\[514\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[529\].inv VDD VDD VSS VSS shrink.pulse_dly\[530\] shrink.pulse_dly\[529\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+X_19_ VDD VDD VSS VSS _05_ gf180mcu_as_sc_mcu7t3v3__tieh_4
+XFILLER_17_85 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_17_96 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[453\].inv VDD VDD VSS VSS shrink.pulse_dly\[454\] shrink.pulse_dly\[453\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[10\].Qbuf VDD VDD VSS VSS counter.Q\[10\] count[10] gf180mcu_as_sc_mcu7t3v3__buff_4
+Xshrink.dly\[468\].inv VDD VDD VSS VSS shrink.pulse_dly\[469\] shrink.pulse_dly\[468\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[406\].inv VDD VDD VSS VSS shrink.pulse_dly\[407\] shrink.pulse_dly\[406\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[81\].inv VDD VDD VSS VSS shrink.pulse_dly\[82\] shrink.pulse_dly\[81\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[96\].inv VDD VDD VSS VSS shrink.pulse_dly\[97\] shrink.pulse_dly\[96\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_0_133 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_0_188 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[34\].inv VDD VDD VSS VSS shrink.pulse_dly\[35\] shrink.pulse_dly\[34\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[49\].inv VDD VDD VSS VSS shrink.pulse_dly\[50\] shrink.pulse_dly\[49\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_5_44 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[392\].inv VDD VDD VSS VSS shrink.pulse_dly\[393\] shrink.pulse_dly\[392\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[960\].inv VDD VDD VSS VSS shrink.pulse_dly\[961\] shrink.pulse_dly\[960\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[330\].inv VDD VDD VSS VSS shrink.pulse_dly\[331\] shrink.pulse_dly\[330\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[975\].inv VDD VDD VSS VSS shrink.pulse_dly\[976\] shrink.pulse_dly\[975\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[345\].inv VDD VDD VSS VSS shrink.pulse_dly\[346\] shrink.pulse_dly\[345\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.start_nand VDD VDD VSS VSS shrink.pulse_dly\[0\] pulse_in shrink.to_start
++ gf180mcu_as_sc_mcu7t3v3__nand2_4
+Xshrink.dly\[913\].inv VDD VDD VSS VSS shrink.pulse_dly\[914\] shrink.pulse_dly\[913\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[928\].inv VDD VDD VSS VSS shrink.pulse_dly\[929\] shrink.pulse_dly\[928\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[0\].inv VDD VDD VSS VSS counter.ripple_clk\[1\] counter.Q\[0\] gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[284\].inv VDD VDD VSS VSS shrink.pulse_dly\[285\] shrink.pulse_dly\[284\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[299\].inv VDD VDD VSS VSS shrink.pulse_dly\[300\] shrink.pulse_dly\[299\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_26_162 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_26_173 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[852\].inv VDD VDD VSS VSS shrink.pulse_dly\[853\] shrink.pulse_dly\[852\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[222\].inv VDD VDD VSS VSS shrink.pulse_dly\[223\] shrink.pulse_dly\[222\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[237\].inv VDD VDD VSS VSS shrink.pulse_dly\[238\] shrink.pulse_dly\[237\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[867\].inv VDD VDD VSS VSS shrink.pulse_dly\[868\] shrink.pulse_dly\[867\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_2_56 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_2_45 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[805\].inv VDD VDD VSS VSS shrink.pulse_dly\[806\] shrink.pulse_dly\[805\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_11_87 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_23_165 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_23_198 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_11_98 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XTAP_TAPCELL_ROW_7_77 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[161\].inv VDD VDD VSS VSS shrink.pulse_dly\[162\] shrink.pulse_dly\[161\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[791\].inv VDD VDD VSS VSS shrink.pulse_dly\[792\] shrink.pulse_dly\[791\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_14_198 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[176\].inv VDD VDD VSS VSS shrink.pulse_dly\[177\] shrink.pulse_dly\[176\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[114\].inv VDD VDD VSS VSS shrink.pulse_dly\[115\] shrink.pulse_dly\[114\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[129\].inv VDD VDD VSS VSS shrink.pulse_dly\[130\] shrink.pulse_dly\[129\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[744\].inv VDD VDD VSS VSS shrink.pulse_dly\[745\] shrink.pulse_dly\[744\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[759\].inv VDD VDD VSS VSS shrink.pulse_dly\[760\] shrink.pulse_dly\[759\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_20_102 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xcounter.dly\[7\].Qbuf VDD VDD VSS VSS counter.Q\[7\] count[7] gf180mcu_as_sc_mcu7t3v3__buff_4
+XFILLER_9_191 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_7_139 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_0_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[683\].inv VDD VDD VSS VSS shrink.pulse_dly\[684\] shrink.pulse_dly\[683\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+X_18_ VDD VDD VSS VSS _04_ gf180mcu_as_sc_mcu7t3v3__tieh_4
+Xshrink.dly\[698\].inv VDD VDD VSS VSS shrink.pulse_dly\[699\] shrink.pulse_dly\[698\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[7\].inv VDD VDD VSS VSS shrink.pulse_dly\[8\] shrink.pulse_dly\[7\] gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[636\].inv VDD VDD VSS VSS shrink.pulse_dly\[637\] shrink.pulse_dly\[636\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[621\].inv VDD VDD VSS VSS shrink.pulse_dly\[622\] shrink.pulse_dly\[621\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_3_142 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[560\].inv VDD VDD VSS VSS shrink.pulse_dly\[561\] shrink.pulse_dly\[560\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[575\].inv VDD VDD VSS VSS shrink.pulse_dly\[576\] shrink.pulse_dly\[575\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_17_Right_17 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XPHY_EDGE_ROW_26_Right_26 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[513\].inv VDD VDD VSS VSS shrink.pulse_dly\[514\] shrink.pulse_dly\[513\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[528\].inv VDD VDD VSS VSS shrink.pulse_dly\[529\] shrink.pulse_dly\[528\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_10_4 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XPHY_EDGE_ROW_17_Left_45 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_14_32 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[452\].inv VDD VDD VSS VSS shrink.pulse_dly\[453\] shrink.pulse_dly\[452\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[467\].inv VDD VDD VSS VSS shrink.pulse_dly\[468\] shrink.pulse_dly\[467\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[405\].inv VDD VDD VSS VSS shrink.pulse_dly\[406\] shrink.pulse_dly\[405\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[80\].inv VDD VDD VSS VSS shrink.pulse_dly\[81\] shrink.pulse_dly\[80\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[95\].inv VDD VDD VSS VSS shrink.pulse_dly\[96\] shrink.pulse_dly\[95\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[33\].inv VDD VDD VSS VSS shrink.pulse_dly\[34\] shrink.pulse_dly\[33\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[48\].inv VDD VDD VSS VSS shrink.pulse_dly\[49\] shrink.pulse_dly\[48\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_25_31 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[391\].inv VDD VDD VSS VSS shrink.pulse_dly\[392\] shrink.pulse_dly\[391\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_2_24 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[974\].inv VDD VDD VSS VSS shrink.pulse_dly\[975\] shrink.pulse_dly\[974\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[344\].inv VDD VDD VSS VSS shrink.pulse_dly\[345\] shrink.pulse_dly\[344\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[359\].inv VDD VDD VSS VSS shrink.pulse_dly\[360\] shrink.pulse_dly\[359\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[989\].inv VDD VDD VSS VSS shrink.pulse_dly\[990\] shrink.pulse_dly\[989\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[912\].inv VDD VDD VSS VSS shrink.pulse_dly\[913\] shrink.pulse_dly\[912\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[927\].inv VDD VDD VSS VSS shrink.pulse_dly\[928\] shrink.pulse_dly\[927\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_20_169 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[283\].inv VDD VDD VSS VSS shrink.pulse_dly\[284\] shrink.pulse_dly\[283\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[221\].inv VDD VDD VSS VSS shrink.pulse_dly\[222\] shrink.pulse_dly\[221\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[298\].inv VDD VDD VSS VSS shrink.pulse_dly\[299\] shrink.pulse_dly\[298\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[851\].inv VDD VDD VSS VSS shrink.pulse_dly\[852\] shrink.pulse_dly\[851\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[236\].inv VDD VDD VSS VSS shrink.pulse_dly\[237\] shrink.pulse_dly\[236\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[866\].inv VDD VDD VSS VSS shrink.pulse_dly\[867\] shrink.pulse_dly\[866\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_7_107 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XPHY_EDGE_ROW_5_Left_33 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[804\].inv VDD VDD VSS VSS shrink.pulse_dly\[805\] shrink.pulse_dly\[804\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_22_87 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[819\].inv VDD VDD VSS VSS shrink.pulse_dly\[820\] shrink.pulse_dly\[819\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_6_162 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_26_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+X_17_ VDD VDD VSS VSS _03_ gf180mcu_as_sc_mcu7t3v3__tieh_4
+Xshrink.dly\[160\].inv VDD VDD VSS VSS shrink.pulse_dly\[161\] shrink.pulse_dly\[160\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[790\].inv VDD VDD VSS VSS shrink.pulse_dly\[791\] shrink.pulse_dly\[790\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[175\].inv VDD VDD VSS VSS shrink.pulse_dly\[176\] shrink.pulse_dly\[175\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[113\].inv VDD VDD VSS VSS shrink.pulse_dly\[114\] shrink.pulse_dly\[113\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_17_76 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_17_87 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[128\].inv VDD VDD VSS VSS shrink.pulse_dly\[129\] shrink.pulse_dly\[128\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_4_68 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[743\].inv VDD VDD VSS VSS shrink.pulse_dly\[744\] shrink.pulse_dly\[743\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[758\].inv VDD VDD VSS VSS shrink.pulse_dly\[759\] shrink.pulse_dly\[758\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_0_90 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_0_135 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_0_168 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[682\].inv VDD VDD VSS VSS shrink.pulse_dly\[683\] shrink.pulse_dly\[682\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[697\].inv VDD VDD VSS VSS shrink.pulse_dly\[698\] shrink.pulse_dly\[697\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[6\].inv VDD VDD VSS VSS shrink.pulse_dly\[7\] shrink.pulse_dly\[6\] gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[620\].inv VDD VDD VSS VSS shrink.pulse_dly\[621\] shrink.pulse_dly\[620\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[635\].inv VDD VDD VSS VSS shrink.pulse_dly\[636\] shrink.pulse_dly\[635\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_14_44 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_14_77 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[574\].inv VDD VDD VSS VSS shrink.pulse_dly\[575\] shrink.pulse_dly\[574\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[589\].inv VDD VDD VSS VSS shrink.pulse_dly\[590\] shrink.pulse_dly\[589\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[512\].inv VDD VDD VSS VSS shrink.pulse_dly\[513\] shrink.pulse_dly\[512\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[527\].inv VDD VDD VSS VSS shrink.pulse_dly\[528\] shrink.pulse_dly\[527\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_26_164 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_26_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_17_142 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_17_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[451\].inv VDD VDD VSS VSS shrink.pulse_dly\[452\] shrink.pulse_dly\[451\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[466\].inv VDD VDD VSS VSS shrink.pulse_dly\[467\] shrink.pulse_dly\[466\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[404\].inv VDD VDD VSS VSS shrink.pulse_dly\[405\] shrink.pulse_dly\[404\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[419\].inv VDD VDD VSS VSS shrink.pulse_dly\[420\] shrink.pulse_dly\[419\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[94\].inv VDD VDD VSS VSS shrink.pulse_dly\[95\] shrink.pulse_dly\[94\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[32\].inv VDD VDD VSS VSS shrink.pulse_dly\[33\] shrink.pulse_dly\[32\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[47\].inv VDD VDD VSS VSS shrink.pulse_dly\[48\] shrink.pulse_dly\[47\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_20_104 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_11_137 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[390\].inv VDD VDD VSS VSS shrink.pulse_dly\[391\] shrink.pulse_dly\[390\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_22_11 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_22_66 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[343\].inv VDD VDD VSS VSS shrink.pulse_dly\[344\] shrink.pulse_dly\[343\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[973\].inv VDD VDD VSS VSS shrink.pulse_dly\[974\] shrink.pulse_dly\[973\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[358\].inv VDD VDD VSS VSS shrink.pulse_dly\[359\] shrink.pulse_dly\[358\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[988\].inv VDD VDD VSS VSS shrink.pulse_dly\[989\] shrink.pulse_dly\[988\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[911\].inv VDD VDD VSS VSS shrink.pulse_dly\[912\] shrink.pulse_dly\[911\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[926\].inv VDD VDD VSS VSS shrink.pulse_dly\[927\] shrink.pulse_dly\[926\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+X_16_ VDD VDD VSS VSS _02_ gf180mcu_as_sc_mcu7t3v3__tieh_4
+XFILLER_19_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XTAP_TAPCELL_ROW_4_69 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_3_155 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_3_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[282\].inv VDD VDD VSS VSS shrink.pulse_dly\[283\] shrink.pulse_dly\[282\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[220\].inv VDD VDD VSS VSS shrink.pulse_dly\[221\] shrink.pulse_dly\[220\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[297\].inv VDD VDD VSS VSS shrink.pulse_dly\[298\] shrink.pulse_dly\[297\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[850\].inv VDD VDD VSS VSS shrink.pulse_dly\[851\] shrink.pulse_dly\[850\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[235\].inv VDD VDD VSS VSS shrink.pulse_dly\[236\] shrink.pulse_dly\[235\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[865\].inv VDD VDD VSS VSS shrink.pulse_dly\[866\] shrink.pulse_dly\[865\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_0_80 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[803\].inv VDD VDD VSS VSS shrink.pulse_dly\[804\] shrink.pulse_dly\[803\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_3_Right_3 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[818\].inv VDD VDD VSS VSS shrink.pulse_dly\[819\] shrink.pulse_dly\[818\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[189\].inv VDD VDD VSS VSS shrink.pulse_dly\[190\] shrink.pulse_dly\[189\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[174\].inv VDD VDD VSS VSS shrink.pulse_dly\[175\] shrink.pulse_dly\[174\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[112\].inv VDD VDD VSS VSS shrink.pulse_dly\[113\] shrink.pulse_dly\[112\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[742\].inv VDD VDD VSS VSS shrink.pulse_dly\[743\] shrink.pulse_dly\[742\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[127\].inv VDD VDD VSS VSS shrink.pulse_dly\[128\] shrink.pulse_dly\[127\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[757\].inv VDD VDD VSS VSS shrink.pulse_dly\[758\] shrink.pulse_dly\[757\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_14_23 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_14_34 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[681\].inv VDD VDD VSS VSS shrink.pulse_dly\[682\] shrink.pulse_dly\[681\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[696\].inv VDD VDD VSS VSS shrink.pulse_dly\[697\] shrink.pulse_dly\[696\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[5\].inv VDD VDD VSS VSS shrink.pulse_dly\[6\] shrink.pulse_dly\[5\] gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_25_33 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[634\].inv VDD VDD VSS VSS shrink.pulse_dly\[635\] shrink.pulse_dly\[634\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[649\].inv VDD VDD VSS VSS shrink.pulse_dly\[650\] shrink.pulse_dly\[649\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_17_176 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_2_8 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[573\].inv VDD VDD VSS VSS shrink.pulse_dly\[574\] shrink.pulse_dly\[573\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[588\].inv VDD VDD VSS VSS shrink.pulse_dly\[589\] shrink.pulse_dly\[588\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[511\].inv VDD VDD VSS VSS shrink.pulse_dly\[512\] shrink.pulse_dly\[511\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[526\].inv VDD VDD VSS VSS shrink.pulse_dly\[527\] shrink.pulse_dly\[526\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_21_111 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_6_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+X_15_ VDD VDD VSS VSS _01_ gf180mcu_as_sc_mcu7t3v3__tieh_4
+Xshrink.dly\[450\].inv VDD VDD VSS VSS shrink.pulse_dly\[451\] shrink.pulse_dly\[450\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[465\].inv VDD VDD VSS VSS shrink.pulse_dly\[466\] shrink.pulse_dly\[465\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[403\].inv VDD VDD VSS VSS shrink.pulse_dly\[404\] shrink.pulse_dly\[403\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[418\].inv VDD VDD VSS VSS shrink.pulse_dly\[419\] shrink.pulse_dly\[418\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[93\].inv VDD VDD VSS VSS shrink.pulse_dly\[94\] shrink.pulse_dly\[93\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[31\].inv VDD VDD VSS VSS shrink.pulse_dly\[32\] shrink.pulse_dly\[31\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[46\].inv VDD VDD VSS VSS shrink.pulse_dly\[47\] shrink.pulse_dly\[46\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_0_70 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_0_92 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[342\].inv VDD VDD VSS VSS shrink.pulse_dly\[343\] shrink.pulse_dly\[342\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[987\].inv VDD VDD VSS VSS shrink.pulse_dly\[988\] shrink.pulse_dly\[987\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[972\].inv VDD VDD VSS VSS shrink.pulse_dly\[973\] shrink.pulse_dly\[972\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[357\].inv VDD VDD VSS VSS shrink.pulse_dly\[358\] shrink.pulse_dly\[357\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[910\].inv VDD VDD VSS VSS shrink.pulse_dly\[911\] shrink.pulse_dly\[910\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[925\].inv VDD VDD VSS VSS shrink.pulse_dly\[926\] shrink.pulse_dly\[925\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_13_Right_13 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XPHY_EDGE_ROW_22_Right_22 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[281\].inv VDD VDD VSS VSS shrink.pulse_dly\[282\] shrink.pulse_dly\[281\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[296\].inv VDD VDD VSS VSS shrink.pulse_dly\[297\] shrink.pulse_dly\[296\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[864\].inv VDD VDD VSS VSS shrink.pulse_dly\[865\] shrink.pulse_dly\[864\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[234\].inv VDD VDD VSS VSS shrink.pulse_dly\[235\] shrink.pulse_dly\[234\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[879\].inv VDD VDD VSS VSS shrink.pulse_dly\[880\] shrink.pulse_dly\[879\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[249\].inv VDD VDD VSS VSS shrink.pulse_dly\[250\] shrink.pulse_dly\[249\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[802\].inv VDD VDD VSS VSS shrink.pulse_dly\[803\] shrink.pulse_dly\[802\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[817\].inv VDD VDD VSS VSS shrink.pulse_dly\[818\] shrink.pulse_dly\[817\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_26_122 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_25_89 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_26_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_9_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[173\].inv VDD VDD VSS VSS shrink.pulse_dly\[174\] shrink.pulse_dly\[173\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[188\].inv VDD VDD VSS VSS shrink.pulse_dly\[189\] shrink.pulse_dly\[188\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_17_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XTAP_TAPCELL_ROW_19_106 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[111\].inv VDD VDD VSS VSS shrink.pulse_dly\[112\] shrink.pulse_dly\[111\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[741\].inv VDD VDD VSS VSS shrink.pulse_dly\[742\] shrink.pulse_dly\[741\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[126\].inv VDD VDD VSS VSS shrink.pulse_dly\[127\] shrink.pulse_dly\[126\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[756\].inv VDD VDD VSS VSS shrink.pulse_dly\[757\] shrink.pulse_dly\[756\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[709\].inv VDD VDD VSS VSS shrink.pulse_dly\[710\] shrink.pulse_dly\[709\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[2\].Qbuf VDD VDD VSS VSS counter.Q\[2\] count[2] gf180mcu_as_sc_mcu7t3v3__buff_4
+XFILLER_14_103 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XTAP_TAPCELL_ROW_24_120 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_13_191 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[4\].inv VDD VDD VSS VSS shrink.pulse_dly\[5\] shrink.pulse_dly\[4\] gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[680\].inv VDD VDD VSS VSS shrink.pulse_dly\[681\] shrink.pulse_dly\[680\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[695\].inv VDD VDD VSS VSS shrink.pulse_dly\[696\] shrink.pulse_dly\[695\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[633\].inv VDD VDD VSS VSS shrink.pulse_dly\[634\] shrink.pulse_dly\[633\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_11_139 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[648\].inv VDD VDD VSS VSS shrink.pulse_dly\[649\] shrink.pulse_dly\[648\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_21_112 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XTAP_TAPCELL_ROW_12_90 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_8_37 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+X_14_ VDD VDD VSS VSS _00_ gf180mcu_as_sc_mcu7t3v3__tieh_4
+XTAP_TAPCELL_ROW_8_80 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_19_4 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[572\].inv VDD VDD VSS VSS shrink.pulse_dly\[573\] shrink.pulse_dly\[572\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_9_Left_37 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[587\].inv VDD VDD VSS VSS shrink.pulse_dly\[588\] shrink.pulse_dly\[587\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[510\].inv VDD VDD VSS VSS shrink.pulse_dly\[511\] shrink.pulse_dly\[510\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_3_157 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[525\].inv VDD VDD VSS VSS shrink.pulse_dly\[526\] shrink.pulse_dly\[525\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_24_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[464\].inv VDD VDD VSS VSS shrink.pulse_dly\[465\] shrink.pulse_dly\[464\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_5_49 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[479\].inv VDD VDD VSS VSS shrink.pulse_dly\[480\] shrink.pulse_dly\[479\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[402\].inv VDD VDD VSS VSS shrink.pulse_dly\[403\] shrink.pulse_dly\[402\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[417\].inv VDD VDD VSS VSS shrink.pulse_dly\[418\] shrink.pulse_dly\[417\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[92\].inv VDD VDD VSS VSS shrink.pulse_dly\[93\] shrink.pulse_dly\[92\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[30\].inv VDD VDD VSS VSS shrink.pulse_dly\[31\] shrink.pulse_dly\[30\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[45\].inv VDD VDD VSS VSS shrink.pulse_dly\[46\] shrink.pulse_dly\[45\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[971\].inv VDD VDD VSS VSS shrink.pulse_dly\[972\] shrink.pulse_dly\[971\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[341\].inv VDD VDD VSS VSS shrink.pulse_dly\[342\] shrink.pulse_dly\[341\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[986\].inv VDD VDD VSS VSS shrink.pulse_dly\[987\] shrink.pulse_dly\[986\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[356\].inv VDD VDD VSS VSS shrink.pulse_dly\[357\] shrink.pulse_dly\[356\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[924\].inv VDD VDD VSS VSS shrink.pulse_dly\[925\] shrink.pulse_dly\[924\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[939\].inv VDD VDD VSS VSS shrink.pulse_dly\[940\] shrink.pulse_dly\[939\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[309\].inv VDD VDD VSS VSS shrink.pulse_dly\[310\] shrink.pulse_dly\[309\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_17_101 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XTAP_TAPCELL_ROW_19_107 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[280\].inv VDD VDD VSS VSS shrink.pulse_dly\[281\] shrink.pulse_dly\[280\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[295\].inv VDD VDD VSS VSS shrink.pulse_dly\[296\] shrink.pulse_dly\[295\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[863\].inv VDD VDD VSS VSS shrink.pulse_dly\[864\] shrink.pulse_dly\[863\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[233\].inv VDD VDD VSS VSS shrink.pulse_dly\[234\] shrink.pulse_dly\[233\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[878\].inv VDD VDD VSS VSS shrink.pulse_dly\[879\] shrink.pulse_dly\[878\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[248\].inv VDD VDD VSS VSS shrink.pulse_dly\[249\] shrink.pulse_dly\[248\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[801\].inv VDD VDD VSS VSS shrink.pulse_dly\[802\] shrink.pulse_dly\[801\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[816\].inv VDD VDD VSS VSS shrink.pulse_dly\[817\] shrink.pulse_dly\[816\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[172\].inv VDD VDD VSS VSS shrink.pulse_dly\[173\] shrink.pulse_dly\[172\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[187\].inv VDD VDD VSS VSS shrink.pulse_dly\[188\] shrink.pulse_dly\[187\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[110\].inv VDD VDD VSS VSS shrink.pulse_dly\[111\] shrink.pulse_dly\[110\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[740\].inv VDD VDD VSS VSS shrink.pulse_dly\[741\] shrink.pulse_dly\[740\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[125\].inv VDD VDD VSS VSS shrink.pulse_dly\[126\] shrink.pulse_dly\[125\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[755\].inv VDD VDD VSS VSS shrink.pulse_dly\[756\] shrink.pulse_dly\[755\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_6_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_6_133 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_6_111 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_10_173 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XPHY_EDGE_ROW_25_Left_53 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+X_13_ VDD VDD VSS VSS _12_ gf180mcu_as_sc_mcu7t3v3__tieh_4
+Xshrink.dly\[708\].inv VDD VDD VSS VSS shrink.pulse_dly\[709\] shrink.pulse_dly\[708\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[694\].inv VDD VDD VSS VSS shrink.pulse_dly\[695\] shrink.pulse_dly\[694\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[3\].inv VDD VDD VSS VSS shrink.pulse_dly\[4\] shrink.pulse_dly\[3\] gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[632\].inv VDD VDD VSS VSS shrink.pulse_dly\[633\] shrink.pulse_dly\[632\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[647\].inv VDD VDD VSS VSS shrink.pulse_dly\[648\] shrink.pulse_dly\[647\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_17_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_5_39 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XTAP_TAPCELL_ROW_5_71 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[571\].inv VDD VDD VSS VSS shrink.pulse_dly\[572\] shrink.pulse_dly\[571\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_7_Right_7 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[586\].inv VDD VDD VSS VSS shrink.pulse_dly\[587\] shrink.pulse_dly\[586\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_12_Left_40 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_14_37 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[524\].inv VDD VDD VSS VSS shrink.pulse_dly\[525\] shrink.pulse_dly\[524\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[539\].inv VDD VDD VSS VSS shrink.pulse_dly\[540\] shrink.pulse_dly\[539\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[463\].inv VDD VDD VSS VSS shrink.pulse_dly\[464\] shrink.pulse_dly\[463\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[11\].Qbuf VDD VDD VSS VSS counter.Q\[11\] count[11] gf180mcu_as_sc_mcu7t3v3__buff_4
+Xshrink.dly\[478\].inv VDD VDD VSS VSS shrink.pulse_dly\[479\] shrink.pulse_dly\[478\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_9_4 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[401\].inv VDD VDD VSS VSS shrink.pulse_dly\[402\] shrink.pulse_dly\[401\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_2_18 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[416\].inv VDD VDD VSS VSS shrink.pulse_dly\[417\] shrink.pulse_dly\[416\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_27_130 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[91\].inv VDD VDD VSS VSS shrink.pulse_dly\[92\] shrink.pulse_dly\[91\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[44\].inv VDD VDD VSS VSS shrink.pulse_dly\[45\] shrink.pulse_dly\[44\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[59\].inv VDD VDD VSS VSS shrink.pulse_dly\[60\] shrink.pulse_dly\[59\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[970\].inv VDD VDD VSS VSS shrink.pulse_dly\[971\] shrink.pulse_dly\[970\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[340\].inv VDD VDD VSS VSS shrink.pulse_dly\[341\] shrink.pulse_dly\[340\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[985\].inv VDD VDD VSS VSS shrink.pulse_dly\[986\] shrink.pulse_dly\[985\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[355\].inv VDD VDD VSS VSS shrink.pulse_dly\[356\] shrink.pulse_dly\[355\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[923\].inv VDD VDD VSS VSS shrink.pulse_dly\[924\] shrink.pulse_dly\[923\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_9_120 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[938\].inv VDD VDD VSS VSS shrink.pulse_dly\[939\] shrink.pulse_dly\[938\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_9_186 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_9_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[308\].inv VDD VDD VSS VSS shrink.pulse_dly\[309\] shrink.pulse_dly\[308\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_3_72 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_22_37 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xcounter.dly\[9\].dff VDD VDD VSS VSS counter.ripple_clk\[9\] counter.Q\[9\] rst_n
++ _09_ counter.ripple_clk\[10\] gf180mcu_as_sc_mcu7t3v3__dfsrtp_2
+XFILLER_10_152 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[294\].inv VDD VDD VSS VSS shrink.pulse_dly\[295\] shrink.pulse_dly\[294\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[862\].inv VDD VDD VSS VSS shrink.pulse_dly\[863\] shrink.pulse_dly\[862\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[232\].inv VDD VDD VSS VSS shrink.pulse_dly\[233\] shrink.pulse_dly\[232\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[877\].inv VDD VDD VSS VSS shrink.pulse_dly\[878\] shrink.pulse_dly\[877\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[247\].inv VDD VDD VSS VSS shrink.pulse_dly\[248\] shrink.pulse_dly\[247\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[800\].inv VDD VDD VSS VSS shrink.pulse_dly\[801\] shrink.pulse_dly\[800\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[815\].inv VDD VDD VSS VSS shrink.pulse_dly\[816\] shrink.pulse_dly\[815\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[171\].inv VDD VDD VSS VSS shrink.pulse_dly\[172\] shrink.pulse_dly\[171\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[186\].inv VDD VDD VSS VSS shrink.pulse_dly\[187\] shrink.pulse_dly\[186\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[124\].inv VDD VDD VSS VSS shrink.pulse_dly\[125\] shrink.pulse_dly\[124\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[754\].inv VDD VDD VSS VSS shrink.pulse_dly\[755\] shrink.pulse_dly\[754\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[139\].inv VDD VDD VSS VSS shrink.pulse_dly\[140\] shrink.pulse_dly\[139\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[769\].inv VDD VDD VSS VSS shrink.pulse_dly\[770\] shrink.pulse_dly\[769\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[8\].Qbuf VDD VDD VSS VSS counter.Q\[8\] count[8] gf180mcu_as_sc_mcu7t3v3__buff_4
+Xshrink.dly\[707\].inv VDD VDD VSS VSS shrink.pulse_dly\[708\] shrink.pulse_dly\[707\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_5_72 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[693\].inv VDD VDD VSS VSS shrink.pulse_dly\[694\] shrink.pulse_dly\[693\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[2\].inv VDD VDD VSS VSS shrink.pulse_dly\[3\] shrink.pulse_dly\[2\] gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[631\].inv VDD VDD VSS VSS shrink.pulse_dly\[632\] shrink.pulse_dly\[631\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[646\].inv VDD VDD VSS VSS shrink.pulse_dly\[647\] shrink.pulse_dly\[646\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[570\].inv VDD VDD VSS VSS shrink.pulse_dly\[571\] shrink.pulse_dly\[570\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_17_147 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[585\].inv VDD VDD VSS VSS shrink.pulse_dly\[586\] shrink.pulse_dly\[585\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[523\].inv VDD VDD VSS VSS shrink.pulse_dly\[524\] shrink.pulse_dly\[523\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[538\].inv VDD VDD VSS VSS shrink.pulse_dly\[539\] shrink.pulse_dly\[538\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_23_139 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_7_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_26_91 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[462\].inv VDD VDD VSS VSS shrink.pulse_dly\[463\] shrink.pulse_dly\[462\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[477\].inv VDD VDD VSS VSS shrink.pulse_dly\[478\] shrink.pulse_dly\[477\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[400\].inv VDD VDD VSS VSS shrink.pulse_dly\[401\] shrink.pulse_dly\[400\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[415\].inv VDD VDD VSS VSS shrink.pulse_dly\[416\] shrink.pulse_dly\[415\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[90\].inv VDD VDD VSS VSS shrink.pulse_dly\[91\] shrink.pulse_dly\[90\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_10_131 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[43\].inv VDD VDD VSS VSS shrink.pulse_dly\[44\] shrink.pulse_dly\[43\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_10_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[58\].inv VDD VDD VSS VSS shrink.pulse_dly\[59\] shrink.pulse_dly\[58\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_17_49 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[984\].inv VDD VDD VSS VSS shrink.pulse_dly\[985\] shrink.pulse_dly\[984\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[354\].inv VDD VDD VSS VSS shrink.pulse_dly\[355\] shrink.pulse_dly\[354\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[999\].inv VDD VDD VSS VSS shrink.pulse_dly\[1000\] shrink.pulse_dly\[999\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[369\].inv VDD VDD VSS VSS shrink.pulse_dly\[370\] shrink.pulse_dly\[369\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[922\].inv VDD VDD VSS VSS shrink.pulse_dly\[923\] shrink.pulse_dly\[922\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[307\].inv VDD VDD VSS VSS shrink.pulse_dly\[308\] shrink.pulse_dly\[307\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[937\].inv VDD VDD VSS VSS shrink.pulse_dly\[938\] shrink.pulse_dly\[937\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1009\].inv VDD VDD VSS VSS shrink.pulse_dly\[1010\] shrink.pulse_dly\[1009\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[8\].dff VDD VDD VSS VSS counter.ripple_clk\[8\] counter.Q\[8\] rst_n
++ _08_ counter.ripple_clk\[9\] gf180mcu_as_sc_mcu7t3v3__dfsrtp_2
+XFILLER_9_72 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_0_108 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[293\].inv VDD VDD VSS VSS shrink.pulse_dly\[294\] shrink.pulse_dly\[293\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[861\].inv VDD VDD VSS VSS shrink.pulse_dly\[862\] shrink.pulse_dly\[861\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[231\].inv VDD VDD VSS VSS shrink.pulse_dly\[232\] shrink.pulse_dly\[231\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[876\].inv VDD VDD VSS VSS shrink.pulse_dly\[877\] shrink.pulse_dly\[876\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[246\].inv VDD VDD VSS VSS shrink.pulse_dly\[247\] shrink.pulse_dly\[246\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[829\].inv VDD VDD VSS VSS shrink.pulse_dly\[830\] shrink.pulse_dly\[829\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[814\].inv VDD VDD VSS VSS shrink.pulse_dly\[815\] shrink.pulse_dly\[814\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_22_2 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_14_39 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[170\].inv VDD VDD VSS VSS shrink.pulse_dly\[171\] shrink.pulse_dly\[170\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[185\].inv VDD VDD VSS VSS shrink.pulse_dly\[186\] shrink.pulse_dly\[185\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_20_93 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[123\].inv VDD VDD VSS VSS shrink.pulse_dly\[124\] shrink.pulse_dly\[123\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[753\].inv VDD VDD VSS VSS shrink.pulse_dly\[754\] shrink.pulse_dly\[753\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[138\].inv VDD VDD VSS VSS shrink.pulse_dly\[139\] shrink.pulse_dly\[138\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[768\].inv VDD VDD VSS VSS shrink.pulse_dly\[769\] shrink.pulse_dly\[768\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[706\].inv VDD VDD VSS VSS shrink.pulse_dly\[707\] shrink.pulse_dly\[706\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_26_104 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XTAP_TAPCELL_ROW_2_63 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[692\].inv VDD VDD VSS VSS shrink.pulse_dly\[693\] shrink.pulse_dly\[692\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1\].inv VDD VDD VSS VSS shrink.pulse_dly\[2\] shrink.pulse_dly\[1\] gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[630\].inv VDD VDD VSS VSS shrink.pulse_dly\[631\] shrink.pulse_dly\[630\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_14_107 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[645\].inv VDD VDD VSS VSS shrink.pulse_dly\[646\] shrink.pulse_dly\[645\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_26_81 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_9_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_3_52 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_22_17 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_22_28 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[584\].inv VDD VDD VSS VSS shrink.pulse_dly\[585\] shrink.pulse_dly\[584\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[599\].inv VDD VDD VSS VSS shrink.pulse_dly\[600\] shrink.pulse_dly\[599\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[522\].inv VDD VDD VSS VSS shrink.pulse_dly\[523\] shrink.pulse_dly\[522\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[537\].inv VDD VDD VSS VSS shrink.pulse_dly\[538\] shrink.pulse_dly\[537\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_17_28 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[461\].inv VDD VDD VSS VSS shrink.pulse_dly\[462\] shrink.pulse_dly\[461\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[476\].inv VDD VDD VSS VSS shrink.pulse_dly\[477\] shrink.pulse_dly\[476\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_2_172 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[429\].inv VDD VDD VSS VSS shrink.pulse_dly\[430\] shrink.pulse_dly\[429\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[414\].inv VDD VDD VSS VSS shrink.pulse_dly\[415\] shrink.pulse_dly\[414\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[42\].inv VDD VDD VSS VSS shrink.pulse_dly\[43\] shrink.pulse_dly\[42\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[57\].inv VDD VDD VSS VSS shrink.pulse_dly\[58\] shrink.pulse_dly\[57\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[983\].inv VDD VDD VSS VSS shrink.pulse_dly\[984\] shrink.pulse_dly\[983\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[353\].inv VDD VDD VSS VSS shrink.pulse_dly\[354\] shrink.pulse_dly\[353\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[998\].inv VDD VDD VSS VSS shrink.pulse_dly\[999\] shrink.pulse_dly\[998\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[368\].inv VDD VDD VSS VSS shrink.pulse_dly\[369\] shrink.pulse_dly\[368\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[921\].inv VDD VDD VSS VSS shrink.pulse_dly\[922\] shrink.pulse_dly\[921\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[306\].inv VDD VDD VSS VSS shrink.pulse_dly\[307\] shrink.pulse_dly\[306\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[936\].inv VDD VDD VSS VSS shrink.pulse_dly\[937\] shrink.pulse_dly\[936\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1008\].inv VDD VDD VSS VSS shrink.pulse_dly\[1009\] shrink.pulse_dly\[1008\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[7\].dff VDD VDD VSS VSS counter.ripple_clk\[7\] counter.Q\[7\] rst_n
++ _07_ counter.ripple_clk\[8\] gf180mcu_as_sc_mcu7t3v3__dfsrtp_2
+XFILLER_6_41 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_6_85 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[292\].inv VDD VDD VSS VSS shrink.pulse_dly\[293\] shrink.pulse_dly\[292\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_16_Left_44 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_26_127 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_26_149 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[860\].inv VDD VDD VSS VSS shrink.pulse_dly\[861\] shrink.pulse_dly\[860\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[230\].inv VDD VDD VSS VSS shrink.pulse_dly\[231\] shrink.pulse_dly\[230\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[875\].inv VDD VDD VSS VSS shrink.pulse_dly\[876\] shrink.pulse_dly\[875\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[245\].inv VDD VDD VSS VSS shrink.pulse_dly\[246\] shrink.pulse_dly\[245\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[813\].inv VDD VDD VSS VSS shrink.pulse_dly\[814\] shrink.pulse_dly\[813\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[828\].inv VDD VDD VSS VSS shrink.pulse_dly\[829\] shrink.pulse_dly\[828\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_17_138 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_15_72 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XTAP_TAPCELL_ROW_2_64 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_11_19 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XPHY_EDGE_ROW_1_Left_29 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[184\].inv VDD VDD VSS VSS shrink.pulse_dly\[185\] shrink.pulse_dly\[184\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_22_152 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_7_4 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[199\].inv VDD VDD VSS VSS shrink.pulse_dly\[200\] shrink.pulse_dly\[199\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[137\].inv VDD VDD VSS VSS shrink.pulse_dly\[138\] shrink.pulse_dly\[137\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[122\].inv VDD VDD VSS VSS shrink.pulse_dly\[123\] shrink.pulse_dly\[122\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[752\].inv VDD VDD VSS VSS shrink.pulse_dly\[753\] shrink.pulse_dly\[752\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[767\].inv VDD VDD VSS VSS shrink.pulse_dly\[768\] shrink.pulse_dly\[767\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[705\].inv VDD VDD VSS VSS shrink.pulse_dly\[706\] shrink.pulse_dly\[705\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_3_86 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_6_104 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_10_111 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_10_199 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[691\].inv VDD VDD VSS VSS shrink.pulse_dly\[692\] shrink.pulse_dly\[691\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[0\].inv VDD VDD VSS VSS shrink.pulse_dly\[1\] shrink.pulse_dly\[0\] gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[644\].inv VDD VDD VSS VSS shrink.pulse_dly\[645\] shrink.pulse_dly\[644\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[659\].inv VDD VDD VSS VSS shrink.pulse_dly\[660\] shrink.pulse_dly\[659\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[12\].inv VDD VDD VSS VSS counter.ripple_clk\[13\] counter.Q\[12\] gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_4_Left_32 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_23_72 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_9_63 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[583\].inv VDD VDD VSS VSS shrink.pulse_dly\[584\] shrink.pulse_dly\[583\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[598\].inv VDD VDD VSS VSS shrink.pulse_dly\[599\] shrink.pulse_dly\[598\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[536\].inv VDD VDD VSS VSS shrink.pulse_dly\[537\] shrink.pulse_dly\[536\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[521\].inv VDD VDD VSS VSS shrink.pulse_dly\[522\] shrink.pulse_dly\[521\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_18_72 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[460\].inv VDD VDD VSS VSS shrink.pulse_dly\[461\] shrink.pulse_dly\[460\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[475\].inv VDD VDD VSS VSS shrink.pulse_dly\[476\] shrink.pulse_dly\[475\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[413\].inv VDD VDD VSS VSS shrink.pulse_dly\[414\] shrink.pulse_dly\[413\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[428\].inv VDD VDD VSS VSS shrink.pulse_dly\[429\] shrink.pulse_dly\[428\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[41\].inv VDD VDD VSS VSS shrink.pulse_dly\[42\] shrink.pulse_dly\[41\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[56\].inv VDD VDD VSS VSS shrink.pulse_dly\[57\] shrink.pulse_dly\[56\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_25_183 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[982\].inv VDD VDD VSS VSS shrink.pulse_dly\[983\] shrink.pulse_dly\[982\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[352\].inv VDD VDD VSS VSS shrink.pulse_dly\[353\] shrink.pulse_dly\[352\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_2_65 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[997\].inv VDD VDD VSS VSS shrink.pulse_dly\[998\] shrink.pulse_dly\[997\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[367\].inv VDD VDD VSS VSS shrink.pulse_dly\[368\] shrink.pulse_dly\[367\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[920\].inv VDD VDD VSS VSS shrink.pulse_dly\[921\] shrink.pulse_dly\[920\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[935\].inv VDD VDD VSS VSS shrink.pulse_dly\[936\] shrink.pulse_dly\[935\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[305\].inv VDD VDD VSS VSS shrink.pulse_dly\[306\] shrink.pulse_dly\[305\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_16_172 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[1007\].inv VDD VDD VSS VSS shrink.pulse_dly\[1008\] shrink.pulse_dly\[1007\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[6\].dff VDD VDD VSS VSS counter.ripple_clk\[6\] counter.Q\[6\] rst_n
++ _06_ counter.ripple_clk\[7\] gf180mcu_as_sc_mcu7t3v3__dfsrtp_2
+XFILLER_13_142 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[291\].inv VDD VDD VSS VSS shrink.pulse_dly\[292\] shrink.pulse_dly\[291\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[874\].inv VDD VDD VSS VSS shrink.pulse_dly\[875\] shrink.pulse_dly\[874\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[244\].inv VDD VDD VSS VSS shrink.pulse_dly\[245\] shrink.pulse_dly\[244\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[259\].inv VDD VDD VSS VSS shrink.pulse_dly\[260\] shrink.pulse_dly\[259\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[889\].inv VDD VDD VSS VSS shrink.pulse_dly\[890\] shrink.pulse_dly\[889\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[812\].inv VDD VDD VSS VSS shrink.pulse_dly\[813\] shrink.pulse_dly\[812\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_22_19 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[827\].inv VDD VDD VSS VSS shrink.pulse_dly\[828\] shrink.pulse_dly\[827\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_16_Right_16 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XPHY_EDGE_ROW_25_Right_25 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[183\].inv VDD VDD VSS VSS shrink.pulse_dly\[184\] shrink.pulse_dly\[183\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[198\].inv VDD VDD VSS VSS shrink.pulse_dly\[199\] shrink.pulse_dly\[198\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[121\].inv VDD VDD VSS VSS shrink.pulse_dly\[122\] shrink.pulse_dly\[121\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[136\].inv VDD VDD VSS VSS shrink.pulse_dly\[137\] shrink.pulse_dly\[136\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[751\].inv VDD VDD VSS VSS shrink.pulse_dly\[752\] shrink.pulse_dly\[751\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[766\].inv VDD VDD VSS VSS shrink.pulse_dly\[767\] shrink.pulse_dly\[766\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[704\].inv VDD VDD VSS VSS shrink.pulse_dly\[705\] shrink.pulse_dly\[704\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[719\].inv VDD VDD VSS VSS shrink.pulse_dly\[720\] shrink.pulse_dly\[719\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_2_174 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xcounter.dly\[3\].Qbuf VDD VDD VSS VSS counter.Q\[3\] count[3] gf180mcu_as_sc_mcu7t3v3__buff_4
+Xshrink.dly\[690\].inv VDD VDD VSS VSS shrink.pulse_dly\[691\] shrink.pulse_dly\[690\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[643\].inv VDD VDD VSS VSS shrink.pulse_dly\[644\] shrink.pulse_dly\[643\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[658\].inv VDD VDD VSS VSS shrink.pulse_dly\[659\] shrink.pulse_dly\[658\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[11\].inv VDD VDD VSS VSS counter.ripple_clk\[12\] counter.Q\[11\] gf180mcu_as_sc_mcu7t3v3__inv_2
+XPHY_EDGE_ROW_2_Right_2 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_20_30 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[582\].inv VDD VDD VSS VSS shrink.pulse_dly\[583\] shrink.pulse_dly\[582\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[520\].inv VDD VDD VSS VSS shrink.pulse_dly\[521\] shrink.pulse_dly\[520\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[597\].inv VDD VDD VSS VSS shrink.pulse_dly\[598\] shrink.pulse_dly\[597\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[535\].inv VDD VDD VSS VSS shrink.pulse_dly\[536\] shrink.pulse_dly\[535\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_6_87 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_6_43 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_26_107 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XTAP_TAPCELL_ROW_15_96 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+XFILLER_15_30 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XFILLER_15_63 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[474\].inv VDD VDD VSS VSS shrink.pulse_dly\[475\] shrink.pulse_dly\[474\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[489\].inv VDD VDD VSS VSS shrink.pulse_dly\[490\] shrink.pulse_dly\[489\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[412\].inv VDD VDD VSS VSS shrink.pulse_dly\[413\] shrink.pulse_dly\[412\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[427\].inv VDD VDD VSS VSS shrink.pulse_dly\[428\] shrink.pulse_dly\[427\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[40\].inv VDD VDD VSS VSS shrink.pulse_dly\[41\] shrink.pulse_dly\[40\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[55\].inv VDD VDD VSS VSS shrink.pulse_dly\[56\] shrink.pulse_dly\[55\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[981\].inv VDD VDD VSS VSS shrink.pulse_dly\[982\] shrink.pulse_dly\[981\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[351\].inv VDD VDD VSS VSS shrink.pulse_dly\[352\] shrink.pulse_dly\[351\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[366\].inv VDD VDD VSS VSS shrink.pulse_dly\[367\] shrink.pulse_dly\[366\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[996\].inv VDD VDD VSS VSS shrink.pulse_dly\[997\] shrink.pulse_dly\[996\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_10_102 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+XFILLER_12_20 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[934\].inv VDD VDD VSS VSS shrink.pulse_dly\[935\] shrink.pulse_dly\[934\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[304\].inv VDD VDD VSS VSS shrink.pulse_dly\[305\] shrink.pulse_dly\[304\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[949\].inv VDD VDD VSS VSS shrink.pulse_dly\[950\] shrink.pulse_dly\[949\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[1006\].inv VDD VDD VSS VSS shrink.pulse_dly\[1007\] shrink.pulse_dly\[1006\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[319\].inv VDD VDD VSS VSS shrink.pulse_dly\[320\] shrink.pulse_dly\[319\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_5_150 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xcounter.dly\[5\].dff VDD VDD VSS VSS counter.ripple_clk\[5\] counter.Q\[5\] rst_n
++ _05_ counter.ripple_clk\[6\] gf180mcu_as_sc_mcu7t3v3__dfsrtp_2
+Xshrink.dly\[290\].inv VDD VDD VSS VSS shrink.pulse_dly\[291\] shrink.pulse_dly\[290\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[243\].inv VDD VDD VSS VSS shrink.pulse_dly\[244\] shrink.pulse_dly\[243\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[873\].inv VDD VDD VSS VSS shrink.pulse_dly\[874\] shrink.pulse_dly\[873\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_2_197 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[258\].inv VDD VDD VSS VSS shrink.pulse_dly\[259\] shrink.pulse_dly\[258\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[888\].inv VDD VDD VSS VSS shrink.pulse_dly\[889\] shrink.pulse_dly\[888\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_0_12 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[811\].inv VDD VDD VSS VSS shrink.pulse_dly\[812\] shrink.pulse_dly\[811\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_9_65 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+Xshrink.dly\[826\].inv VDD VDD VSS VSS shrink.pulse_dly\[827\] shrink.pulse_dly\[826\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[182\].inv VDD VDD VSS VSS shrink.pulse_dly\[183\] shrink.pulse_dly\[182\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[197\].inv VDD VDD VSS VSS shrink.pulse_dly\[198\] shrink.pulse_dly\[197\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[120\].inv VDD VDD VSS VSS shrink.pulse_dly\[121\] shrink.pulse_dly\[120\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[135\].inv VDD VDD VSS VSS shrink.pulse_dly\[136\] shrink.pulse_dly\[135\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[750\].inv VDD VDD VSS VSS shrink.pulse_dly\[751\] shrink.pulse_dly\[750\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[765\].inv VDD VDD VSS VSS shrink.pulse_dly\[766\] shrink.pulse_dly\[765\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[703\].inv VDD VDD VSS VSS shrink.pulse_dly\[704\] shrink.pulse_dly\[703\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xshrink.dly\[718\].inv VDD VDD VSS VSS shrink.pulse_dly\[719\] shrink.pulse_dly\[718\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_6_66 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_2
+Xshrink.dly\[642\].inv VDD VDD VSS VSS shrink.pulse_dly\[643\] shrink.pulse_dly\[642\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+XTAP_TAPCELL_ROW_15_97 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+Xshrink.dly\[657\].inv VDD VDD VSS VSS shrink.pulse_dly\[658\] shrink.pulse_dly\[657\]
++ gf180mcu_as_sc_mcu7t3v3__inv_2
+Xcounter.dly\[10\].inv VDD VDD VSS VSS counter.ripple_clk\[11\] counter.Q\[10\] gf180mcu_as_sc_mcu7t3v3__inv_2
+XFILLER_16_174 VDD VDD VSS VSS gf180mcu_as_sc_mcu7t3v3__fill_1
+XTAP_TAPCELL_ROW_18_103 VDD VSS gf180mcu_as_sc_mcu7t3v3__tap_2
+.ends
+

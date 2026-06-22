@@ -1,0 +1,31 @@
+* NGspice testbench for pulse shrinking cell
+.param
++ sw_stat_global = 0
++ sw_stat_mismatch = 0
++ mc_skew = 3
++ res_mc_skew = 3
++ cap_mc_skew = 3
++ fnoicor = 0
+
+.temp 25
+
+VVSS VSS 0 0
+VVDD VDD 0 3.3
+
+
+.lib "/home/egor/proj/waferspace/gf180mcu-caravel-template/gf180mcu/gf180mcuD/libs.tech/ngspice/sm141064.ngspice" typical
+
+.include shrinking_tdc.pex.spice
+
+Xshrink VSS VDD RST IN Q0 Q1 Q2 Q3 Q4 Q5 Q6 Q7 shrinking_tdc
+
+VRST RST 0 PWL 0ps 0V 580ps 0V 590ps 3.3V
+VIN IN 0 PWL 0ps 3.3V 1100ps 3.3V 1110ps 0V 1610ps 0V 1620ps 3.3V 
+
+.control
+save v(IN) v(RST) v(Q0) v(Q1) v(Q2) v(Q3) v(Q4) v(Q5) v(Q6) v(Q7)
+tran 5p 150n
+
+write shrink.raw
+plot v(Q0)
+.endc

@@ -1,0 +1,53 @@
+############################## General #################################
+
+meta:
+  version: 2
+  flow: Classic
+  substituting_steps:
+    
+    # disable timing related steps
+    OpenROAD.ResizerTimingPostCTS: null
+    OpenROAD.STAPostPNR: null
+    OpenROAD.IRDropReport: null
+
+DESIGN_NAME: shrinking_tdc
+VERILOG_FILES:
+- dir::shrinking_tdc.v
+
+# 3.3V CELL LIBRABRY
+STD_CELL_LIBRARY: gf180mcu_as_sc_mcu7t3v3
+STD_CELL_LIBRARY_OPT: gf180mcu_as_sc_mcu7t3v3
+
+PRIMARY_GDSII_STREAMOUT_TOOL: klayout
+
+# SDC files (empty)
+PNR_SDC_FILE: dir::constraint.sdc
+SIGNOFF_SDC_FILE: dir::constraint.sdc
+FALLBACK_SDC: dir::constraint.sdc
+
+# Power / ground nets
+VDD_NETS:
+- VDD
+GND_NETS:
+- VSS
+
+############################# Flow config ############################## 
+
+# disable timing related steps
+RUN_POST_GPL_DESIGN_REPAIR: false
+RUN_ANTENNA_REPAIR: false
+RUN_SPEF_EXTRACTION: false
+
+######################### Floorplanning & PDN ########################## 
+
+FP_SIZING: absolute
+DIE_AREA: [0, 0, 120, 120]
+CORE_AREA: [3, 3, 117, 117]
+FP_PIN_ORDER_CFG: dir::pin.cfg
+PDN_MULTILAYER: false
+PDN_VOFFSET: 5
+PDN_VPITCH: 15
+
+PL_TIMING_DRIVEN: false
+PL_ROUTABILITY_DRIVEN: true
+

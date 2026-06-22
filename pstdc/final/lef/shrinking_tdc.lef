@@ -1,0 +1,258 @@
+VERSION 5.7 ;
+  NOWIREEXTENSIONATPIN ON ;
+  DIVIDERCHAR "/" ;
+  BUSBITCHARS "[]" ;
+MACRO shrinking_tdc
+  CLASS BLOCK ;
+  FOREIGN shrinking_tdc ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 120.000 BY 120.000 ;
+  PIN VDD
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER Metal4 ;
+        RECT 7.560 3.620 9.160 113.980 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 22.560 3.620 24.160 113.980 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 37.560 3.620 39.160 113.980 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 52.560 3.620 54.160 113.980 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 67.560 3.620 69.160 113.980 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 82.560 3.620 84.160 113.980 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 97.560 3.620 99.160 113.980 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 112.560 3.620 114.160 113.980 ;
+    END
+  END VDD
+  PIN VSS
+    DIRECTION INOUT ;
+    USE GROUND ;
+    PORT
+      LAYER Metal4 ;
+        RECT 10.860 3.620 12.460 113.980 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 25.860 3.620 27.460 113.980 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 40.860 3.620 42.460 113.980 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 55.860 3.620 57.460 113.980 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 70.860 3.620 72.460 113.980 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 85.860 3.620 87.460 113.980 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 100.860 3.620 102.460 113.980 ;
+    END
+  END VSS
+  PIN count[0]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 2.475200 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 5.600 0.000 6.160 0.560 ;
+    END
+  END count[0]
+  PIN count[10]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 2.475200 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 95.200 0.000 95.760 0.560 ;
+    END
+  END count[10]
+  PIN count[11]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 2.475200 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 104.160 0.000 104.720 0.560 ;
+    END
+  END count[11]
+  PIN count[12]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 2.475200 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 113.120 0.000 113.680 0.560 ;
+    END
+  END count[12]
+  PIN count[1]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 2.475200 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 14.560 0.000 15.120 0.560 ;
+    END
+  END count[1]
+  PIN count[2]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 2.475200 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 23.520 0.000 24.080 0.560 ;
+    END
+  END count[2]
+  PIN count[3]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 2.475200 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 32.480 0.000 33.040 0.560 ;
+    END
+  END count[3]
+  PIN count[4]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 2.475200 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 41.440 0.000 42.000 0.560 ;
+    END
+  END count[4]
+  PIN count[5]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 2.475200 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 50.400 0.000 50.960 0.560 ;
+    END
+  END count[5]
+  PIN count[6]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 2.475200 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 59.360 0.000 59.920 0.560 ;
+    END
+  END count[6]
+  PIN count[7]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 2.475200 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 68.320 0.000 68.880 0.560 ;
+    END
+  END count[7]
+  PIN count[8]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 2.475200 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 77.280 0.000 77.840 0.560 ;
+    END
+  END count[8]
+  PIN count[9]
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 2.475200 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 86.240 0.000 86.800 0.560 ;
+    END
+  END count[9]
+  PIN pulse_in
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 2.665600 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 0.000 88.480 0.560 89.040 ;
+    END
+  END pulse_in
+  PIN rst_n
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 19.991999 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 0.000 29.120 0.560 29.680 ;
+    END
+  END rst_n
+  OBS
+      LAYER Nwell ;
+        RECT 2.930 3.490 116.910 114.110 ;
+      LAYER Metal1 ;
+        RECT 3.360 3.620 116.480 113.980 ;
+      LAYER Metal2 ;
+        RECT 4.060 0.860 116.340 113.870 ;
+        RECT 4.060 0.560 5.300 0.860 ;
+        RECT 6.460 0.560 14.260 0.860 ;
+        RECT 15.420 0.560 23.220 0.860 ;
+        RECT 24.380 0.560 32.180 0.860 ;
+        RECT 33.340 0.560 41.140 0.860 ;
+        RECT 42.300 0.560 50.100 0.860 ;
+        RECT 51.260 0.560 59.060 0.860 ;
+        RECT 60.220 0.560 68.020 0.860 ;
+        RECT 69.180 0.560 76.980 0.860 ;
+        RECT 78.140 0.560 85.940 0.860 ;
+        RECT 87.100 0.560 94.900 0.860 ;
+        RECT 96.060 0.560 103.860 0.860 ;
+        RECT 105.020 0.560 112.820 0.860 ;
+        RECT 113.980 0.560 116.340 0.860 ;
+      LAYER Metal3 ;
+        RECT 0.560 89.340 116.390 113.820 ;
+        RECT 0.860 88.180 116.390 89.340 ;
+        RECT 0.560 29.980 116.390 88.180 ;
+        RECT 0.860 28.820 116.390 29.980 ;
+        RECT 0.560 0.700 116.390 28.820 ;
+      LAYER Metal4 ;
+        RECT 9.660 6.250 10.560 113.030 ;
+        RECT 12.760 6.250 22.260 113.030 ;
+        RECT 24.460 6.250 25.560 113.030 ;
+        RECT 27.760 6.250 37.260 113.030 ;
+        RECT 39.460 6.250 40.560 113.030 ;
+        RECT 42.760 6.250 52.260 113.030 ;
+        RECT 54.460 6.250 55.560 113.030 ;
+        RECT 57.760 6.250 67.260 113.030 ;
+        RECT 69.460 6.250 70.560 113.030 ;
+        RECT 72.760 6.250 82.260 113.030 ;
+        RECT 84.460 6.250 85.560 113.030 ;
+        RECT 87.760 6.250 97.260 113.030 ;
+        RECT 99.460 6.250 100.560 113.030 ;
+        RECT 102.760 6.250 110.740 113.030 ;
+  END
+END shrinking_tdc
+END LIBRARY
+
