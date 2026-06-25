@@ -77,7 +77,7 @@ help: ## Show this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-20s %s\n", $$1, $$2}'
 .PHONY: help
 
-all: caravel-librelane librelane copy-final ## Build the project (runs LibreLane)
+all: caravel-librelane macros-librelane librelane copy-final ## Build the project (runs LibreLane)
 .PHONY: all
 .NOTPARALLEL: all
 
@@ -104,6 +104,17 @@ caravel-librelane: ## Run LibreLane flow for caravel
 	#make -C caravel all
 	make -C caravel librelane-nodrc
 	make -C caravel copy-final
+.PHONY: caravel-librelane
+
+ztimer-librelane: ## Run LibreLane flow for macros
+	make -C ztimer all
+.PHONY: librelane-librelane
+
+otusb-librelane: ## Run LibreLane flow for macros
+	make -C otUSB all
+.PHONY: otusb-librelane
+
+macros-librelane: ztimer-librelane otusb-librelane ## Run LibreLane flow for macros
 .PHONY: caravel-librelane
 
 librelane-condensed: clone-pdk defines ## Run LibreLane flow (synthesis, PnR, verification)

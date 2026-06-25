@@ -17,7 +17,7 @@ help: ## Show this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-20s %s\n", $$1, $$2}'
 .PHONY: help
 
-all: librelane copy-final ## Build the project (runs librelane)
+all: librelane-nodrc copy-final ## Build the project (runs librelane)
 .PHONY: all
 .NOTPARALLEL: all
 

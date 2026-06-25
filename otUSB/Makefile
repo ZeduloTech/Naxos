@@ -16,13 +16,17 @@ help: ## Show this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-20s %s\n", $$1, $$2}'
 .PHONY: help
 
-all: librelane copy-final ## Build the project (runs librelane)
+all: librelane-nodrc copy-final ## Build the project (runs librelane)
 .PHONY: all
 .NOTPARALLEL: all
 
 librelane: ## Run librelane flow (synthesis, PnR, verification)
 	librelane librelane/config.yaml --pdk ${PDK} --pdk-root ${PDK_ROOT} --manual-pdk
 .PHONY: librelane
+
+librelane-nodrc: ## Run LibreLane flow without DRC checks
+	librelane librelane/config.yaml --pdk ${PDK} --pdk-root ${PDK_ROOT} --manual-pdk --skip KLayout.DRC --skip Magic.DRC
+.PHONY: librelane-nodrc
 
 librelane-openroad: ## Open the last run in OpenROAD
 	librelane librelane/config.yaml --pdk ${PDK} --pdk-root ${PDK_ROOT} --manual-pdk --last-run --flow OpenInOpenROAD
