@@ -78,7 +78,7 @@ jobs:
           sudo tree /nix/store/*-librelane || true
       - name: Clone the PDK
         run: |
-          make clone-pdk
+          nix develop --command make clone-pdk
       - name: Run RTL simulation
         run: |
           nix develop --command make sim
@@ -88,9 +88,9 @@ jobs:
       - name: Implement the Chip
         if: success() || failure()
         run: |
-          nix develop --command make all
+          #nix develop --command make all
+          nix develop --command make librelane-nodrc
           make copy-final
-          nix develop --command make render-image
       - name: Create summary
         if: success() || failure()
         run: |
@@ -98,16 +98,16 @@ jobs:
           cat librelane/runs/*/*-misc-reportmanufacturability/manufacturability.rpt >> $GITHUB_STEP_SUMMARY
       - name: Upload GDS
         if: success() || failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.slot }}_gds
           path: final/gds/*
       - name: Upload image
         if: success() || failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.slot }}_image
-          path: img/*.png
+          path: final/render/*.png
       - name: Run GL simulation
         if: success() || failure()
         run: |

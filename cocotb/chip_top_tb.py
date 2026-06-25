@@ -16,11 +16,13 @@ from cocotbext.uart import UartSink
 from cocotb_tools.runner import get_runner
 
 sim = os.getenv("SIM", "icarus")
+gl = os.getenv("GL", False)
+sdf = os.getenv("SDF", False)
 pdk_root = os.getenv("PDK_ROOT", Path("../gf180mcu").absolute())
 pdk = os.getenv("PDK", "gf180mcuD")
 scl = os.getenv("SCL", "gf180mcu_as_sc_mcu7t3v3")
-gl = os.getenv("GL", False)
-sdf = os.getenv("SDF", False)
+pad = os.getenv("PAD", "gf180mcu_fd_io")
+sram = os.getenv("SRAM", "gf180mcu_fd_ip_sram")
 slot = os.getenv("SLOT", "1X0P5").upper()
 test_env = os.getenv("TEST", "all")
 add_build_args = os.getenv("ADD_BUILD_ARGS", "").split()

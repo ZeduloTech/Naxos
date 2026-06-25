@@ -95,6 +95,11 @@ FP_SIZING: absolute
 DIE_AREA: [0, 0, 470, 470]
 CORE_AREA: [30, 30, 450, 450]
 
+PDN_MULTILAYER: false
+RT_MAX_LAYER: Metal4
+PDN_VOFFSET: 5
+PDN_VPITCH: 50
+
 ############################### Placement ##############################
 
 PL_TARGET_DENSITY_PCT: 45
@@ -164,3 +169,11 @@ MAGIC_GDS_FLATGLOB:
 
 # Because we have multiple power pads for one power domain
 MAGIC_EXT_UNIQUE: notopports
+
+KLAYOUT_DRC_THREADS: 1
+
+# "max" equals max hardware threads
+KLAYOUT_DRC_OPTIONS:
+  decks: "all,-antenna,-density,-cup" # disable CUP for now
+  variant: ref::$PDK
+  workers: max

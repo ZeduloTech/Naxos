@@ -1,0 +1,190 @@
+MACROS:
+  # required: will be replaced with actual content
+  gf180mcu_ws_ip__qrcode_id:
+    gds:
+      - dir::../ip/gf180mcu_ws_ip__qrcode_id/gds/gf180mcu_ws_ip__qrcode_id.gds
+    lef:
+      - dir::../ip/gf180mcu_ws_ip__qrcode_id/lef/gf180mcu_ws_ip__qrcode_id.lef
+    vh:
+      - dir::../ip/gf180mcu_ws_ip__qrcode_id/vh/gf180mcu_ws_ip__qrcode_id.v
+    lib:
+      "*":
+        - dir::../ip/gf180mcu_ws_ip__qrcode_id/lib/gf180mcu_ws_ip__qrcode_id.lib
+    instances:
+      qrcode_id:
+        location: [26, 26]
+        orientation: N
+
+  # required: will be replaced with actual content
+  gf180mcu_ws_ip__shuttle_id:
+    gds:
+      - dir::../ip/gf180mcu_ws_ip__shuttle_id/gds/gf180mcu_ws_ip__shuttle_id.gds
+    lef:
+      - dir::../ip/gf180mcu_ws_ip__shuttle_id/lef/gf180mcu_ws_ip__shuttle_id.lef
+    vh:
+      - dir::../ip/gf180mcu_ws_ip__shuttle_id/vh/gf180mcu_ws_ip__shuttle_id.v
+    lib:
+      "*":
+        - dir::../ip/gf180mcu_ws_ip__shuttle_id/lib/gf180mcu_ws_ip__shuttle_id.lib
+    instances:
+      shuttle_id:
+        location: [26, 175.6]
+        orientation: E
+
+  # required: will be replaced with actual content
+  gf180mcu_ws_ip__project_id:
+    gds:
+      - dir::../ip/gf180mcu_ws_ip__project_id/gds/gf180mcu_ws_ip__project_id.gds
+    lef:
+      - dir::../ip/gf180mcu_ws_ip__project_id/lef/gf180mcu_ws_ip__project_id.lef
+    vh:
+      - dir::../ip/gf180mcu_ws_ip__project_id/vh/gf180mcu_ws_ip__project_id.v
+    lib:
+      "*":
+        - dir::../ip/gf180mcu_ws_ip__project_id/lib/gf180mcu_ws_ip__project_id.lib
+    instances:
+      project_id:
+        location: [175.6, 26]
+        orientation: N
+
+  # required: top right corner marker
+  gf180mcu_ws_ip__marker:
+    gds:
+      - dir::../ip/gf180mcu_ws_ip__marker/gds/gf180mcu_ws_ip__marker.gds
+    lef:
+      - dir::../ip/gf180mcu_ws_ip__marker/lef/gf180mcu_ws_ip__marker.lef
+    vh:
+      - dir::../ip/gf180mcu_ws_ip__marker/vh/gf180mcu_ws_ip__marker.v
+    lib:
+      "*":
+        - dir::../ip/gf180mcu_ws_ip__marker/lib/gf180mcu_ws_ip__marker.lib
+    instances:
+      marker:
+        location: ["expr::($DIE_AREA[2] - (245 + 36))", "expr::($DIE_AREA[3] - (245 + 36))"]
+        orientation: N
+
+  gf180mcu_ws_ip__logo:
+    gds:
+      - dir::../ip/gf180mcu_ws_ip__logo/gds/gf180mcu_ws_ip__logo.gds
+    lef:
+      - dir::../ip/gf180mcu_ws_ip__logo/lef/gf180mcu_ws_ip__logo.lef
+    vh:
+      - dir::../ip/gf180mcu_ws_ip__logo/vh/gf180mcu_ws_ip__logo.v
+    lib:
+      "*":
+        - dir::../ip/gf180mcu_ws_ip__logo/lib/gf180mcu_ws_ip__logo.lib
+    instances:
+      wafer_space_logo:
+        location: [26, "expr::$DIE_AREA[3] - 169.25"]
+        orientation: N
+
+  # 3.3V SRAM
+  #gf180mcu_ocd_ip_sram__sram512x8m8wm1:
+    #gds:
+      #- pdk_dir::libs.ref/gf180mcu_ocd_ip_sram/gds/gf180mcu_ocd_ip_sram__sram512x8m8wm1.gds
+    #lef:
+      #- pdk_dir::libs.ref/gf180mcu_ocd_ip_sram/lef/gf180mcu_ocd_ip_sram__sram512x8m8wm1.lef
+    #vh:
+      #- pdk_dir::libs.ref/gf180mcu_ocd_ip_sram/verilog/gf180mcu_ocd_ip_sram__sram512x8m8wm1__blackbox_pp.v
+    #lib:
+      #"*_tt_025C_3v30":
+        #- pdk_dir::libs.ref/gf180mcu_ocd_ip_sram/lib/gf180mcu_ocd_ip_sram__sram512x8m8wm1__tt_025C_3v30.lib
+      #"*_ff_n40C_3v60":
+        #- pdk_dir::libs.ref/gf180mcu_ocd_ip_sram/lib/gf180mcu_ocd_ip_sram__sram512x8m8wm1__ff_n40C_3v60.lib
+      #"*_ss_125C_3v00":
+        #- pdk_dir::libs.ref/gf180mcu_ocd_ip_sram/lib/gf180mcu_ocd_ip_sram__sram512x8m8wm1__ss_125C_3v00.lib
+    #instances:
+      ## Make sure to specify the SRAMs in pdn_cfg.tcl
+      #i_chip_core.sram_0:
+        #location: [490, 500]
+        #orientation: N
+      #i_chip_core.sram_1:
+        #location: [970, 500]
+        #orientation: E
+        
+  caravel_core:
+    gds:
+      - dir::../caravel/final/gds/caravel_core.gds.gz
+    lef:
+      - dir::../caravel/final/lef/caravel_core.lef
+    pnl:
+      - dir::../caravel/final/pnl/caravel_core.pnl.v
+    lib:
+      "*tt*" : [ dir::../caravel/final/lib/nom_tt_025C_3v30/caravel_core__nom_tt_025C_3v30.lib ]
+      "*ff*" : [ dir::../caravel/final/lib/min_ff_n40C_3v60/caravel_core__min_ff_n40C_3v60.lib ]
+      "*ss*" : [ dir::../caravel/final/lib/max_ss_125C_3v00/caravel_core__max_ss_125C_3v00.lib ]
+    spef:
+      "*tt*" : [ dir::../caravel/final/spef/nom/caravel_core.nom.spef.gz ]
+      "*ff*" : [ dir::../caravel/final/spef/min/caravel_core.min.spef.gz ]
+      "*ss*" : [ dir::../caravel/final/spef/max/caravel_core.max.spef.gz ]
+    instances:
+      i_chip_core.caravel:
+        location: [490, 475]
+        orientation: N
+
+  XTAL:
+    gds:
+      - dir::../ip/XTAL3P3/XTAL.gds
+    lef:
+      - dir::../ip/XTAL3P3/XTAL.lef
+    vh:
+      - dir::../ip/XTAL3P3/XTAL.v
+    instances:
+      i_chip_core.xtal_driver:
+        location: [460.5, 2087.5]
+        orientation: N
+
+  gf180_ram_1024x8_wrapper:
+    gds:
+      - dir::../ip/sram/gf180_ram_1024x8_wrapper.gds.gz
+    lef:
+      - dir::../ip/sram/gf180_ram_1024x8_wrapper.lef
+    vh:
+      - dir::../ip/sram/gf180_ram_1024x8_wrapper.vh
+    lib:
+      "*tt*" : [ dir::../ip/sram/gf180_ram_1024x8_wrapper__tt_025C_3v30.lib ]
+      "*ss*" : [ dir::../ip/sram/gf180_ram_1024x8_wrapper__tt_025C_3v30.lib ]
+      "*ff*" : [ dir::../ip/sram/gf180_ram_1024x8_wrapper__ff_n40C_3v60.lib ]
+    instances:
+      i_chip_core.sram_1k:
+        location: [3140, 1515] #490, 1515 left
+        orientation: N
+
+  usbdev:
+    gds:
+      - dir::../otUSB/final/gds/usbdev.gds.gz
+    lef:
+      - dir::../otUSB/final/lef/usbdev.lef
+    vh:
+      - dir::../otUSB/final/vh/usbdev.vh
+    lib:
+      "*tt*" : [ dir::../otUSB/final/lib/nom_tt_025C_3v30/usbdev__nom_tt_025C_3v30.lib ]
+      "*ss*" : [ dir::../otUSB/final/lib/nom_ss_125C_3v00/usbdev__nom_ss_125C_3v00.lib ]
+      "*ff*" : [ dir::../otUSB/final/lib/nom_ff_n40C_3v60/usbdev__nom_ff_n40C_3v60.lib ]
+    instances:
+      i_chip_core.u_usbdev:
+        location: [2580, 1515] #900 
+        orientation: N
+
+  rosc_spi_bridge:
+    gds:
+      - dir::../ztimer/final/gds/rosc_spi_bridge.gds.gz
+    lef:
+      - dir::../ztimer/final/lef/rosc_spi_bridge.lef
+    vh:
+      - dir::../ztimer/final/vh/rosc_spi_bridge.vh
+    lib:
+      "*tt*" : [ dir::../ztimer/final/lib/nom_tt_025C_3v30/rosc_spi_bridge__nom_tt_025C_3v30.lib ]
+      "*ff*" : [ dir::../ztimer/final/lib/min_ff_n40C_3v60/rosc_spi_bridge__min_ff_n40C_3v60.lib ]
+      "*ss*" : [ dir::../ztimer/final/lib/max_ss_125C_3v00/rosc_spi_bridge__max_ss_125C_3v00.lib ]
+    instances:
+      i_chip_core.u_ztimer:
+        location: [490, 1515]
+        orientation: N
+
+
+## This is an alternative method compared to
+## specifying the power connections in the RTL
+#PDN_MACRO_CONNECTIONS:
+#- "i_chip_core.sram_0 VDD VSS VDD VSS"
+#- "i_chip_core.sram_1 VDD VSS VDD VSS"

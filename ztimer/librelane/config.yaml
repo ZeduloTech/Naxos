@@ -42,7 +42,7 @@ GND_NETS:
 
 # Clock
 CLOCK_PORT: clk_i
-CLOCK_PERIOD: 50 #20MHz
+CLOCK_PERIOD: 20 #50MHz
 
 ############################ Floorplanning ############################# 
 
@@ -52,6 +52,12 @@ FP_SIZING: absolute
 
 DIE_AREA: [0, 0, 185, 185]
 CORE_AREA: [10, 10, 175, 175]
+
+PDN_MULTILAYER: false
+RT_MAX_LAYER: Metal4
+PDN_VOFFSET: 5
+PDN_VPITCH: 30
+
 ############################### Placement ############################## 
 
 PL_TARGET_DENSITY_PCT: 70 #55
