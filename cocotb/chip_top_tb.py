@@ -108,6 +108,9 @@ def test_chip_top_runner(test : str):
         sources.append(proj_path / "../caravel/ring_osc2x13/final/pnl/ring_osc2x13.pnl.v")
         sources.append(proj_path / "../caravel/final/pnl/caravel_core.pnl.v")
         sources.append(proj_path / "../final/pnl/chip_top.pnl.v")
+        
+        sources.append(proj_path / "../otUSB/final/pnl/usbdev.pnl.v"),
+        sources.append(proj_path / "../ztimer/final/pnl/rosc_spi_bridge.pnl.v"),
 
         defines.update({"GL" : 1, "USE_POWER_PINS": 1})
         if sdf:
@@ -118,6 +121,18 @@ def test_chip_top_runner(test : str):
         sources.append(proj_path / "../src/wb_counter.v")
 
         sources += (proj_path / "../caravel/verilog/").glob("*.v")
+        
+        # Timer IP
+        sources.append(proj_path / "../ztimer/src/inverter.v"),
+        sources.append(proj_path / "../ztimer/src/not_rosc.v"),
+        sources.append(proj_path / "../ztimer/src/rosc_timer.v"),
+        sources.append(proj_path / "../ztimer/src/spi_byte_sm.sv"),
+        sources.append(proj_path / "../ztimer/src/spi_core.sv"),
+        sources.append(proj_path / "../ztimer/src/spi_device.sv"),
+        sources.append(proj_path / "../ztimer/src/rosc_spi_bridge.sv"),
+        
+        # USB IP (does not work in Icarus, use netlist always)
+        sources.append(proj_path / "../otUSB/final/nl/usbdev.nl.v"),
 
         defines.update({"FUNCTIONAL": 1})
 
@@ -128,7 +143,6 @@ def test_chip_top_runner(test : str):
     sources += [
         # IO pad models
         Path(pdk_root) / pdk / "libs.ref/gf180mcu_fd_io/verilog/gf180mcu_fd_io.v",
-        Path(pdk_root) / pdk / "libs.ref/gf180mcu_fd_io/verilog/gf180mcu_ws_io.v",
         
         # SRAM macros
         #Path(pdk_root) / pdk / "libs.ref/gf180mcu_fd_ip_sram/verilog/gf180mcu_fd_ip_sram__sram512x8m8wm1.v",
@@ -139,12 +153,15 @@ def test_chip_top_runner(test : str):
         # XTAL IP
         proj_path / "../ip/XTAL3P3/XTAL.v",
  
-        # Caravel IP
+        # Caravel POR IP
         proj_path / "../ip/simple_por/verilog/simple_por.v",
-        
+ 
         # Custom IP
-        proj_path / "../ip/gf180mcu_ws_ip__id/vh/gf180mcu_ws_ip__id.v",
+        proj_path / "../ip/gf180mcu_ws_ip__project_id/vh/gf180mcu_ws_ip__project_id.v",
+        proj_path / "../ip/gf180mcu_ws_ip__qrcode_id/vh/gf180mcu_ws_ip__qrcode_id.v",
+        proj_path / "../ip/gf180mcu_ws_ip__shuttle_id/vh/gf180mcu_ws_ip__shuttle_id.v",
         proj_path / "../ip/gf180mcu_ws_ip__logo/vh/gf180mcu_ws_ip__logo.v",
+        proj_path / "../ip/gf180mcu_ws_ip__marker/vh/gf180mcu_ws_ip__marker.v",
     ]
 
     build_args = []
