@@ -1,3 +1,5 @@
+`timescale 1 ns / 1 ps
+
 module ripple_counter #(
     parameter CNT_WDT   = 8
 ) (
@@ -13,7 +15,7 @@ module ripple_counter #(
     
     genvar i;
     generate
-    for (i=0; i<CNT_WDT; i++) begin : dly
+    for (i=0; i<CNT_WDT; i=i+1) begin : stage
         (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__dfsrtp_2 dff (
             .CLK(ripple_clk[i]),
             .RN(rst_n),
@@ -45,7 +47,11 @@ module shrink_unit #(
 );
 
     wire to_start;
+    `ifdef SIM
+    reg [DLY_LEN:0] pulse_dly;
+    `else
     wire [DLY_LEN:0] pulse_dly;
+    `endif
     
     assign pulse_out = pulse_dly[DLY_LEN];
     
@@ -61,6 +67,7 @@ module shrink_unit #(
         .Y(pulse_dly[0])
     );
     
+    `ifndef SIM
     genvar i;
     generate
     for (i=0; i<DLY_LEN; i++) begin : dly
@@ -70,6 +77,25 @@ module shrink_unit #(
         );
     end
     endgenerate
+    `else
+    initial begin
+        while(1)
+        begin
+            #1;
+            if (rst_n == 0) begin
+                pulse_dly[DLY_LEN-1:1] <= '0;
+                @(posedge rst_n);
+            end else begin
+                @(posedge pulse_dly[0]);
+                #0.100 pulse_dly[1] <= 1'b1;
+                @(negedge pulse_dly[0]);
+                #0.070 pulse_dly[1] <= 1'b0;
+            end
+        end
+    end
+    
+    always @(pulse_dly[1]) pulse_dly[DLY_LEN] <= #(DLY_LEN*0.047) pulse_dly[1];
+    `endif
 
 endmodule
 

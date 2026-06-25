@@ -3,7 +3,9 @@
 
 `default_nettype none
 
+`ifndef SIM
 `include "generated_defines.svh"
+`endif
 `include "slot_defines.svh"
 
 `ifdef PAD_gf180mcu_ocd_io
