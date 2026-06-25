@@ -1,5 +1,28 @@
 `timescale 1 ns / 1 ps
 
+`ifdef SIM
+`ifdef SIM_FAST
+`define INV_MULTIPLIER 8
+`else
+`define INV_MULTIPLIER 1
+`endif
+
+module inv_delay #(
+    parameter MULT = 1
+) (
+    input  A,
+    output reg Y
+);
+
+    always @(A) 
+        if (MULT & 1)
+            Y <= #(0.047*MULT) ~A;
+        else
+            Y <= #(0.047*MULT) A;
+
+endmodule;
+`endif
+
 module ripple_counter #(
     parameter CNT_WDT   = 8
 ) (
@@ -68,6 +91,7 @@ module shrink_unit #(
     );
     
     `ifndef SIM
+    // Synthesys version
     genvar i;
     generate
     for (i=0; i<DLY_LEN; i++) begin : dly
@@ -77,24 +101,40 @@ module shrink_unit #(
         );
     end
     endgenerate
+    
     `else
-    initial begin
-        while(1)
-        begin
-            #1;
-            if (rst_n == 0) begin
-                pulse_dly[DLY_LEN-1:1] <= '0;
-                @(posedge rst_n);
-            end else begin
-                @(posedge pulse_dly[0]);
-                #0.100 pulse_dly[1] <= 1'b1;
-                @(negedge pulse_dly[0]);
-                #0.070 pulse_dly[1] <= 1'b0;
-            end
-        end
+    // Simulation version
+    
+    reg shrinked;
+    
+    always @(pulse_dly[0]) begin
+        if (pulse_dly[0])
+            shrinked <= #0.100 1'b1;
+        else
+            shrinked <= #0.070 1'b0;
+    end;
+    
+    inv_delay dly0 (
+        .A(shrinked),
+        .Y(pulse_dly[1])
+    );
+        
+    genvar i;
+    generate
+    for (i=1; i<`INV_MULTIPLIER; i=i+1) begin : dly1
+        inv_delay inv (
+            .A(pulse_dly[i]),
+            .Y(pulse_dly[i+1])
+        );
     end
     
-    always @(pulse_dly[1]) pulse_dly[DLY_LEN] <= #(DLY_LEN*0.047) pulse_dly[1];
+    for (i=1; i<DLY_LEN/`INV_MULTIPLIER; i=i+1) begin : dly2
+        inv_delay #(.MULT(`INV_MULTIPLIER)) inv (
+            .A(pulse_dly[i*`INV_MULTIPLIER]),
+            .Y(pulse_dly[(i+1)*`INV_MULTIPLIER])
+        );
+    end
+    endgenerate
     `endif
 
 endmodule
