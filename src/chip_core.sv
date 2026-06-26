@@ -209,7 +209,7 @@ module chip_core #(
     assign macro_gwen = ~sram_we;
     assign macro_wen = ~sram_wmask;
     
-    (* keep, dont_touch *) gf180_ram_512x8_wrapper sram_0 (
+    (* keep, dont_touch *) gf180mcu_ocd_ip_sram__sram512x8m8wm1 sram_0 (
     `ifdef USE_POWER_PINS
 	.VDD(VDD), .VSS(VSS),
     `endif
@@ -217,7 +217,7 @@ module chip_core #(
 	.WEN(macro_wen[7:0]), .A(sram_addr), .D(sram_wdata[7:0]), .Q(sram_rdata[7:0])
     );
 
-    (* keep, dont_touch *) gf180_ram_512x8_wrapper sram_1 (
+    (* keep, dont_touch *) gf180mcu_ocd_ip_sram__sram512x8m8wm1 sram_1 (
     `ifdef USE_POWER_PINS
 	.VDD(VDD), .VSS(VSS),
     `endif
@@ -225,7 +225,7 @@ module chip_core #(
 	.WEN(macro_wen[15:8]), .A(sram_addr), .D(sram_wdata[15:8]), .Q(sram_rdata[15:8])
     );
 
-   (* keep, dont_touch *) gf180_ram_512x8_wrapper sram_2 (
+   (* keep, dont_touch *) gf180mcu_ocd_ip_sram__sram512x8m8wm1 sram_2 (
     `ifdef USE_POWER_PINS
 	.VDD(VDD), .VSS(VSS),
     `endif
@@ -233,7 +233,7 @@ module chip_core #(
 	.WEN(macro_wen[23:16]), .A(sram_addr), .D(sram_wdata[23:16]), .Q(sram_rdata[23:16])
     );
 
-   (* keep, dont_touch *) gf180_ram_512x8_wrapper sram_3 (
+   (* keep, dont_touch *) gf180mcu_ocd_ip_sram__sram512x8m8wm1 sram_3 (
     `ifdef USE_POWER_PINS
 	.VDD(VDD), .VSS(VSS),
     `endif

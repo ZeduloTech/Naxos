@@ -12,3 +12,4 @@ chip_core_copy.sv
 otUSB/src_o
 librelane/macros/macros_5v_or.yaml
 librelane/pdn/pdn_5v_sram_or.yaml
+librelane/pdn/pdn_3v3_sram_or.yaml

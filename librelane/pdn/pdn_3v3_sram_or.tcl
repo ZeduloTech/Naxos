@@ -19,10 +19,10 @@ add_pdn_connect \
 add_pdn_stripe \
     -grid sram_macros_NS \
     -layer Metal4 \
-    -width 2.36 \
-    -offset 1.18 \
+    -width 1.36 \
+    -offset 0.68 \
     -spacing 0.28 \
-    -pitch 426.86 \
+    -pitch 298.30 \
     -starts_with GROUND \
     -number_of_straps 2
 
@@ -32,11 +32,11 @@ add_pdn_stripe \
     -grid sram_macros_NS \
     -layer Metal4 \
     -width 4.00 \
-    -offset 65.93 \
+    -offset 50.80 \
     -spacing 0.28 \
-    -pitch 50 \
+    -pitch 48.86 \
     -starts_with GROUND \
-    -number_of_straps 7
+    -number_of_straps 5
 
 define_pdn_grid \
     -macro \
@@ -57,11 +57,11 @@ add_pdn_connect \
 add_pdn_stripe \
     -grid sram_macros_WE \
     -layer Metal4 \
-    -width 2.36 \
-    -offset 1.18 \
+    -width 1.36 \
+    -offset 0.68 \
     -spacing 0.28 \
-    -pitch 479.88 \
-    -starts_with GROUND \
+    -pitch 319.09 \
+    -starts_with POWER \
     -number_of_straps 2
 
 # Since the above stripes block the top level PDN at Metal4, add some more stripes
@@ -70,8 +70,8 @@ add_pdn_stripe \
     -grid sram_macros_WE \
     -layer Metal4 \
     -width 4.00 \
-    -offset 46.48 \
+    -offset 28.0 \
     -spacing 0.28 \
-    -pitch 48.48 \
+    -pitch 43.50 \
     -starts_with GROUND \
-    -number_of_straps 9
+    -number_of_straps 7
