@@ -22,10 +22,10 @@ meta:
 
 DESIGN_NAME: chip_top
 VERILOG_FILES:
-- dir::../src/wb_counter.v
 - dir::../src/chip_top.sv
 - dir::../src/chip_core.sv
-
+#- dir::../src/wb_counter.v
+ 
 VERILOG_INCLUDE_DIRS: [ dir::../caravel/verilog/ ]
 
 # Enable plugin for better SystemVerilog support
@@ -58,11 +58,12 @@ IGNORE_DISCONNECTED_MODULES:
 - gf180mcu_ws_ip__project_id
 - gf180mcu_ws_ip__logo
 - gf180mcu_ws_ip__marker
+- usbdev
 
 # Clock
 CLOCK_NET: i_chip_core.wb_clk_buf/Y
 
-CLOCK_PERIOD: 20 # 50 MHz
+CLOCK_PERIOD: 20.83 # 50 MHz
 
 # Fix hold violations
 PL_RESIZER_HOLD_SLACK_MARGIN: 0.7
@@ -90,7 +91,10 @@ PDN_CORE_RING_CONNECT_TO_PAD_LAYERS: [Metal2]
 
 PDN_MACRO_CONNECTIONS:
   - "i_chip_core.xtal_driver VDD VSS VDD_XTAL VSS_XTAL"
-  - "i_chip_core.sram_1k VDD VSS VDD VSS"
+  - "i_chip_core.sram_0 VDD VSS VDD VSS"
+  - "i_chip_core.sram_1 VDD VSS VDD VSS"
+  - "i_chip_core.sram_2 VDD VSS VDD VSS"
+  - "i_chip_core.sram_3 VDD VSS VDD VSS"
 
 # To disable ports buffering & wire repair with dly cells as they degrade timing
 #PNR_EXCLUDED_CELL_FILE: dir::../caravel/librelane/pnr_exclude.cells

@@ -11,11 +11,11 @@
 // This module runs on the 48MHz USB clock
 module usbdev_usbif  #(
   parameter int NEndpoints = 6,//previously 12
-  parameter int AVFifoWidth = 1,
-  parameter int RXFifoWidth = 1,
+  parameter int AVFifoWidth = 4,
+  parameter int RXFifoWidth = 4,
   parameter int MaxPktSizeByte = 64,
-  parameter int NBuf = 1,
-  parameter int SramAw = 10,
+  parameter int NBuf = 4,
+  parameter int SramAw = 4,
   //localparam int NBufWidth = $clog2(NBuf), // derived parameter
   //localparam int PktW = $clog2(MaxPktSizeByte) // derived parameter
   parameter int NBufWidth = $clog2(NBuf), // derived parameter
@@ -49,6 +49,7 @@ module usbdev_usbif  #(
   output logic                     avout_rready_o,
   input  logic [AVFifoWidth - 1: 0]avout_rdata_i,
 
+  //TODO check all of them, outputs first
   output logic                     rx_wvalid_o,
   input  logic                     rx_wready_setup_i,
   input  logic                     rx_wready_out_i,
@@ -72,8 +73,8 @@ module usbdev_usbif  #(
   output logic                     mem_req_o,
   output logic                     mem_write_o,
   output logic [SramAw-1:0]        mem_addr_o,
-  output logic [7:0]              mem_wdata_o,
-  input  logic [7:0]              mem_rdata_i,
+  output logic [31:0]              mem_wdata_o,
+  input  logic [31:0]              mem_rdata_i,
 
   // time reference
   input  logic                     us_tick_i,
@@ -123,6 +124,7 @@ module usbdev_usbif  #(
   output logic                     rx_bitstuff_err_o,
 
   // event counters
+  //TODO check events just incase (data0 especially)
   output logic                     event_ign_avsetup_o,
   output logic                     event_drop_avout_o,
   output logic                     event_drop_rx_o,
@@ -145,13 +147,14 @@ module usbdev_usbif  #(
   logic                              current_setup, all_out_blocked;
   logic [NEndpoints-1:0]             out_ep_setup, out_ep_full, out_ep_stall;
   logic [NEndpoints-1:0]             out_blocked;
+  logic [31:0]                       wdata_q, wdata_d;
   logic                              mem_read;
   logic [SramAw-1:0]                 mem_waddr, mem_raddr;
   logic                              link_reset;
 
   // Make sure out_endpoint_o can safely be used to index signals of NEndpoints width.
-  assign out_endpoint_val_o = int'(out_ep_current) < NEndpoints;
-  assign out_endpoint_o     = out_endpoint_val_o ? out_ep_current : '0;
+  assign out_endpoint_val_o = int'(out_ep_current) < NEndpoints;//TODO check
+  assign out_endpoint_o     = out_endpoint_val_o ? out_ep_current : '0;//TODO check
 
   assign link_reset_o   = link_reset;
   assign clr_devaddr_o  = ~connect_en_i | link_reset;
@@ -180,15 +183,40 @@ module usbdev_usbif  #(
     end
   end // always_comb
 
+  // don't write if the address has wrapped (happens for two CRC bytes after max data)
+  logic std_write_d, std_write_q;
+  assign std_write_d = out_ep_data_put & ((int'(out_max_used_q) < MaxPktSizeByte - 1) &
+      (out_ep_put_addr[1:0] == 2'b11));
+
+  always_comb begin
+    wdata_d = wdata_q;
+
+    unique case (out_ep_put_addr[1:0])
+      0:       wdata_d[7:0]   = out_ep_data;
+      1:       wdata_d[15:8]  = out_ep_data;
+      2:       wdata_d[23:16] = out_ep_data;
+      3:       wdata_d[31:24] = out_ep_data;
+      default: wdata_d[7:0]   = out_ep_data;
+    endcase
+  end
+
   always_ff @(posedge clk_48mhz_i or negedge rst_ni) begin
     if (!rst_ni) begin
       out_max_used_q <= '0;
+      wdata_q        <= '0;
+      std_write_q    <= 1'b0;
     end else if (link_reset) begin
       out_max_used_q <= '0;
+      std_write_q    <= 1'b0;
     end else begin
       out_max_used_q <= out_max_used_d;
+      std_write_q    <= std_write_d;
+
+      if (out_ep_data_put) begin
+        wdata_q <= wdata_d;
+      end
     end
-  end
+  end // always_ff @ (posedge clk_48mhz_i)
 
   // select from the appropriate Available Buffer FIFO, SETUP or OUT.
   logic av_rvalid;
@@ -202,9 +230,10 @@ module usbdev_usbif  #(
   assign rx_wready = current_setup ? rx_wready_setup_i : rx_wready_out_i;
 
   // need extra write at end if packet not multiple of 4 bytes
-  assign mem_write_o = av_rvalid & out_ep_data_put & (int'(out_max_used_q) < MaxPktSizeByte);
-  assign mem_waddr   = {av_rdata, out_ep_put_addr};   // full byte address
-  assign mem_wdata_o = out_ep_data;                   // direct byte, no packing
+  assign mem_write_o = av_rvalid & (std_write_q |
+                       (~out_max_used_q[PktW] & (out_max_used_q[1:0] != 2'b11) & out_ep_acked));
+  assign mem_waddr = {av_rdata, out_max_used_q[PktW-1:2]};
+  assign mem_wdata_o = wdata_q;
   assign mem_addr_o = mem_write_o ? mem_waddr : mem_raddr;
   assign mem_req_o = mem_read | mem_write_o;
   // Is the DATA packet currently being received a SETUP DATA packet or a regular OUT DATA packet?
@@ -215,10 +244,10 @@ module usbdev_usbif  #(
   assign out_max_minus1 = out_max_used_q - 1;
 
   assign rx_wdata_o = {
-      out_endpoint_o,//[15:12] //endpoint
-      current_setup,//[11] is_setup
-      out_max_minus1,//[10:4] size
-      av_rdata//[3:0] buffer
+      out_endpoint_o,
+      current_setup,
+      out_max_minus1,
+      av_rdata
   };
   assign rx_wvalid_o = out_ep_acked;
 
@@ -276,9 +305,12 @@ module usbdev_usbif  #(
     end
   end
 
-  assign mem_raddr  = {in_buf_i, in_ep_get_addr};
-  assign mem_read = pkt_start_rd | in_ep_data_get;
-  assign in_ep_data = mem_rdata_i;
+  assign mem_raddr = {in_buf_i,in_ep_get_addr[PktW-1:2]};
+  assign mem_read = pkt_start_rd | (in_ep_data_get & (in_ep_get_addr[1:0] == 2'b0));
+
+  assign in_ep_data = in_ep_get_addr[1] ?
+                      (in_ep_get_addr[0] ? mem_rdata_i[31:24] : mem_rdata_i[23:16]) :
+                      (in_ep_get_addr[0] ? mem_rdata_i[15:8]  : mem_rdata_i[7:0]);
 
   logic            sof_valid;
   logic [10:0]     frame_index_raw;

@@ -237,5 +237,5 @@ add_pdn_connect \
     #}
 #} else {
     ## Config for 5V SRAM
-    #source [file join [file dirname [info script]] "pdn_5v_sram.tcl"]
+    source [file join [file dirname [info script]] "pdn_5v_sram.tcl"]
 #}

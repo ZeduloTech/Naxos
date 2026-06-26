@@ -134,22 +134,6 @@ MACROS:
         location: [460.5, 2087.5]
         orientation: N
 
-  gf180_ram_1024x8_wrapper:
-    gds:
-      - dir::../ip/sram/gf180_ram_1024x8_wrapper.gds.gz
-    lef:
-      - dir::../ip/sram/gf180_ram_1024x8_wrapper.lef
-    vh:
-      - dir::../ip/sram/gf180_ram_1024x8_wrapper.vh
-    lib:
-      "*tt*" : [ dir::../ip/sram/gf180_ram_1024x8_wrapper__tt_025C_3v30.lib ]
-      "*ss*" : [ dir::../ip/sram/gf180_ram_1024x8_wrapper__tt_025C_3v30.lib ]
-      "*ff*" : [ dir::../ip/sram/gf180_ram_1024x8_wrapper__ff_n40C_3v60.lib ]
-    instances:
-      i_chip_core.sram_1k:
-        location: [3140, 1515] #490, 1515 left
-        orientation: N
-
   usbdev:
     gds:
       - dir::../otUSB/final/gds/usbdev.gds.gz
@@ -163,7 +147,7 @@ MACROS:
       "*ff*" : [ dir::../otUSB/final/lib/nom_ff_n40C_3v60/usbdev__nom_ff_n40C_3v60.lib ]
     instances:
       i_chip_core.u_usbdev:
-        location: [2580, 1515] #900 
+        location: [900, 1515] #900 
         orientation: N
 
   rosc_spi_bridge:

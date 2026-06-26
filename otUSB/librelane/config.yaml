@@ -92,8 +92,8 @@ CLOCK_PERIOD: 20.83  # 48 MHz
 ############################ Floorplanning #############################
 
 FP_SIZING: absolute
-DIE_AREA: [0, 0, 470, 470]
-CORE_AREA: [30, 30, 450, 450]
+DIE_AREA: [0, 0, 500, 500]
+CORE_AREA: [25, 25, 475, 475]
 
 PDN_MULTILAYER: false
 RT_MAX_LAYER: Metal4

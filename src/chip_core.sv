@@ -1,4 +1,3 @@
-// SPDX-FileCopyrightText: © 2026 Zedulo
 // SPDX-License-Identifier: Apache-2.0
 
 `timescale 1 ns / 1 ps
@@ -94,7 +93,7 @@ module chip_core #(
         .S(input_in[`PADI_SYS_CLKSEL]),
         .Y(core_clk)
     );
-
+/*
     wb_counter counter (
         .wb_clk_i(user_wb_clk),
         .wb_rst_i(user_wb_rst),
@@ -106,34 +105,11 @@ module chip_core #(
         .wb_dat_o(user_wb_dat_rd),
         .wb_ack_o(user_wb_ack)
     );
-
+*/
     // Buffer wb clock
     (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__clkbuff_8 wb_clk_buf (
         .A(user_wb_clk_prebuf),
         .Y(user_wb_clk)
-    );
-
-    // 1K SRAM
-    //    logic [7:0] sram_1k_out;
-    logic sram_req_i;
-    logic sram_we_i;
-    logic [9:0] sram_addr_i;
-    logic [7:0] sram_wdata_i;
-    logic [7:0] sram_wmask_i;
-    logic [7:0] sram_rdata_o;
-
-    (* keep, dont_touch *) gf180_ram_1024x8_wrapper sram_1k (
-        `ifdef USE_POWER_PINS
-        .VDD(VDD),
-        .VSS(VSS),
-        `endif
-        .CLK (clk),
-        .CEN (~sram_req_i),
-        .GWEN(~sram_we_i),
-        .WEN (~sram_wmask_i),
-        .A   (sram_addr_i),
-        .D   (sram_wdata_i),
-        .Q   (sram_rdata_o)
     );
 
     caravel_core caravel (
@@ -198,7 +174,7 @@ module chip_core #(
     // ztimer 
     //
     (* keep, dont_touch *) rosc_spi_bridge  u_ztimer (
-        .clk_i         (core_clk),                          // post-mux chip clock
+        .clk_i         (core_clk),   // post-mux chip clock
         .rst_ni        (rst_n),
 
         // SPI slave
@@ -213,53 +189,99 @@ module chip_core #(
         .stop_i        (input_in [`PADI_ZTIMER_STOP])
     );
 
-    //
-    // USB
-    //
-    // bus port tied off
-    wire [49:0] usbdev_bus_i_tie;
-    assign      usbdev_bus_i_tie = '0;
-    wire [32:0] usbdev_bus_o;
-    //
-    //bus_reg_pkg::bus_reg_i_t usbdev_bus_i_tie;
-    //assign usbdev_bus_i_tie = '0;
+// 512
+    wire sram_req, sram_we, sram_rvalid;
+    wire [8:0] sram_addr;
+    wire [31:0] sram_wdata, sram_wmask, sram_rdata;
+    wire [1:0] sram_rerror;
+
+    //assign sram_req = 1'b1;
+    //assign sram_we = 1'b0;
+    //assign sram_addr = 9'h00;
+    //assign sram_wdata = 32'h00;
+    //assign sram_wmask = 32'h00;
+    assign sram_rerror = 2'b00;    
+
+    wire macro_cen, macro_gwen;
+    wire [31:0] macro_wen;
+
+    assign macro_cen = ~sram_req;
+    assign macro_gwen = ~sram_we;
+    assign macro_wen = ~sram_wmask;
+    
+    (* keep, dont_touch *) gf180_ram_512x8_wrapper sram_0 (
+    `ifdef USE_POWER_PINS
+	.VDD(VDD), .VSS(VSS),
+    `endif
+	.CLK(core_clk), .CEN(macro_cen), .GWEN(macro_gwen),
+	.WEN(macro_wen[7:0]), .A(sram_addr), .D(sram_wdata[7:0]), .Q(sram_rdata[7:0])
+    );
+
+    (* keep, dont_touch *) gf180_ram_512x8_wrapper sram_1 (
+    `ifdef USE_POWER_PINS
+	.VDD(VDD), .VSS(VSS),
+    `endif
+	.CLK(core_clk), .CEN(macro_cen), .GWEN(macro_gwen),
+	.WEN(macro_wen[15:8]), .A(sram_addr), .D(sram_wdata[15:8]), .Q(sram_rdata[15:8])
+    );
+
+   (* keep, dont_touch *) gf180_ram_512x8_wrapper sram_2 (
+    `ifdef USE_POWER_PINS
+	.VDD(VDD), .VSS(VSS),
+    `endif
+	.CLK(core_clk), .CEN(macro_cen), .GWEN(macro_gwen),
+	.WEN(macro_wen[23:16]), .A(sram_addr), .D(sram_wdata[23:16]), .Q(sram_rdata[23:16])
+    );
+
+   (* keep, dont_touch *) gf180_ram_512x8_wrapper sram_3 (
+    `ifdef USE_POWER_PINS
+	.VDD(VDD), .VSS(VSS),
+    `endif
+	.CLK(core_clk), .CEN(macro_cen), .GWEN(macro_gwen),
+	.WEN(macro_wen[31:24]), .A(sram_addr), .D(sram_wdata[31:24]), .Q(sram_rdata[31:24])
+    );
+     
+    reg rvalid_q;
+    always_ff @(posedge core_clk or negedge rst_n) begin
+	if(!rst_n) rvalid_q <= 1'b0;
+        else rvalid_q <= sram_req & ~sram_we;
+    end
+
+    assign sram_rvalid = rvalid_q;
+// 512-end
+
+//USB
     // data output
-    wire        usbdev_dp_o, usbdev_dp_en_o;
-    wire        usbdev_dn_o, usbdev_dn_en_o;
-    wire        usbdev_tx_se0_o, usbdev_tx_d_o;
-    wire        usbdev_dp_pullup_o, usbdev_dn_pullup_o;
-    wire        usbdev_rx_enable_o, usbdev_tx_use_d_se0_o;
-    wire        usbdev_aon_suspend_req_o, usbdev_aon_wake_ack_o;
-    wire        usbdev_ref_val_o, usbdev_ref_pulse_o;
-    wire        usbdev_rx_fifo_rvalid;
-    //bus_reg_pkg::bus_reg_o_t usbdev_bus_o;
-   
-     // SRAM interface
-    wire        usbdev_ram_req_o, usbdev_ram_we_o;
-    wire [8:0]  usbdev_ram_addr_o;
-    wire [31:0] usbdev_ram_wdata_o, usbdev_ram_wmask_o;
+    wire usbdev_dp_o, usbdev_dp_en_o;
+    wire usbdev_dn_o, usbdev_dn_en_o;
+    wire usbdev_tx_se0_o, usbdev_tx_d_o;
+    wire usbdev_dp_pullup_o, usbdev_dn_pullup_o;
+    wire usbdev_rx_enable_o, usbdev_tx_use_d_se0_o;
+    wire usbdev_aon_suspend_req_o, usbdev_aon_wake_ack_o;
+    wire usbdev_ref_val_o, usbdev_ref_pulse_o;
+    wire usbdev_rx_fifo_rvalid;
+
+    // usbdev_reg_top access
+    logic usbdev_bus_we, usbdev_bus_re, usbdev_bus_error;
+    logic [3:0]  usbdev_bus_be;
+    logic [11:0] usbdev_bus_addr;
+    logic [31:0] usbdev_bus_wdata;
+    logic [31:0] usbdev_bus_rdata;
 
     // SW SRAM interface
-    wire        usbdev_sw_mem_a_rvalid;
-    wire [1:0]  usbdev_sw_mem_a_rerror;
-    wire [31:0] usbdev_sw_mem_a_rdata;
+    logic        usbdev_sw_mem_a_rvalid;
+    logic [1:0]  usbdev_sw_mem_a_rerror;
+    logic [31:0] usbdev_sw_mem_a_rdata;
 
     // Interrupts
-    wire usbdev_intr_pkt_received, usbdev_intr_pkt_sent;
-    wire usbdev_intr_powered, usbdev_intr_disconnected;
-    wire usbdev_intr_host_lost, usbdev_intr_link_reset;
-    wire usbdev_intr_link_suspend, usbdev_intr_link_resume;
-    wire usbdev_intr_av_out_empty, usbdev_intr_rx_full;
-    wire usbdev_intr_av_overflow, usbdev_intr_link_in_err;
-    wire usbdev_intr_link_out_err, usbdev_intr_rx_crc_err;
-    wire usbdev_intr_rx_pid_err, usbdev_intr_rx_bitstuff_err;
-    wire usbdev_intr_frame, usbdev_intr_av_setup_empty;
+    logic usbdev_intr_pkt_received, usbdev_intr_pkt_sent;
+    logic usbdev_intr_powered, usbdev_intr_link_reset, usbdev_intr_frame;
 
     (* keep, dont_touch *) usbdev u_usbdev (
         .clk_i                  (clk), //0
         .rst_ni                 (rst_n), //1
         .clk_aon_i              (1'b0),
-        .rst_aon_ni             (1'b1),
+        .rst_aon_ni             (rst_n),
 
         // data inputs tied low
         .cio_usb_dp_i           (1'b1),
@@ -294,47 +316,167 @@ module chip_core #(
         .usb_ref_pulse_o        (usbdev_ref_pulse_o),
 
         // Register bus
-        .bus_i                  (usbdev_bus_i_tie),
-        .bus_o                  (usbdev_bus_o),
+        .bus_we_i               (usbdev_bus_we),
+        .bus_re_i               (usbdev_bus_re),
+        .bus_addr_i             (usbdev_bus_addr),
+        .bus_wdata_i            (usbdev_bus_wdata),
+        .bus_be_i               (usbdev_bus_be),
+        .bus_error_o            (usbdev_bus_error),
+        .bus_rdata_o            (usbdev_bus_rdata),
 
         // RX FIFO
         .rx_fifo_rvalid         (usbdev_rx_fifo_rvalid),
 
-        // SRAM interface, inputs tied of
-        .ram_rdata_i            (sram_rdata_o),
-        .ram_rvalid_i           (sram_req_i & ~sram_we_i),
-        .ram_rerror_i           (2'h0),
-        .ram_req_o              (sram_req_i),
-        .ram_we_o               (sram_we_i),
-        .ram_addr_o             (sram_addr_i),
-        .ram_wdata_o            (sram_wdata_i),
-        .ram_wmask_o            (sram_wmask_i),
+        // SRAM interface
+        .ram_rdata_i            (sram_rdata),
+        .ram_rvalid_i           (sram_rvalid),
+        .ram_rerror_i           (sram_rerror),
+        .ram_req_o              (sram_req),
+        .ram_we_o               (sram_we),
+        .ram_addr_o             (sram_addr),
+        .ram_wdata_o            (sram_wdata),
+        .ram_wmask_o            (sram_wmask),
 
         // SW SRAM read por
-        .sw_mem_a_rvalid        (usbdev_sw_mem_a_rvalid),
-        .sw_mem_a_rerror        (usbdev_sw_mem_a_rerror),
-        .sw_mem_a_rdata         (usbdev_sw_mem_a_rdata),
+        .sw_mem_a_rvalid_o      (usbdev_sw_mem_a_rvalid),
+        .sw_mem_a_rerror_o      (usbdev_sw_mem_a_rerror),
+        .sw_mem_a_rdata_o       (usbdev_sw_mem_a_rdata),
 
         // Interrupts
         .intr_pkt_received_o    (usbdev_intr_pkt_received),
         .intr_pkt_sent_o        (usbdev_intr_pkt_sent),
         .intr_powered_o         (usbdev_intr_powered),
-        .intr_disconnected_o    (usbdev_intr_disconnected),
-        .intr_host_lost_o       (usbdev_intr_host_lost),
+        .intr_disconnected_o    (),
+        .intr_host_lost_o       (),
         .intr_link_reset_o      (usbdev_intr_link_reset),
-        .intr_link_suspend_o    (usbdev_intr_link_suspend),
-        .intr_link_resume_o     (usbdev_intr_link_resume),
-        .intr_av_out_empty_o    (usbdev_intr_av_out_empty),
-        .intr_rx_full_o         (usbdev_intr_rx_full),
-        .intr_av_overflow_o     (usbdev_intr_av_overflow),
-        .intr_link_in_err_o     (usbdev_intr_link_in_err),
-        .intr_link_out_err_o    (usbdev_intr_link_out_err),
-        .intr_rx_crc_err_o      (usbdev_intr_rx_crc_err),
-        .intr_rx_pid_err_o      (usbdev_intr_rx_pid_err),
-        .intr_rx_bitstuff_err_o (usbdev_intr_rx_bitstuff_err),
+        .intr_link_suspend_o    (),
+        .intr_link_resume_o     (),
+        .intr_av_out_empty_o    (),
+        .intr_rx_full_o         (),
+        .intr_av_overflow_o     (),
+        .intr_link_in_err_o     (),
+        .intr_link_out_err_o    (),
+        .intr_rx_crc_err_o      (),
+        .intr_rx_pid_err_o      (),
+        .intr_rx_bitstuff_err_o (),
         .intr_frame_o           (usbdev_intr_frame),
-        .intr_av_setup_empty_o  (usbdev_intr_av_setup_empty)
+        .intr_av_setup_empty_o  ()
     );
+
+    // Wishbone Interfacing
+    wire cpu_req, is_signal, is_usb_reg, is_usb_buf;
+    reg is_usb_buf_r_q; // registered: read request targeting USB_BUF region
+    reg bus_re_sent;    // one-shot: suppresses bus_re after first pulse per WB transaction
+    reg bus_we_sent;    // one-shot: suppresses bus_we after first pulse per WB transaction
+    reg [31:0] signal_reg;
+    reg [31:0] usb_rdata_hold; // captured bus_o.bus_rdata for register reads
+    reg [31:0] sw_rdata_hold;  // captured sw_rdata for SRAM reads
+
+    //==========================================================================
+    //  Memory Map
+    //  0x3000_000C                Signal register (interrupts)
+    //  0x3000_1000 – 0x3000_17FF  USB registers   (usbdev_reg_top)
+    //  0x3000_1800 – 0x3000_1FFF  Packet-buffer SRAM (SW read/write port)
+    //==========================================================================
+    localparam USB_BASE     = 32'h3000_1000;
+    localparam USB_REGS_END = 32'h3000_17FF;
+    localparam USB_BUF_BASE = 32'h3000_1800;
+    localparam USB_END      = 32'h3000_1FFF;
+
+    assign cpu_req     = user_wb_stb && user_wb_cyc && !user_wb_ack;
+    assign is_signal   = cpu_req && (user_wb_adr == 32'h3000_000C);
+    assign is_usb_reg  = cpu_req && ((user_wb_adr >= USB_BASE)     && (user_wb_adr <= USB_REGS_END));
+    assign is_usb_buf  = cpu_req && ((user_wb_adr >= USB_BUF_BASE) && (user_wb_adr <= USB_END));
+
+    assign user_wb_dat_rd =
+          (user_wb_adr == 32'h3000_000C)                              ? signal_reg
+        : (user_wb_adr >= USB_BUF_BASE && user_wb_adr <= USB_END)     ? sw_rdata_hold
+        : (user_wb_adr >= USB_BASE     && user_wb_adr <= USB_REGS_END)? usb_rdata_hold
+        : 32'h0;
+
+    //assign user_wb_ack = is_usb_reg | (is_usb_buf && user_wb_we) | (is_usb_buf_r_q && sw_rvalid);
+    assign user_wb_ack = is_usb_reg | (is_usb_buf && user_wb_we) | (is_usb_buf_r_q && usbdev_sw_mem_a_rvalid);
+
+
+    //==========================================================================
+    // Signal register
+    //==========================================================================
+    always_ff @(posedge core_clk) begin
+        signal_reg <= {27'b0, usbdev_intr_powered, usbdev_intr_link_reset, usbdev_intr_frame, usbdev_intr_pkt_sent, usbdev_intr_pkt_received};
+    end
+
+    //==========================================================================
+    // USB reg_top bus_i drive
+    //==========================================================================
+    always_comb begin
+        usbdev_bus_we    = 1'b0;
+        usbdev_bus_re    = 1'b0;
+        usbdev_bus_addr  = 12'h0;
+        usbdev_bus_wdata = 32'h0;
+        usbdev_bus_be    = 4'hF;
+
+        if (user_wb_stb && user_wb_cyc && !user_wb_ack) begin
+            if ((user_wb_adr >= USB_BASE) && (user_wb_adr <= USB_END)) begin
+                usbdev_bus_addr = user_wb_adr[11:0];
+                if (!user_wb_we) begin
+                    usbdev_bus_re = !bus_re_sent;
+                    usbdev_bus_be = 4'hF;
+                end else begin
+                    usbdev_bus_wdata = user_wb_dat_wr;
+                    usbdev_bus_we    = !bus_we_sent;
+                    usbdev_bus_be    = user_wb_sel;
+                end
+            end
+        end
+    end
+
+    // Hold registers — latched while the request is live; stable on ack cycle.
+    always_ff @(posedge core_clk or negedge rst_n) begin
+        if (!rst_n) begin
+            is_usb_buf_r_q <= 1'b0;
+            usb_rdata_hold <= 32'h0;
+            sw_rdata_hold  <= 32'h0;
+            bus_re_sent    <= 1'b0;
+            bus_we_sent    <= 1'b0;
+        end else begin
+            // Register the SRAM-read flag without !user_wb_ack so it persists
+            is_usb_buf_r_q <= user_wb_stb && user_wb_cyc
+                              && !user_wb_we
+                              && (user_wb_adr >= USB_BUF_BASE)
+                              && (user_wb_adr <= USB_END);
+
+            // bus_re_sent: set the cycle bus_re fires, clear when transaction ends.
+            if (user_wb_ack || !user_wb_stb || !user_wb_cyc) begin
+                bus_re_sent <= 1'b0;
+            end else if (user_wb_stb && user_wb_cyc && !user_wb_we
+                    && (user_wb_adr >= USB_BASE) && (user_wb_adr <= USB_END)
+                    && !bus_re_sent) begin
+                bus_re_sent <= 1'b1;
+            end
+
+            // bus_we_sent: set the cycle bus_we fires, clear when transaction ends.
+            if (user_wb_ack || !user_wb_stb || !user_wb_cyc) begin
+                bus_we_sent <= 1'b0;
+            end else if (user_wb_stb && user_wb_cyc && user_wb_we
+                     && (user_wb_adr >= USB_BASE) && (user_wb_adr <= USB_REGS_END)
+                     && !bus_we_sent) begin
+                bus_we_sent <= 1'b1;
+            end
+
+            // Latch USB register read data on the cycle bus_re fires.
+            if (is_usb_reg && !user_wb_we && !bus_re_sent)begin
+                usb_rdata_hold <= usbdev_bus_rdata;
+            end
+
+            // Latch SRAM read data whenever usbdev_sw_mem_a_rvalid pulses.
+            if (usbdev_sw_mem_a_rvalid) begin
+                sw_rdata_hold <= usbdev_sw_mem_a_rdata;
+            end
+        end
+    end
+
+
 
 endmodule
 `default_nettype wire
+

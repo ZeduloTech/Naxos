@@ -13,7 +13,7 @@
 //`include "prim_assert.sv"
 
 module usb_fs_nb_in_pe #(
-  parameter logic [3:0] NumInEps = 3,//previously 12
+  parameter logic [4:0] NumInEps = 6,//previously 12
   parameter int unsigned MaxInPktSizeByte = 32,
   // Targeting 17 bit times for the timeout. The counter runs on the 48 MHz
   // clock, the SOP delay to rx_pkt_start_i is 1.5 bit times (synchronizer flops and K detection),
