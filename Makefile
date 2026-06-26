@@ -110,11 +110,11 @@ ztimer-librelane: ## Run LibreLane flow for macros
 	make -C ztimer all
 .PHONY: librelane-librelane
 
-otusb-librelane: ## Run LibreLane flow for macros
-	make -C otUSB all
-.PHONY: otusb-librelane
+#otusb-librelane: ## Run LibreLane flow for macros
+#	make -C otUSB all
+#.PHONY: otusb-librelane
 
-macros-librelane: ztimer-librelane otusb-librelane ## Run LibreLane flow for macros
+macros-librelane: ztimer-librelane ## Run LibreLane flow for macros
 .PHONY: caravel-librelane
 
 librelane-condensed: clone-pdk defines ## Run LibreLane flow (synthesis, PnR, verification)
@@ -122,7 +122,7 @@ librelane-condensed: clone-pdk defines ## Run LibreLane flow (synthesis, PnR, ve
 .PHONY: librelane-condensed
 
 librelane-nodrc: clone-pdk defines ## Run LibreLane flow without DRC checks
-	SRAM_DEFINE=${SRAM_DEFINE} librelane ${LIBRELANE_CONFIGS} ${LIBRELANE_OPTS} --save-views-to $(MAKEFILE_DIR)/final --skip KLayout.Antenna --skip KLayout.DRC --skip Magic.DRC
+	SRAM_DEFINE=${SRAM_DEFINE} librelane ${LIBRELANE_CONFIGS} ${LIBRELANE_OPTS} --save-views-to $(MAKEFILE_DIR)/final --skip KLayout.Antenna --skip KLayout.Density --skip KLayout.DRC --skip Magic.DRC
 .PHONY: librelane-nodrc
 
 librelane-klayoutdrc: clone-pdk defines ## Run LibreLane flow without magic DRC checks

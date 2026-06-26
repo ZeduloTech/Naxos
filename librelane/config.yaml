@@ -24,12 +24,60 @@ DESIGN_NAME: chip_top
 VERILOG_FILES:
 - dir::../src/chip_top.sv
 - dir::../src/chip_core.sv
-#- dir::../src/wb_counter.v
+
+- dir::../otUSB/src/usb_wrapper.sv
+- dir::../otUSB/src/prim_util/prim_util_pkg.sv
+- dir::../otUSB/src/other_prim/prim_mubi_pkg.sv
+- dir::../otUSB/src/other_prim/prim_buf.sv
+- dir::../otUSB/src/other_prim/prim_clock_mux2.sv
+- dir::../otUSB/src/other_prim/prim_intr_hw.sv
+- dir::../otUSB/src/other_prim/prim_onehot_check.sv
+- dir::../otUSB/src/other_prim/prim_xnor2.sv
+- dir::../otUSB/src/other_prim/prim_reg_we_check.sv
+- dir::../otUSB/src/prim_cdc/prim_cdc_rand_delay.sv
+- dir::../otUSB/src/prim_flop/prim_flop.sv
+- dir::../otUSB/src/prim_flop/prim_sparse_fsm_flop.sv
+- dir::../otUSB/src/prim_flop/prim_flop_2sync.sv
+- dir::../otUSB/src/prim_count/prim_count_pkg.sv
+- dir::../otUSB/src/prim_count/prim_count.sv
+- dir::../otUSB/src/prim_sec/prim_sec_anchor_buf.sv
+- dir::../otUSB/src/prim_sec/prim_sec_anchor_flop.sv
+- dir::../otUSB/src/other_prim/prim_diff_decode.sv
+- dir::../otUSB/src/other_prim/prim_edge_detector.sv
+- dir::../otUSB/src/other_prim/prim_filter.sv
+- dir::../otUSB/src/prim_sync/prim_sync_reqack.sv
+- dir::../otUSB/src/prim_sync/prim_pulse_sync.sv
+- dir::../otUSB/src/prim_cdc/prim_reg_cdc_arb.sv
+- dir::../otUSB/src/prim_cdc/prim_reg_cdc.sv
+- dir::../otUSB/src/prim_fifo/prim_fifo_assert.svh
+- dir::../otUSB/src/prim_fifo/prim_fifo_sync_cnt.sv
+- dir::../otUSB/src/prim_fifo/prim_fifo_sync.sv
+- dir::../otUSB/src/prim_subreg/prim_subreg_pkg.sv
+- dir::../otUSB/src/prim_subreg/prim_subreg_ext.sv
+- dir::../otUSB/src/prim_subreg/prim_subreg_arb.sv
+- dir::../otUSB/src/prim_subreg/prim_subreg.sv
+- dir::../otUSB/src/usb_consts_pkg.sv
+- dir::../otUSB/src/usb_fs_nb_out_pe.sv
+- dir::../otUSB/src/usb_fs_nb_in_pe.sv
+- dir::../otUSB/src/usb_fs_rx.sv
+- dir::../otUSB/src/usb_fs_tx.sv
+- dir::../otUSB/src/usb_fs_tx_mux.sv
+- dir::../otUSB/src/usb_fs_nb_pe.sv
+- dir::../otUSB/src/usbdev_reg_pkg.sv
+- dir::../otUSB/src/support_reg_hw_pkg.sv
+- dir::../otUSB/src/usbdev_counter.sv
+- dir::../otUSB/src/usbdev_linkstate.sv
+- dir::../otUSB/src/usbdev_aon_wake.sv
+- dir::../otUSB/src/usbdev_iomux.sv
+- dir::../otUSB/src/usbdev_usbif.sv
+- dir::../otUSB/src/bus_reg_pkg.sv
+- dir::../otUSB/src/usbdev_reg_top.sv
+- dir::../otUSB/src/usbdev.sv
  
 VERILOG_INCLUDE_DIRS: [ dir::../caravel/verilog/ ]
 
 # Enable plugin for better SystemVerilog support
-# USE_SLANG: True
+USE_SLANG: True
 
 # 3.3V CELL LIBRABRY
 STD_CELL_LIBRARY: gf180mcu_as_sc_mcu7t3v3
@@ -63,7 +111,10 @@ IGNORE_DISCONNECTED_MODULES:
 # Clock
 CLOCK_NET: i_chip_core.wb_clk_buf/Y
 
-CLOCK_PERIOD: 20.83 # 50 MHz
+CLOCK_PERIOD: 20 # 50 MHz
+
+TIME_DERATING_CONSTRAINT: 7
+CLOCK_UNCERTAINTY_CONSTRAINT: 0.1
 
 # Fix hold violations
 PL_RESIZER_HOLD_SLACK_MARGIN: 0.7
@@ -89,19 +140,18 @@ PDN_CORE_HORIZONTAL_LAYER: Metal3
 PDN_HPITCH: 50
 PDN_CORE_RING_CONNECT_TO_PAD_LAYERS: [Metal2]
 
-PDN_MACRO_CONNECTIONS:
-  - "i_chip_core.xtal_driver VDD VSS VDD_XTAL VSS_XTAL"
-  - "i_chip_core.sram_0 VDD VSS VDD VSS"
-  - "i_chip_core.sram_1 VDD VSS VDD VSS"
-  - "i_chip_core.sram_2 VDD VSS VDD VSS"
-  - "i_chip_core.sram_3 VDD VSS VDD VSS"
-
 # To disable ports buffering & wire repair with dly cells as they degrade timing
 #PNR_EXCLUDED_CELL_FILE: dir::../caravel/librelane/pnr_exclude.cells
 
+RUN_POST_GRT_RESIZER_TIMING: True
+GRT_RESIZER_HOLD_SLACK_MARGIN: 1.0
+GRT_RESIZER_SETUP_SLACK_MARGIN: 0.2
+GRT_RESIZER_HOLD_MAX_BUFFER_PCT: 100
+GRT_RESIZER_ALLOW_SETUP_VIOS: True
+
 # To fix antennas
 DESIGN_REPAIR_MAX_WIRE_LENGTH: 1000
-DIODE_ON_PORTS: both
+#DIODE_ON_PORTS: both
 GRT_ANTENNA_MARGIN: 20
 GRT_ANTENNA_ITERS: 10
 DRT_ANTENNA_REPAIR_ITERS: 10

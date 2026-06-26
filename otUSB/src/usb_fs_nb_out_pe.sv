@@ -103,7 +103,9 @@ module usb_fs_nb_out_pe #(
     StRcvdDataStart,
     StRcvdDataEnd//,
     //StRcvdIsoDataEnd
-  } state_out_e;
+  } state_out_enum;
+
+  typedef logic [2:0] state_out_e;
 
   state_out_e  out_xact_state;
   state_out_e  out_xact_state_next;

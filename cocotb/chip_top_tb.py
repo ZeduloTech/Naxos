@@ -22,7 +22,7 @@ pdk_root = os.getenv("PDK_ROOT", Path("../gf180mcu").absolute())
 pdk = os.getenv("PDK", "gf180mcuD")
 scl = os.getenv("SCL", "gf180mcu_as_sc_mcu7t3v3")
 pad = os.getenv("PAD", "gf180mcu_fd_io")
-sram = os.getenv("SRAM", "gf180mcu_fd_ip_sram")
+sram = os.getenv("SRAM", "gf180mcu_ocd_ip_sram")
 slot = os.getenv("SLOT", "1X0P5").upper()
 test_env = os.getenv("TEST", "all")
 add_build_args = os.getenv("ADD_BUILD_ARGS", "").split()
@@ -132,22 +132,69 @@ def test_chip_top_runner(test : str):
         sources.append(proj_path / "../ztimer/src/rosc_spi_bridge.sv"),
         
         # USB IP (does not work in Icarus, use netlist always)
-        sources.append(proj_path / "../otUSB/final/nl/usbdev.nl.v"),
+        sources.append(proj_path / "../otUSB/src/usb_wrapper.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_util/prim_util_pkg.sv"),
+        sources.append(proj_path / "../otUSB/src/other_prim/prim_mubi_pkg.sv"),
+        sources.append(proj_path / "../otUSB/src/other_prim/prim_buf.sv"),
+        sources.append(proj_path / "../otUSB/src/other_prim/prim_clock_mux2.sv"),
+        sources.append(proj_path / "../otUSB/src/other_prim/prim_intr_hw.sv"),
+        sources.append(proj_path / "../otUSB/src/other_prim/prim_onehot_check.sv"),
+        sources.append(proj_path / "../otUSB/src/other_prim/prim_xnor2.sv"),
+        sources.append(proj_path / "../otUSB/src/other_prim/prim_reg_we_check.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_cdc/prim_cdc_rand_delay.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_flop/prim_flop.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_flop/prim_sparse_fsm_flop.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_flop/prim_flop_2sync.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_count/prim_count_pkg.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_count/prim_count.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_sec/prim_sec_anchor_buf.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_sec/prim_sec_anchor_flop.sv"),
+        sources.append(proj_path / "../otUSB/src/other_prim/prim_diff_decode.sv"),
+        sources.append(proj_path / "../otUSB/src/other_prim/prim_edge_detector.sv"),
+        sources.append(proj_path / "../otUSB/src/other_prim/prim_filter.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_sync/prim_sync_reqack.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_sync/prim_pulse_sync.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_cdc/prim_reg_cdc_arb.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_cdc/prim_reg_cdc.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_fifo/prim_fifo_assert.svh"),
+        sources.append(proj_path / "../otUSB/src/prim_fifo/prim_fifo_sync_cnt.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_fifo/prim_fifo_sync.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_subreg/prim_subreg_pkg.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_subreg/prim_subreg_ext.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_subreg/prim_subreg_arb.sv"),
+        sources.append(proj_path / "../otUSB/src/prim_subreg/prim_subreg.sv"),
+        sources.append(proj_path / "../otUSB/src/usb_consts_pkg.sv"),
+        sources.append(proj_path / "../otUSB/src/usb_fs_nb_out_pe.sv"),
+        sources.append(proj_path / "../otUSB/src/usb_fs_nb_in_pe.sv"),
+        sources.append(proj_path / "../otUSB/src/usb_fs_rx.sv"),
+        sources.append(proj_path / "../otUSB/src/usb_fs_tx.sv"),
+        sources.append(proj_path / "../otUSB/src/usb_fs_tx_mux.sv"),
+        sources.append(proj_path / "../otUSB/src/usb_fs_nb_pe.sv"),
+        sources.append(proj_path / "../otUSB/src/usbdev_reg_pkg.sv"),
+        sources.append(proj_path / "../otUSB/src/support_reg_hw_pkg.sv"),
+        sources.append(proj_path / "../otUSB/src/usbdev_counter.sv"),
+        sources.append(proj_path / "../otUSB/src/usbdev_linkstate.sv"),
+        sources.append(proj_path / "../otUSB/src/usbdev_aon_wake.sv"),
+        sources.append(proj_path / "../otUSB/src/usbdev_iomux.sv"),
+        sources.append(proj_path / "../otUSB/src/usbdev_usbif.sv"),
+        sources.append(proj_path / "../otUSB/src/bus_reg_pkg.sv"),
+        sources.append(proj_path / "../otUSB/src/usbdev_reg_top.sv"),
+        sources.append(proj_path / "../otUSB/src/usbdev.sv"),
+
 
         defines.update({"FUNCTIONAL": 1})
 
     includes.append(proj_path / "../src")
     includes.append(proj_path / "../caravel/verilog/")
     includes.append(proj_path / "../caravel/sim/common/")
+    includes.append(proj_path / "../otUSB/src/prim_fifo/")
 
     sources += [
         # IO pad models
-        Path(pdk_root) / pdk / "libs.ref/gf180mcu_fd_io/verilog/gf180mcu_fd_io.v",
+        Path(pdk_root) / pdk / f"libs.ref/{pad}/verilog/{pad}.v",
         
         # SRAM macros
-        #Path(pdk_root) / pdk / "libs.ref/gf180mcu_fd_ip_sram/verilog/gf180mcu_fd_ip_sram__sram512x8m8wm1.v",
-        #proj_path / "../ip/sram/gf180_ram_512x8_wrapper.v",
-        #proj_path / "../ip/sram/gf180mcu_ocd_ip_sram__sram1024x8m8wm1.v",
+        Path(pdk_root) / pdk / f"libs.ref/{sram}/verilog/{sram}__sram512x8m8wm1.v",
         proj_path / "../ip/sram/gf180_ram_1024x8_wrapper.v",
  
         # XTAL IP

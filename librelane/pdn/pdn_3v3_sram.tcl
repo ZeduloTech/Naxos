@@ -2,7 +2,7 @@
 
 define_pdn_grid \
     -macro \
-    -instances {i_chip_core.sram_0 i_chip_core.sram_1 i_chip_core.sram_2 i_chip_core.sram_3} \
+    -instances {i_chip_core.usb.sram_0 i_chip_core.usb.sram_1 i_chip_core.usb.sram_2 i_chip_core.usb.sram_3} \
     -name sram_macros_NS \
     -starts_with POWER \
     -halo "$::env(PDN_HORIZONTAL_HALO) $::env(PDN_VERTICAL_HALO)"

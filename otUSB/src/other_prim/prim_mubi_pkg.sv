@@ -34,7 +34,7 @@ package prim_mubi_pkg;
   endfunction : mubi4_test_invalid
 
   // Convert a 1 input value to a mubi output
-  function automatic mubi4_t mubi4_bool_to_mubi(logic val);
+  function automatic logic [MuBi4Width-1:0] mubi4_bool_to_mubi(logic val);
     return (val ? MuBi4True : MuBi4False);
   endfunction : mubi4_bool_to_mubi
 
@@ -174,7 +174,7 @@ package prim_mubi_pkg;
   endfunction : mubi8_test_invalid
 
   // Convert a 1 input value to a mubi output
-  function automatic mubi8_t mubi8_bool_to_mubi(logic val);
+  function automatic logic [MuBi8Width-1:0] mubi8_bool_to_mubi(logic val);
     return (val ? MuBi8True : MuBi8False);
   endfunction : mubi8_bool_to_mubi
 
@@ -314,7 +314,7 @@ package prim_mubi_pkg;
   endfunction : mubi12_test_invalid
 
   // Convert a 1 input value to a mubi output
-  function automatic mubi12_t mubi12_bool_to_mubi(logic val);
+  function automatic logic [MuBi12Width-1:0] mubi12_bool_to_mubi(logic val);
     return (val ? MuBi12True : MuBi12False);
   endfunction : mubi12_bool_to_mubi
 
@@ -454,7 +454,7 @@ package prim_mubi_pkg;
   endfunction : mubi16_test_invalid
 
   // Convert a 1 input value to a mubi output
-  function automatic mubi16_t mubi16_bool_to_mubi(logic val);
+  function automatic logic [MuBi16Width-1:0] mubi16_bool_to_mubi(logic val);
     return (val ? MuBi16True : MuBi16False);
   endfunction : mubi16_bool_to_mubi
 
@@ -594,7 +594,7 @@ package prim_mubi_pkg;
   endfunction : mubi20_test_invalid
 
   // Convert a 1 input value to a mubi output
-  function automatic mubi20_t mubi20_bool_to_mubi(logic val);
+  function automatic logic [MuBi20Width-1:0] mubi20_bool_to_mubi(logic val);
     return (val ? MuBi20True : MuBi20False);
   endfunction : mubi20_bool_to_mubi
 
@@ -734,7 +734,7 @@ package prim_mubi_pkg;
   endfunction : mubi24_test_invalid
 
   // Convert a 1 input value to a mubi output
-  function automatic mubi24_t mubi24_bool_to_mubi(logic val);
+  function automatic logic [MuBi24Width-1:0] mubi24_bool_to_mubi(logic val);
     return (val ? MuBi24True : MuBi24False);
   endfunction : mubi24_bool_to_mubi
 
@@ -874,7 +874,7 @@ package prim_mubi_pkg;
   endfunction : mubi28_test_invalid
 
   // Convert a 1 input value to a mubi output
-  function automatic mubi28_t mubi28_bool_to_mubi(logic val);
+  function automatic logic [MuBi28Width-1:0] mubi28_bool_to_mubi(logic val);
     return (val ? MuBi28True : MuBi28False);
   endfunction : mubi28_bool_to_mubi
 
@@ -1014,7 +1014,7 @@ package prim_mubi_pkg;
   endfunction : mubi32_test_invalid
 
   // Convert a 1 input value to a mubi output
-  function automatic mubi32_t mubi32_bool_to_mubi(logic val);
+  function automatic logic [MuBi32Width-1:0] mubi32_bool_to_mubi(logic val);
     return (val ? MuBi32True : MuBi32False);
   endfunction : mubi32_bool_to_mubi
 

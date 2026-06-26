@@ -66,7 +66,7 @@ module prim_count
 
   // Reset Values for primary and secondary counters.
   localparam int NumCnt = 2;
-  localparam logic [NumCnt-1:0][Width-1:0] ResetValues = {{Width{1'b1}} - ResetValue, // secondary
+  logic [NumCnt-1:0][Width-1:0] ResetValues = {{Width{1'b1}} - ResetValue, // secondary
                                                           ResetValue};                // primary
 
   logic [NumCnt-1:0][Width-1:0] cnt_d, cnt_d_committed, cnt_q;
