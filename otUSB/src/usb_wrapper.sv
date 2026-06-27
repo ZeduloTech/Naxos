@@ -16,12 +16,19 @@ module naxos_usb_wrapper  #(
     input  [WB_ADR_WIDTH-1:0]   wb_adr_i,
     input  [WB_DAT_WIDTH-1:0]   wb_dat_i, 
     input                       wb_we_i,
-    input                       wb_sel_i,
+    input  [WB_DAT_WIDTH/8-1:0] wb_sel_i,
     output [WB_DAT_WIDTH-1:0]   wb_dat_o,
     output                      wb_ack_o,
 
-    output                      usb_tx_d_o,
-    input                       usb_rx_d_i
+    output                      usb_dp_oe_o,
+    output                      usb_dn_oe_o,
+    output                      usb_dp_pullup_o,
+    output                      usb_dn_pullup_o,
+    output                      usb_dp_o,
+    output                      usb_dn_o,
+    input                       usb_dp_i,
+    input                       usb_dn_i,
+    input                       usb_sense_i
 );
 
     wire rst_n = ~wb_rst_i;
@@ -37,7 +44,7 @@ module naxos_usb_wrapper  #(
     wire macro_cen, macro_gwen;
     wire [31:0] macro_wen;
 
-    assign macro_cen = ~sram_req;
+    assign macro_cen = 1;//~sram_req;
     assign macro_gwen = ~sram_we;
     assign macro_wen = ~sram_wmask;
     
@@ -84,10 +91,7 @@ module naxos_usb_wrapper  #(
 
     //USB
     // data output
-    wire usbdev_dp_o, usbdev_dp_en_o;
-    wire usbdev_dn_o, usbdev_dn_en_o;
     wire usbdev_tx_se0_o;
-    wire usbdev_dp_pullup_o, usbdev_dn_pullup_o;
     wire usbdev_rx_enable_o, usbdev_tx_use_d_se0_o;
     wire usbdev_aon_suspend_req_o, usbdev_aon_wake_ack_o;
     wire usbdev_ref_val_o, usbdev_ref_pulse_o;
@@ -110,28 +114,28 @@ module naxos_usb_wrapper  #(
     logic usbdev_intr_powered, usbdev_intr_link_reset, usbdev_intr_frame;
 
     (* keep, dont_touch *) usbdev u_usbdev (
-        .clk_i                  (wb_clk_i), //0
-        .rst_ni                 (rst_n), //1
+        .clk_i                  (wb_clk_i), 
+        .rst_ni                 (rst_n), 
         .clk_aon_i              (1'b0),
         .rst_aon_ni             (rst_n),
 
         // data inputs tied low
-        .cio_usb_dp_i           (1'b1),
-        .cio_usb_dn_i           (1'b1),
-        .usb_rx_d_i             (usb_rx_d_i),
+        .cio_usb_dp_i           (usb_dp_i),
+        .cio_usb_dn_i           (usb_dn_i),
+        .usb_rx_d_i             (1'b0),     // tie-low??
 
         // data outputs
-        .cio_usb_dp_o           (usbdev_dp_o),
-        .cio_usb_dp_en_o        (usbdev_dp_en_o),
-        .cio_usb_dn_o           (usbdev_dn_o),
-        .cio_usb_dn_en_o        (usbdev_dn_en_o),
+        .cio_usb_dp_o           (usb_dp_o),
+        .cio_usb_dp_en_o        (usb_dp_oe_o),
+        .cio_usb_dn_o           (usb_dn_o),
+        .cio_usb_dn_en_o        (usb_dn_oe_o),
         .usb_tx_se0_o           (usbdev_tx_se0_o),
-        .usb_tx_d_o             (usb_tx_d_o),
+        .usb_tx_d_o             (),
 
         // Non-data I/O
-        .cio_sense_i            (1'b0),
-        .usb_dp_pullup_o        (usbdev_dp_pullup_o),
-        .usb_dn_pullup_o        (usbdev_dn_pullup_o),
+        .cio_sense_i            (usb_sense_i),
+        .usb_dp_pullup_o        (usb_dp_pullup_o),
+        .usb_dn_pullup_o        (usb_dn_pullup_o),
         .usb_rx_enable_o        (usbdev_rx_enable_o),
         .usb_tx_use_d_se0_o     (usbdev_tx_use_d_se0_o),
 
@@ -215,7 +219,7 @@ module naxos_usb_wrapper  #(
     localparam USB_BUF_BASE = 32'h3000_1800;
     localparam USB_END      = 32'h3000_1FFF;
 
-    assign cpu_req     = wb_stb_i && wb_cyc_i && !wb_ack_o;
+    assign cpu_req     = wb_stb_i && wb_cyc_i;// && !wb_ack_o;
     assign is_signal   = cpu_req && (wb_adr_i == 32'h3000_000C);
     assign is_usb_reg  = cpu_req && ((wb_adr_i >= USB_BASE)     && (wb_adr_i <= USB_REGS_END));
     assign is_usb_buf  = cpu_req && ((wb_adr_i >= USB_BUF_BASE) && (wb_adr_i <= USB_END));
@@ -228,7 +232,6 @@ module naxos_usb_wrapper  #(
 
     //assign wb_ack_o = is_usb_reg | (is_usb_buf && wb_we_i) | (is_usb_buf_r_q && sw_rvalid);
     assign wb_ack_o = is_usb_reg | (is_usb_buf && wb_we_i) | (is_usb_buf_r_q && usbdev_sw_mem_a_rvalid);
-
 
     //==========================================================================
     // Signal register
@@ -247,7 +250,7 @@ module naxos_usb_wrapper  #(
         usbdev_bus_wdata = 32'h0;
         usbdev_bus_be    = 4'hF;
 
-        if (wb_stb_i && wb_cyc_i && !wb_ack_o) begin
+        if (wb_stb_i && wb_cyc_i /*&& !wb_ack_o*/) begin
             if ((wb_adr_i >= USB_BASE) && (wb_adr_i <= USB_END)) begin
                 usbdev_bus_addr = wb_adr_i[11:0];
                 if (!wb_we_i) begin
@@ -287,7 +290,7 @@ module naxos_usb_wrapper  #(
             end
 
             // bus_we_sent: set the cycle bus_we fires, clear when transaction ends.
-            if (wb_ack_o || !wb_stb_i || !wb_cyc_i) begin
+            if (/*wb_ack_o || */!wb_stb_i || !wb_cyc_i) begin
                 bus_we_sent <= 1'b0;
             end else if (wb_stb_i && wb_cyc_i && wb_we_i
                      && (wb_adr_i >= USB_BASE) && (wb_adr_i <= USB_REGS_END)

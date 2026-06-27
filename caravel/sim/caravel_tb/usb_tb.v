@@ -26,7 +26,7 @@
 
 
 
-module wbcounter_tb;
+module usb_tb;
 	reg clock;
 	reg RSTB;
 	reg power1;
@@ -49,7 +49,7 @@ module wbcounter_tb;
 	assign uart_tx = mprj_io[6];
 	assign mprj_io[5] = uart_rx;
 
-	always #25 clock <= (clock === 1'b0);
+	always #10.42 clock <= (clock === 1'b0);    // 48 MHz
 
 	initial begin
 		clock = 0;
@@ -64,9 +64,9 @@ module wbcounter_tb;
 	`endif 
 
 	initial begin
-		$display("Wait for wishbone counter test to complete");
-        wait(gpio == 1'b1);
-        $display("Monitor: Test WishboneCounter Passed");
+		$display("Wait for USB test to complete");
+        wait(usb_tb_host.test_success == 1'b1);
+        $display("Monitor: Test USB Passed");
         test_success <= 1'b1;
         #100;
 		$finish;
@@ -81,13 +81,14 @@ module wbcounter_tb;
 
 	initial begin		// Power-up sequence
 		power1 <= 1'b0;
-		#2000;
+		#200;
 		power1 <= 1'b1;
 	end
 
 	initial begin
-         wait(checkbits == 1'b1);
-         $display("Monitor: Test WishboneCounter Failed");
+         //wait(checkbits == 1'b1);
+         #10000000;
+         $display("Monitor: Test USB Failed (timeout)");
          $finish;
     end
 
@@ -116,7 +117,7 @@ module wbcounter_tb;
 	);
 
 	spiflash #(
-		.FILENAME({`HEX_PREFIX, "wbcounter.hex"})
+		.FILENAME({`HEX_PREFIX, "usb.hex"})     
 	) spiflash (
 		.csb(flash_csb),
 		.clk(flash_clk),
@@ -126,10 +127,21 @@ module wbcounter_tb;
 		.io3()			// not used
 	);
 
-	// Testbench UART
-	//tbuart tbuart (
-		//.ser_rx(uart_tx)
-	//);
+	// Testbench USB host
+    wire usb_sense;
+    assign (strong1, strong0) uut.in_pads[`PADI_USB_SENSE] = usb_sense;
+	usb_host usb_tb_host (
+        .clk(clock),         
+        .rst_ni(RSTB),
+        .enable(1),
+        .is_set(0), 
+        .send_in(0),
+
+        .usb_sense_p2d_o(usb_sense),  
+
+        .usb_p(uut.bidir_pads[`PAD_USB_DP]),
+        .usb_n(uut.bidir_pads[`PAD_USB_DN])
+    );
 		
 endmodule
 `default_nettype wire

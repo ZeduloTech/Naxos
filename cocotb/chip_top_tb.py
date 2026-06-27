@@ -109,7 +109,6 @@ def test_chip_top_runner(test : str):
         sources.append(proj_path / "../caravel/final/pnl/caravel_core.pnl.v")
         sources.append(proj_path / "../final/pnl/chip_top.pnl.v")
         
-        sources.append(proj_path / "../otUSB/final/pnl/usbdev.pnl.v"),
         sources.append(proj_path / "../ztimer/final/pnl/rosc_spi_bridge.pnl.v"),
 
         defines.update({"GL" : 1, "USE_POWER_PINS": 1})
@@ -118,7 +117,6 @@ def test_chip_top_runner(test : str):
     else:
         sources.append(proj_path / "../src/chip_top.sv")
         sources.append(proj_path / "../src/chip_core.sv")
-        sources.append(proj_path / "../src/wb_counter.v")
 
         sources += (proj_path / "../caravel/verilog/").glob("*.v")
         
@@ -131,7 +129,7 @@ def test_chip_top_runner(test : str):
         sources.append(proj_path / "../ztimer/src/spi_device.sv"),
         sources.append(proj_path / "../ztimer/src/rosc_spi_bridge.sv"),
         
-        # USB IP (does not work in Icarus, use netlist always)
+        # USB IP
         sources.append(proj_path / "../otUSB/src/usb_wrapper.sv"),
         sources.append(proj_path / "../otUSB/src/prim_util/prim_util_pkg.sv"),
         sources.append(proj_path / "../otUSB/src/other_prim/prim_mubi_pkg.sv"),
@@ -196,8 +194,12 @@ def test_chip_top_runner(test : str):
         # SRAM macros
         Path(pdk_root) / pdk / f"libs.ref/{sram}/verilog/{sram}__sram512x8m8wm1.v",
         proj_path / "../ip/sram/gf180_ram_1024x8_wrapper.v",
+        
+        # USB model
+        proj_path / "../otUSB/tb/usb_host.sv",
+        proj_path / "../otUSB/tb/host_rx_pe.sv",
  
-        # XTAL IP
+        # XTAL IP model
         proj_path / "../ip/XTAL3P3/XTAL.v",
  
         # Caravel POR IP
@@ -214,7 +216,7 @@ def test_chip_top_runner(test : str):
     build_args = []
 
     if sim == "icarus":
-        pass
+        build_args = ["-g2012"]
 
     build_args += add_build_args
 

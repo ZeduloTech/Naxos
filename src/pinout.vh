@@ -19,10 +19,11 @@
 `define PAD_CARAVEL_END `PAD_FLASH_IO1
 
 // USB
-`define PAD_USB_START   `PAD_USB_TXD
-`define PAD_USB_TXD     36
-`define PAD_USB_RXD     37
-`define PAD_USB_END     `PAD_USB_RXD
+`define PAD_USB_START   `PAD_USB_DP
+`define PAD_USB_DP      36
+`define PAD_USB_DN      37
+`define PAD_USB_END     `PAD_USB_DN
+`define PADI_USB_SENSE  2
 
 // zTimer
 `define PAD_ZTIMER_SCK   38

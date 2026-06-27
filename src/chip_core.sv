@@ -53,9 +53,14 @@ module chip_core #(
     wire [31:0] user_wb_dat_wr;
     wire [31:0] user_wb_dat_rd;
     wire user_wb_ack;
+    
     // Additional Caravel signals
     wire npor;
     wire caravel_start_mode;
+    
+    // USB
+    wire usb_dp_oe;
+    wire usb_dn_oe;
 
     // #####################################################################
     // ############################# IO CONFIG #############################
@@ -81,12 +86,8 @@ module chip_core #(
     assign bidir_oe[`PAD_USB_START-1:`PAD_CARAVEL_END+1] = '0;
 
     // USB pad config
-    assign bidir_pu[`PAD_USB_END:`PAD_USB_TXD] = 2'b00;
-    assign bidir_pd[`PAD_USB_END:`PAD_USB_TXD] = 2'b00;
-    assign bidir_sl[`PAD_USB_END:`PAD_USB_TXD] = 2'b00;
-    assign bidir_cs[`PAD_USB_END:`PAD_USB_TXD] = 2'b00;
-    assign bidir_ie[`PAD_USB_END:`PAD_USB_TXD] = 2'b10;
-    assign bidir_oe[`PAD_USB_END:`PAD_USB_TXD] = 2'b01;
+    assign bidir_sl[`PAD_USB_END:`PAD_USB_START] = 2'b00;
+    assign bidir_cs[`PAD_USB_END:`PAD_USB_START] = 2'b00;
 
     // ztimer SPI pad config (pads 18..21: SCK, CSB, SDI, SDO)
     assign bidir_pu[`PAD_ZTIMER_SDO:`PAD_ZTIMER_SCK] = 4'b0010; // CSB pull-up
@@ -231,9 +232,21 @@ module chip_core #(
         .wb_dat_o(user_wb_dat_rd),
         .wb_ack_o(user_wb_ack),
 
-        .usb_tx_d_o(bidir_out[`PAD_USB_TXD]),
-        .usb_rx_d_i(bidir_in[`PAD_USB_RXD])
+        .usb_dp_oe_o    (usb_dp_oe),
+        .usb_dn_oe_o    (usb_dn_oe),
+        .usb_dp_pullup_o(bidir_pu [`PAD_USB_DP]),
+        .usb_dn_pullup_o(bidir_pu [`PAD_USB_DN]),
+        .usb_dp_o       (bidir_out[`PAD_USB_DP]),
+        .usb_dn_o       (bidir_out[`PAD_USB_DN]),
+        .usb_dp_i       (bidir_in [`PAD_USB_DP]),
+        .usb_dn_i       (bidir_in [`PAD_USB_DN]),
+        .usb_sense_i    (input_in [`PADI_USB_SENSE])
     );
+
+    assign bidir_ie[`PAD_USB_DP] = ~usb_dp_oe;
+    assign bidir_ie[`PAD_USB_DN] = ~usb_dn_oe;
+    assign bidir_oe[`PAD_USB_DP] = usb_dp_oe;
+    assign bidir_oe[`PAD_USB_DN] = usb_dn_oe;
 
 endmodule
 `default_nettype wire
