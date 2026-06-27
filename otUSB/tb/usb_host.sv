@@ -14,6 +14,9 @@ module usb_host (
         inout usb_n
 );
 
+        pullup(usb_p);
+        pullup(usb_n);
+
         logic test_success = 0;
         logic rx_pkt_done, is_handshake;
         logic data_recv;
