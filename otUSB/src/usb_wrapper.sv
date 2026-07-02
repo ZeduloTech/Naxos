@@ -201,6 +201,7 @@ module naxos_usb_wrapper  #(
 
     // Wishbone Interfacing
     wire cpu_req, is_signal, is_usb_reg, is_usb_buf;
+    reg wb_ack_usb, wb_ack;
     reg is_usb_buf_r_q; // registered: read request targeting USB_BUF region
     reg bus_re_sent;    // one-shot: suppresses bus_re after first pulse per WB transaction
     reg bus_we_sent;    // one-shot: suppresses bus_we after first pulse per WB transaction
@@ -219,7 +220,7 @@ module naxos_usb_wrapper  #(
     localparam USB_BUF_BASE = 32'h3000_1800;
     localparam USB_END      = 32'h3000_1FFF;
 
-    assign cpu_req     = wb_stb_i && wb_cyc_i;// && !wb_ack_o;
+    assign cpu_req     = wb_stb_i && wb_cyc_i && !wb_ack;
     assign is_signal   = cpu_req && (wb_adr_i == 32'h3000_000C);
     assign is_usb_reg  = cpu_req && ((wb_adr_i >= USB_BASE)     && (wb_adr_i <= USB_REGS_END));
     assign is_usb_buf  = cpu_req && ((wb_adr_i >= USB_BUF_BASE) && (wb_adr_i <= USB_END));
@@ -230,8 +231,7 @@ module naxos_usb_wrapper  #(
         : (wb_adr_i >= USB_BASE     && wb_adr_i <= USB_REGS_END)? usb_rdata_hold
         : 32'h0;
 
-    //assign wb_ack_o = is_usb_reg | (is_usb_buf && wb_we_i) | (is_usb_buf_r_q && sw_rvalid);
-    assign wb_ack_o = is_usb_reg | (is_usb_buf && wb_we_i) | (is_usb_buf_r_q && usbdev_sw_mem_a_rvalid);
+    assign wb_ack_o = wb_ack;
 
     //==========================================================================
     // Signal register
@@ -250,7 +250,7 @@ module naxos_usb_wrapper  #(
         usbdev_bus_wdata = 32'h0;
         usbdev_bus_be    = 4'hF;
 
-        if (wb_stb_i && wb_cyc_i /*&& !wb_ack_o*/) begin
+        if (wb_stb_i && wb_cyc_i) begin
             if ((wb_adr_i >= USB_BASE) && (wb_adr_i <= USB_END)) begin
                 usbdev_bus_addr = wb_adr_i[11:0];
                 if (!wb_we_i) begin
@@ -275,13 +275,12 @@ module naxos_usb_wrapper  #(
             bus_we_sent    <= 1'b0;
         end else begin
             // Register the SRAM-read flag without !wb_ack_o so it persists
-            is_usb_buf_r_q <= wb_stb_i && wb_cyc_i
-                              && !wb_we_i
+            is_usb_buf_r_q <= wb_stb_i && wb_cyc_i && !wb_we_i
                               && (wb_adr_i >= USB_BUF_BASE)
                               && (wb_adr_i <= USB_END);
 
             // bus_re_sent: set the cycle bus_re fires, clear when transaction ends.
-            if (wb_ack_o || !wb_stb_i || !wb_cyc_i) begin
+            if (!wb_stb_i || !wb_cyc_i) begin
                 bus_re_sent <= 1'b0;
             end else if (wb_stb_i && wb_cyc_i && !wb_we_i
                     && (wb_adr_i >= USB_BASE) && (wb_adr_i <= USB_END)
@@ -290,7 +289,7 @@ module naxos_usb_wrapper  #(
             end
 
             // bus_we_sent: set the cycle bus_we fires, clear when transaction ends.
-            if (/*wb_ack_o || */!wb_stb_i || !wb_cyc_i) begin
+            if (!wb_stb_i || !wb_cyc_i) begin
                 bus_we_sent <= 1'b0;
             end else if (wb_stb_i && wb_cyc_i && wb_we_i
                      && (wb_adr_i >= USB_BASE) && (wb_adr_i <= USB_REGS_END)
@@ -310,5 +309,20 @@ module naxos_usb_wrapper  #(
         end
     end
 
+    //==========================================================================
+    // Wishbone ACK  — all registered to break combinatorial feedback loop
+    //==========================================================================
+    always_ff @(posedge wb_clk_i or negedge rst_n) begin
+        if (!rst_n) begin
+            wb_ack_usb <= 1'b0;
+            wb_ack     <= 1'b0;
+        end else begin
+            wb_ack_usb <= is_usb_reg
+                | (is_usb_buf && wb_we_i)
+                | (is_usb_buf_r_q && usbdev_sw_mem_a_rvalid);
+
+            wb_ack <= wb_ack_usb | is_signal;
+        end
+    end
 
 endmodule
