@@ -1,0 +1,189 @@
+VERSION 5.7 ;
+  NOWIREEXTENSIONATPIN ON ;
+  DIVIDERCHAR "/" ;
+  BUSBITCHARS "[]" ;
+MACRO rosc_spi_bridge
+  CLASS BLOCK ;
+  FOREIGN rosc_spi_bridge ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 185.000 BY 185.000 ;
+  PIN VDD
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER Metal4 ;
+        RECT 14.280 11.460 15.880 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 44.280 11.460 45.880 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 74.280 11.460 75.880 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 104.280 11.460 105.880 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 134.280 11.460 135.880 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 164.280 11.460 165.880 172.780 ;
+    END
+  END VDD
+  PIN VSS
+    DIRECTION INOUT ;
+    USE GROUND ;
+    PORT
+      LAYER Metal4 ;
+        RECT 17.580 11.460 19.180 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 47.580 11.460 49.180 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 77.580 11.460 79.180 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 107.580 11.460 109.180 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 137.580 11.460 139.180 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 167.580 11.460 169.180 172.780 ;
+    END
+  END VSS
+  PIN cio_csb_i
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.673300 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 73.920 184.440 74.480 185.000 ;
+    END
+  END cio_csb_i
+  PIN cio_sck_i
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.673300 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 96.320 184.440 96.880 185.000 ;
+    END
+  END cio_sck_i
+  PIN cio_sd_i
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.673300 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 75.040 184.440 75.600 185.000 ;
+    END
+  END cio_sd_i
+  PIN cio_sd_o
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 1.757600 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 184.440 110.880 185.000 111.440 ;
+    END
+  END cio_sd_o
+  PIN clk_i
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 2.352000 ;
+    PORT
+      LAYER Metal2 ;
+        RECT 154.560 184.440 155.120 185.000 ;
+    END
+  END clk_i
+  PIN rosc_enable_i
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 1.332800 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 0.000 78.400 0.560 78.960 ;
+    END
+  END rosc_enable_i
+  PIN rst_ni
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 1.999200 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 184.440 21.280 185.000 21.840 ;
+    END
+  END rst_ni
+  PIN start_i
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.666400 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 184.440 67.200 185.000 67.760 ;
+    END
+  END start_i
+  PIN stop_i
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 2.006100 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 184.440 75.040 185.000 75.600 ;
+    END
+  END stop_i
+  OBS
+      LAYER Nwell ;
+        RECT 9.650 11.330 175.150 172.910 ;
+      LAYER Metal1 ;
+        RECT 10.080 11.460 174.720 172.780 ;
+      LAYER Metal2 ;
+        RECT 7.420 184.140 73.620 184.440 ;
+        RECT 75.900 184.140 96.020 184.440 ;
+        RECT 97.180 184.140 154.260 184.440 ;
+        RECT 155.420 184.140 180.740 184.440 ;
+        RECT 7.420 7.370 180.740 184.140 ;
+      LAYER Metal3 ;
+        RECT 0.560 111.740 184.440 177.380 ;
+        RECT 0.560 110.580 184.140 111.740 ;
+        RECT 0.560 79.260 184.440 110.580 ;
+        RECT 0.860 78.100 184.440 79.260 ;
+        RECT 0.560 75.900 184.440 78.100 ;
+        RECT 0.560 74.740 184.140 75.900 ;
+        RECT 0.560 68.060 184.440 74.740 ;
+        RECT 0.560 66.900 184.140 68.060 ;
+        RECT 0.560 22.140 184.440 66.900 ;
+        RECT 0.560 20.980 184.140 22.140 ;
+        RECT 0.560 7.420 184.440 20.980 ;
+      LAYER Metal4 ;
+        RECT 11.900 173.080 172.340 174.630 ;
+        RECT 11.900 11.160 13.980 173.080 ;
+        RECT 16.180 11.160 17.280 173.080 ;
+        RECT 19.480 11.160 43.980 173.080 ;
+        RECT 46.180 11.160 47.280 173.080 ;
+        RECT 49.480 11.160 73.980 173.080 ;
+        RECT 76.180 11.160 77.280 173.080 ;
+        RECT 79.480 11.160 103.980 173.080 ;
+        RECT 106.180 11.160 107.280 173.080 ;
+        RECT 109.480 11.160 133.980 173.080 ;
+        RECT 136.180 11.160 137.280 173.080 ;
+        RECT 139.480 11.160 163.980 173.080 ;
+        RECT 166.180 11.160 167.280 173.080 ;
+        RECT 169.480 11.160 172.340 173.080 ;
+        RECT 11.900 7.370 172.340 11.160 ;
+  END
+END rosc_spi_bridge
+END LIBRARY
+

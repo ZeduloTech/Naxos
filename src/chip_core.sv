@@ -66,8 +66,8 @@ module chip_core #(
     // ############################# IO CONFIG #############################
     // #####################################################################
 
-    // Set input pads to pull-down
-    // ztimer control inputs default LOW: ROSC off, no start, no stop
+    // Set input pads to pull-down, no pull ups
+    // ROSC_EN on input pad 1, off 
     assign input_pu = '0;
     assign input_pd = '1;
 
@@ -89,17 +89,31 @@ module chip_core #(
     assign bidir_sl[`PAD_USB_END:`PAD_USB_START] = 2'b00;
     assign bidir_cs[`PAD_USB_END:`PAD_USB_START] = 2'b00;
 
-    // ztimer SPI pad config (pads 18..21: SCK, CSB, SDI, SDO)
-    assign bidir_pu[`PAD_ZTIMER_SDO:`PAD_ZTIMER_SCK] = 4'b0010; // CSB pull-up
-    assign bidir_pd[`PAD_ZTIMER_SDO:`PAD_ZTIMER_SCK] = 4'b0000;
-    assign bidir_sl[`PAD_ZTIMER_SDO:`PAD_ZTIMER_SCK] = 4'b0000;
-    assign bidir_cs[`PAD_ZTIMER_SDO:`PAD_ZTIMER_SCK] = 4'b0000;
-    assign bidir_ie[`PAD_ZTIMER_SDO:`PAD_ZTIMER_SCK] = 4'b0111;
-    assign bidir_oe[`PAD_ZTIMER_SDO:`PAD_ZTIMER_SCK] = 4'b1000; // drive SDO only
+    // ztimer SPI pad config [CSB, SDI, SCK, SDO]
+    assign bidir_pu[`PAD_ZTIMER_SPI_HI:`PAD_ZTIMER_SPI_LO] = 4'b1000; // CSB pull-up
+    assign bidir_pd[`PAD_ZTIMER_SPI_HI:`PAD_ZTIMER_SPI_LO] = 4'b0110; // SCK & SDI pull-down
+    assign bidir_sl[`PAD_ZTIMER_SPI_HI:`PAD_ZTIMER_SPI_LO] = 4'b0000; // fast slew
+    assign bidir_cs[`PAD_ZTIMER_SPI_HI:`PAD_ZTIMER_SPI_LO] = 4'b1110; // Schmitt on 3 inputs
+    assign bidir_ie[`PAD_ZTIMER_SPI_HI:`PAD_ZTIMER_SPI_LO] = 4'b1110; // inputs enabled
+    assign bidir_oe[`PAD_ZTIMER_SPI_HI:`PAD_ZTIMER_SPI_LO] = 4'b0001; // SDO output enabled
 
     //!!!!!!!!!!!!!!!!!!!!!!!!
-    // NO CONFIG FOR ZTIMER CONTROL PINS!
+    // CONFIG FOR ZTIMER CONTROL PINS!
     //!!!!!!!!!!!!!!!!!!!!!!!!
+     // bidir 44
+    assign bidir_pu[`PAD_ZTIMER_END+1] = 1'b0;
+    assign bidir_pd[`PAD_ZTIMER_END+1] = 1'b1;
+    assign bidir_sl[`PAD_ZTIMER_END+1] = 1'b0;
+    assign bidir_cs[`PAD_ZTIMER_END+1] = 1'b0;
+    assign bidir_ie[`PAD_ZTIMER_END+1] = 1'b0;
+    assign bidir_oe[`PAD_ZTIMER_END+1] = 1'b0;
+    // bidir 39 to 38
+    assign bidir_pu[`PAD_ZTIMER_START-1:`PAD_USB_END+1] = 2'b00;
+    assign bidir_pd[`PAD_ZTIMER_START-1:`PAD_USB_END+1] = 2'b11;
+    assign bidir_sl[`PAD_ZTIMER_START-1:`PAD_USB_END+1] = 2'b00;
+    assign bidir_cs[`PAD_ZTIMER_START-1:`PAD_USB_END+1] = 2'b00;
+    assign bidir_ie[`PAD_ZTIMER_START-1:`PAD_USB_END+1] = 2'b00;
+    assign bidir_oe[`PAD_ZTIMER_START-1:`PAD_USB_END+1] = 2'b00;
 
     // Clock feedback pin
     assign bidir_pu[`PAD_SYS_CLK_FB] = 1'b0;
@@ -202,15 +216,15 @@ module chip_core #(
         .rst_ni        (rst_n),
 
         // SPI slave
-        .cio_sck_i     (bidir_in [`PAD_ZTIMER_SCK]),
-        .cio_csb_i     (bidir_in [`PAD_ZTIMER_CSB]),
-        .cio_sd_i      (bidir_in [`PAD_ZTIMER_SDI]),
+        .cio_sck_i     (bidir_in[`PAD_ZTIMER_SCK]),
+        .cio_csb_i     (bidir_in[`PAD_ZTIMER_CSB]),
+        .cio_sd_i      (bidir_in[`PAD_ZTIMER_SDI]),
         .cio_sd_o      (bidir_out[`PAD_ZTIMER_SDO]),
 
         // controls 
-        .rosc_enable_i (bidir_in [`PAD_ZTIMER_ROSC_EN]),
-        .start_i       (bidir_in [`PAD_ZTIMER_START]),
-        .stop_i        (bidir_in [`PAD_ZTIMER_STOP])
+        .rosc_enable_i (input_in[`PADI_ZTIMER_ROSC_EN]),
+        .start_i       (analog[`PADA_ZTIMER_START]),
+        .stop_i        (analog[`PADA_ZTIMER_STOP])
     );
 
     //

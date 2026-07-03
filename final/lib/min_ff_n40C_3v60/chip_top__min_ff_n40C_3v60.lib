@@ -1,0 +1,294 @@
+library (chip_top) {
+  comment                        : "";
+  delay_model                    : table_lookup;
+  simulation                     : false;
+  capacitive_load_unit (1,pF);
+  leakage_power_unit             : 1pW;
+  current_unit                   : "1mA";
+  pulling_resistance_unit        : "1ohm";
+  time_unit                      : "1ns";
+  voltage_unit                   : "1v";
+  library_features(report_delay_calculation);
+
+  input_threshold_pct_rise : 50;
+  input_threshold_pct_fall : 50;
+  output_threshold_pct_rise : 50;
+  output_threshold_pct_fall : 50;
+  slew_lower_threshold_pct_rise : 30;
+  slew_lower_threshold_pct_fall : 30;
+  slew_upper_threshold_pct_rise : 70;
+  slew_upper_threshold_pct_fall : 70;
+  slew_derate_from_library : 1.0;
+
+
+  nom_process                    : 1.0;
+  nom_temperature                : -40.0;
+  nom_voltage                    : 3.60;
+
+  type ("analog_PAD") {
+    base_type : array;
+    data_type : bit;
+    bit_width : 4;
+    bit_from : 3;
+    bit_to : 0;
+  }
+  type ("bidir_PAD") {
+    base_type : array;
+    data_type : bit;
+    bit_width : 46;
+    bit_from : 45;
+    bit_to : 0;
+  }
+  type ("input_PAD") {
+    base_type : array;
+    data_type : bit;
+    bit_width : 4;
+    bit_from : 3;
+    bit_to : 0;
+  }
+
+  cell ("chip_top") {
+    area : 9288684.000 
+    is_macro_cell : true;
+    pin("clk_PAD") {
+      direction : inout;
+      capacitance : 3.0453;
+    }
+    pin("rst_n_PAD") {
+      direction : inout;
+      capacitance : 3.0458;
+    }
+    bus("analog_PAD") {
+      bus_type : analog_PAD;
+      direction : inout;
+      capacitance : 0.0000;
+    pin("analog_PAD[3]") {
+      direction : inout;
+      capacitance : 0.0209;
+    }
+    pin("analog_PAD[2]") {
+      direction : inout;
+      capacitance : 0.0075;
+    }
+    pin("analog_PAD[1]") {
+      direction : inout;
+      capacitance : 0.0000;
+    }
+    pin("analog_PAD[0]") {
+      direction : inout;
+      capacitance : 0.0000;
+    }
+    }
+    bus("bidir_PAD") {
+      bus_type : bidir_PAD;
+      direction : inout;
+      capacitance : 0.0000;
+    pin("bidir_PAD[45]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[44]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[43]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[42]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[41]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[40]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[39]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[38]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[37]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[36]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[35]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[34]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[33]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[32]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[31]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[30]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[29]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[28]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[27]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[26]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[25]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[24]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[23]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[22]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[21]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[20]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[19]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[18]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[17]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[16]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[15]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[14]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[13]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[12]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[11]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[10]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[9]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[8]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[7]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[6]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[5]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[4]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[3]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[2]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[1]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    pin("bidir_PAD[0]") {
+      direction : inout;
+      capacitance : 3.4114;
+    }
+    }
+    bus("input_PAD") {
+      bus_type : input_PAD;
+      direction : inout;
+      capacitance : 0.0000;
+    pin("input_PAD[3]") {
+      direction : inout;
+      capacitance : 3.0458;
+    }
+    pin("input_PAD[2]") {
+      direction : inout;
+      capacitance : 3.0458;
+    }
+    pin("input_PAD[1]") {
+      direction : inout;
+      capacitance : 3.0458;
+    }
+    pin("input_PAD[0]") {
+      direction : inout;
+      capacitance : 3.0458;
+    }
+    }
+  }
+
+}
