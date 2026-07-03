@@ -26,11 +26,11 @@
 `define PADI_USB_SENSE  2
 
 // zTimer
-`define PAD_ZTIMER_SDO   40
-`define PAD_ZTIMER_SCK   41
-`define PAD_ZTIMER_SDI   42
-`define PAD_ZTIMER_CSB   43
-`define PADI_ZTIMER_ROSC_EN 1
+`define PAD_ZTIMER_SDO   40 //MISO
+`define PAD_ZTIMER_SCK   41 //SCK
+`define PAD_ZTIMER_SDI   42 //MOSI
+`define PAD_ZTIMER_CSB   43 //CS
+`define PADI_ZTIMER_ROSC_EN 1 //Rosc enable
 `define PADA_ZTIMER_START   2
 `define PADA_ZTIMER_STOP    3
   // SPI, start, end markers
