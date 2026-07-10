@@ -31,13 +31,13 @@
 `define PAD_ZTIMER_SDI   42 //MOSI
 `define PAD_ZTIMER_CSB   43 //CS
 `define PADI_ZTIMER_ROSC_EN 1 //Rosc enable
-`define PADA_ZTIMER_START   2
-`define PADA_ZTIMER_STOP    3
+`define PAD_ZTIMER_START   44  //start_i
+`define PADI_ZTIMER_STOP    0
   // SPI, start, end markers
 `define PAD_ZTIMER_SPI_LO `PAD_ZTIMER_SDO
 `define PAD_ZTIMER_SPI_HI `PAD_ZTIMER_CSB
-`define PAD_ZTIMER_START `PAD_ZTIMER_SDO
-`define PAD_ZTIMER_END   `PAD_ZTIMER_CSB
+`define PAD_ZTIMER_BEGIN `PAD_ZTIMER_SDO
+`define PAD_ZTIMER_END   `PAD_ZTIMER_START
 
 // I2C
 // `define PAD_OT_LOW      33

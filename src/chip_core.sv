@@ -100,20 +100,22 @@ module chip_core #(
     //!!!!!!!!!!!!!!!!!!!!!!!!
     // CONFIG FOR ZTIMER CONTROL PINS!
     //!!!!!!!!!!!!!!!!!!!!!!!!
+
      // bidir 44
-    assign bidir_pu[`PAD_ZTIMER_END+1] = 1'b0;
-    assign bidir_pd[`PAD_ZTIMER_END+1] = 1'b1;
-    assign bidir_sl[`PAD_ZTIMER_END+1] = 1'b0;
-    assign bidir_cs[`PAD_ZTIMER_END+1] = 1'b0;
-    assign bidir_ie[`PAD_ZTIMER_END+1] = 1'b0;
-    assign bidir_oe[`PAD_ZTIMER_END+1] = 1'b0;
+    assign bidir_pu[`PAD_ZTIMER_START] = 1'b0;
+    assign bidir_pd[`PAD_ZTIMER_START] = 1'b1;
+    assign bidir_sl[`PAD_ZTIMER_START] = 1'b0;
+    assign bidir_cs[`PAD_ZTIMER_START] = 1'b0;
+    assign bidir_ie[`PAD_ZTIMER_START] = 1'b1;
+    assign bidir_oe[`PAD_ZTIMER_START] = 1'b0;
+
     // bidir 39 to 38
-    assign bidir_pu[`PAD_ZTIMER_START-1:`PAD_USB_END+1] = 2'b00;
-    assign bidir_pd[`PAD_ZTIMER_START-1:`PAD_USB_END+1] = 2'b11;
-    assign bidir_sl[`PAD_ZTIMER_START-1:`PAD_USB_END+1] = 2'b00;
-    assign bidir_cs[`PAD_ZTIMER_START-1:`PAD_USB_END+1] = 2'b00;
-    assign bidir_ie[`PAD_ZTIMER_START-1:`PAD_USB_END+1] = 2'b00;
-    assign bidir_oe[`PAD_ZTIMER_START-1:`PAD_USB_END+1] = 2'b00;
+    assign bidir_pu[`PAD_ZTIMER_BEGIN-1:`PAD_USB_END+1] = 2'b00;
+    assign bidir_pd[`PAD_ZTIMER_BEGIN-1:`PAD_USB_END+1] = 2'b11;
+    assign bidir_sl[`PAD_ZTIMER_BEGIN-1:`PAD_USB_END+1] = 2'b00;
+    assign bidir_cs[`PAD_ZTIMER_BEGIN-1:`PAD_USB_END+1] = 2'b00;
+    assign bidir_ie[`PAD_ZTIMER_BEGIN-1:`PAD_USB_END+1] = 2'b00;
+    assign bidir_oe[`PAD_ZTIMER_BEGIN-1:`PAD_USB_END+1] = 2'b00;
 
     // Clock feedback pin
     assign bidir_pu[`PAD_SYS_CLK_FB] = 1'b0;
@@ -223,8 +225,8 @@ module chip_core #(
 
         // controls 
         .rosc_enable_i (input_in[`PADI_ZTIMER_ROSC_EN]),
-        .start_i       (analog[`PADA_ZTIMER_START]),
-        .stop_i        (analog[`PADA_ZTIMER_STOP])
+        .start_i       (bidir_in[`PAD_ZTIMER_START]),
+        .stop_i        (input_in[`PADI_ZTIMER_STOP])
     );
 
     //

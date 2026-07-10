@@ -9,12 +9,12 @@ meta:
 
     # Save time during development
     # Enable for sign-off
-    #KLayout.DRC: null
-    #Checker.KLayoutDRC: null
+    KLayout.DRC: null
+    Checker.KLayoutDRC: null
     #OpenROAD.IRDropReport: null
-    #Magic.DRC: null
-    #Checker.MagicDRC: null
-    #KLayout.XOR: null
+    Magic.DRC: null
+    Checker.MagicDRC: null
+    KLayout.XOR: null
     #Netgen.LVS: null
     #Checker.LVS: null
     

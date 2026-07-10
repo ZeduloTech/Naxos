@@ -48,7 +48,7 @@ library (chip_top) {
   }
 
   cell ("chip_top") {
-    area : 9288684.000 
+    area : 9288693.000 
     is_macro_cell : true;
     pin("clk_PAD") {
       direction : inout;
@@ -64,11 +64,11 @@ library (chip_top) {
       capacitance : 0.0000;
     pin("analog_PAD[3]") {
       direction : inout;
-      capacitance : 0.0234;
+      capacitance : 0.0000;
     }
     pin("analog_PAD[2]") {
       direction : inout;
-      capacitance : 0.0082;
+      capacitance : 0.0000;
     }
     pin("analog_PAD[1]") {
       direction : inout;
