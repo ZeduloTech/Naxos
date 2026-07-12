@@ -9,15 +9,15 @@ meta:
     Checker.MaxSlewViolations: null # Demoted to warning while timing is being >
     Checker.MaxCapViolations: null
 
-DESIGN_NAME: rosc_spi_bridge
+DESIGN_NAME: ztimer_naxos
 VERILOG_FILES:
 - dir::../src/inverter.v
 - dir::../src/not_rosc.v
-- dir::../src/rosc_timer.v
+- dir::../src/.v
 - dir::../src/spi_byte_sm.sv
 - dir::../src/spi_core.sv
 - dir::../src/spi_device.sv
-- dir::../src/rosc_spi_bridge.sv
+- dir::../src/ztimer_naxos.sv
 
 # 3.3V CELL LIBRABRY
 STD_CELL_LIBRARY: gf180mcu_as_sc_mcu7t3v3

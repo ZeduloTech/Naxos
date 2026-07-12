@@ -139,22 +139,26 @@ MACROS:
         location: [460.5, 2087.5]
         orientation: N
 
-  rosc_spi_bridge:
+  shrinking_tdc:
     gds:
-      - dir::../ztimer/final/gds/rosc_spi_bridge.gds.gz
+      - dir::../pstdc/final/gds/shrinking_tdc.gds
     lef:
-      - dir::../ztimer/final/lef/rosc_spi_bridge.lef
+      - dir::../pstdc/final/lef/shrinking_tdc.lef
     vh:
-      - dir::../ztimer/final/vh/rosc_spi_bridge.vh
-    lib:
-      "*tt*" : [ dir::../ztimer/final/lib/nom_tt_025C_3v30/rosc_spi_bridge__nom_tt_025C_3v30.lib ]
-      "*ff*" : [ dir::../ztimer/final/lib/min_ff_n40C_3v60/rosc_spi_bridge__min_ff_n40C_3v60.lib ]
-      "*ss*" : [ dir::../ztimer/final/lib/max_ss_125C_3v00/rosc_spi_bridge__max_ss_125C_3v00.lib ]
+      - dir::../pstdc/final/vh/shrinking_tdc.vh
     instances:
-      i_chip_core.u_ztimer:
+      i_chip_core.u_ztimer.shrinking_tdc:
         location: [490, 1515]
         orientation: N
-
+      i_chip_core.u_ztimer.sc_stop:
+        location: [640, 1515]
+        orientation: N
+      i_chip_core.u_ztimer.sc_cal:
+        location: [490, 1665]
+        orientation: N
+      i_chip_core.u_ztimer.sc_direct:
+        location: [640, 1665]
+        orientation: N
 
 ## This is an alternative method compared to
 ## specifying the power connections in the RTL

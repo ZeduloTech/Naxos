@@ -1,0 +1,168 @@
+VERSION 5.7 ;
+  NOWIREEXTENSIONATPIN ON ;
+  DIVIDERCHAR "/" ;
+  BUSBITCHARS "[]" ;
+MACRO ztimer
+  CLASS BLOCK ;
+  FOREIGN ztimer ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 185.000 BY 185.000 ;
+  PIN VDD
+    DIRECTION INOUT ;
+    USE POWER ;
+    PORT
+      LAYER Metal4 ;
+        RECT 14.280 11.460 15.880 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 44.280 11.460 45.880 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 74.280 11.460 75.880 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 104.280 11.460 105.880 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 134.280 11.460 135.880 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 164.280 11.460 165.880 172.780 ;
+    END
+  END VDD
+  PIN VSS
+    DIRECTION INOUT ;
+    USE GROUND ;
+    PORT
+      LAYER Metal4 ;
+        RECT 17.580 11.460 19.180 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 47.580 11.460 49.180 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 77.580 11.460 79.180 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 107.580 11.460 109.180 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 137.580 11.460 139.180 172.780 ;
+    END
+    PORT
+      LAYER Metal4 ;
+        RECT 167.580 11.460 169.180 172.780 ;
+    END
+  END VSS
+  PIN cio_csb_i
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.673300 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 0.000 100.800 0.560 101.360 ;
+    END
+  END cio_csb_i
+  PIN cio_sck_i
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.673300 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 0.000 99.680 0.560 100.240 ;
+    END
+  END cio_sck_i
+  PIN cio_sd_i
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.673300 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 0.000 117.600 0.560 118.160 ;
+    END
+  END cio_sd_i
+  PIN cio_sd_o
+    DIRECTION OUTPUT ;
+    USE SIGNAL ;
+    ANTENNADIFFAREA 1.757600 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 184.440 80.640 185.000 81.200 ;
+    END
+  END cio_sd_o
+  PIN clk_i
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 2.352000 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 0.000 122.080 0.560 122.640 ;
+    END
+  END clk_i
+  PIN rst_ni
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    ANTENNAGATEAREA 0.666400 ;
+    PORT
+      LAYER Metal3 ;
+        RECT 184.440 47.040 185.000 47.600 ;
+    END
+  END rst_ni
+  PIN start_i
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER Metal2 ;
+        RECT 1.120 0.000 1.680 0.560 ;
+    END
+  END start_i
+  PIN stop_i
+    DIRECTION INPUT ;
+    USE SIGNAL ;
+    PORT
+      LAYER Metal2 ;
+        RECT 2.240 0.000 2.800 0.560 ;
+    END
+  END stop_i
+  OBS
+      LAYER Nwell ;
+        RECT 9.650 11.330 175.150 172.910 ;
+      LAYER Metal1 ;
+        RECT 10.080 11.460 174.720 172.780 ;
+      LAYER Metal2 ;
+        RECT 11.340 11.570 176.820 172.670 ;
+      LAYER Metal3 ;
+        RECT 0.560 122.940 184.440 172.620 ;
+        RECT 0.860 121.780 184.440 122.940 ;
+        RECT 0.560 118.460 184.440 121.780 ;
+        RECT 0.860 117.300 184.440 118.460 ;
+        RECT 0.560 101.660 184.440 117.300 ;
+        RECT 0.860 99.380 184.440 101.660 ;
+        RECT 0.560 81.500 184.440 99.380 ;
+        RECT 0.560 80.340 184.140 81.500 ;
+        RECT 0.560 47.900 184.440 80.340 ;
+        RECT 0.560 46.740 184.140 47.900 ;
+        RECT 0.560 11.620 184.440 46.740 ;
+      LAYER Metal4 ;
+        RECT 23.100 48.810 43.980 119.750 ;
+        RECT 46.180 48.810 47.280 119.750 ;
+        RECT 49.480 48.810 73.980 119.750 ;
+        RECT 76.180 48.810 77.280 119.750 ;
+        RECT 79.480 48.810 103.980 119.750 ;
+        RECT 106.180 48.810 107.280 119.750 ;
+        RECT 109.480 48.810 133.980 119.750 ;
+        RECT 136.180 48.810 137.280 119.750 ;
+        RECT 139.480 48.810 141.540 119.750 ;
+  END
+END ztimer
+END LIBRARY
+

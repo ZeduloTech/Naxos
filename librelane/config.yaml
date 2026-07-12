@@ -15,8 +15,8 @@ meta:
     Magic.DRC: null
     Checker.MagicDRC: null
     KLayout.XOR: null
-    #Netgen.LVS: null
-    #Checker.LVS: null
+    Netgen.LVS: null
+    Checker.LVS: null
     
     Checker.YosysSynthChecks: null  # Fails due to multisources in PLL
 
@@ -73,6 +73,16 @@ VERILOG_FILES:
 - dir::../otUSB/src/bus_reg_pkg.sv
 - dir::../otUSB/src/usbdev_reg_top.sv
 - dir::../otUSB/src/usbdev.sv
+
+- dir::../sctimer/src/sr_latch.sv
+- dir::../sctimer/src/d_latch.sv
+- dir::../sctimer/src/ss2p.sv
+- dir::../sctimer/src/clk_timer.sv
+- dir::../sctimer/src/spi_byte_sm.sv
+- dir::../sctimer/src/spi_core.sv
+- dir::../sctimer/src/spi_device.sv
+- dir::../sctimer/src/sctimer.sv
+
  
 VERILOG_INCLUDE_DIRS: [ dir::../caravel/verilog/ ]
 
