@@ -13,7 +13,6 @@ module clk_timer (
     input  wire clear,
     input  wire start,
     input  wire stop,
-    output wire [31:0] debug_count,		// Debug count
     output reg [31:0] elapsed_count
 );
 
@@ -21,7 +20,6 @@ module clk_timer (
 	reg [3:0] lowcount;
 	reg [27:0] highcount;
 
-	assign debug_count = {highcount, lowcount};
     
 	wire [4:0] next_lowcount = lowcount + 1'b1; // Carry-out logic
     reg stop_prev; // To store the previous state of the stop signal

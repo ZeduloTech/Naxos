@@ -61,6 +61,7 @@ module chip_core #(
     // USB
     wire usb_dp_oe;
     wire usb_dn_oe;
+    wire usb_rx_en;
 
     // #####################################################################
     // ############################# IO CONFIG #############################
@@ -87,9 +88,8 @@ module chip_core #(
     assign bidir_oe[`PAD_USB_START-1:`PAD_CARAVEL_END+1] = '0;
 
     // USB pad config
-    assign bidir_sl[`PAD_USB_END:`PAD_USB_START] = 2'b00;
-    assign bidir_cs[`PAD_USB_END:`PAD_USB_START] = 2'b00;
-    assign bidir_pd[`PAD_USB_END:`PAD_USB_START] = 2'b00;
+    assign bidir_sl[`PAD_USB_END:`PAD_USB_START] = 4'b0000;
+    assign bidir_cs[`PAD_USB_END:`PAD_USB_START] = 4'b0000;
 
     // ztimer SPI pad config [CSB, SDI, SCK, SDO]
     assign bidir_pu[`PAD_ZTIMER_SPI_HI:`PAD_ZTIMER_SPI_LO] = 4'b1000; // CSB pull-up
@@ -216,8 +216,7 @@ module chip_core #(
     // ztimer 
     //
 
-wire [31:0] debug_count; // prevent from dangling after synth, temp for now
-    (* keep, dont_touch *) sctimer  u_ztimer (
+   (* keep, dont_touch *) ztimer  u_ztimer (
         .clk_i         (core_clk),   // post-mux chip clock
         .rst_ni        (rst_n),
 
@@ -228,7 +227,6 @@ wire [31:0] debug_count; // prevent from dangling after synth, temp for now
         .cio_sd_o      (bidir_out[`PAD_ZTIMER_SDO]),
 
         // controls
-	.debug_count   (debug_count),
 	.extpulse      (input_in[`PADI_ZTIMER_EXTPULSE]), 
         .start_i       (bidir_in[`PAD_ZTIMER_START]),
         .stop_i        (input_in[`PADI_ZTIMER_STOP])
@@ -253,22 +251,26 @@ wire [31:0] debug_count; // prevent from dangling after synth, temp for now
         .wb_dat_o(user_wb_dat_rd),
         .wb_ack_o(user_wb_ack),
 
-        .usb_dp_oe_o    (usb_dp_oe),
-        .usb_dn_oe_o    (usb_dn_oe),
-        .usb_dp_pullup_o(bidir_pu [`PAD_USB_DP]),
-        .usb_dn_pullup_o(bidir_pu [`PAD_USB_DN]),
-        .usb_dp_o       (bidir_out[`PAD_USB_DP]),
-        .usb_dn_o       (bidir_out[`PAD_USB_DN]),
-        .usb_dp_i       (bidir_in [`PAD_USB_DP]),
-        .usb_dn_i       (bidir_in [`PAD_USB_DN]),
-        .usb_sense_i    (input_in [`PADI_USB_SENSE])
+        .usb_dp_oe_o      (usb_dp_oe),
+        .usb_dn_oe_o      (usb_dn_oe),
+        .usb_dp_pullup_o  (bidir_pu [`PAD_USB_DP]),
+        .usb_dn_pullup_o  (bidir_pu [`PAD_USB_DN]),
+        .usb_diff_rx_en_o (usb_rx_en),
+        .usb_diff_tx_o    (bidir_out[`PAD_USB_DIFF_TX]),
+        .usb_dp_o         (bidir_out[`PAD_USB_DP]),
+        .usb_dn_o         (bidir_out[`PAD_USB_DN]),
+        .usb_dp_i         (bidir_in [`PAD_USB_DP]),
+        .usb_dn_i         (bidir_in [`PAD_USB_DN]),
+        .usb_diff_rx_i    (bidir_in [`PAD_USB_DIFF_RX]),
+        .usb_sense_i      (input_in [`PADI_USB_SENSE])
     );
 
     assign bidir_ie[`PAD_USB_DP] = ~usb_dp_oe;
     assign bidir_ie[`PAD_USB_DN] = ~usb_dn_oe;
     assign bidir_oe[`PAD_USB_DP] = usb_dp_oe;
     assign bidir_oe[`PAD_USB_DN] = usb_dn_oe;
+    assign bidir_ie[`PAD_USB_DIFF_RX] = usb_rx_en;
+    assign bidir_oe[`PAD_USB_DIFF_TX] = usb_rx_en;
 
 endmodule
 `default_nettype wire
-

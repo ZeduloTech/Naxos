@@ -147,7 +147,7 @@ MACROS:
     vh:
       - dir::../pstdc/final/vh/shrinking_tdc.vh
     instances:
-      i_chip_core.u_ztimer.shrinking_tdc:
+      i_chip_core.u_ztimer.sc_start:
         location: [490, 1515]
         orientation: N
       i_chip_core.u_ztimer.sc_stop:

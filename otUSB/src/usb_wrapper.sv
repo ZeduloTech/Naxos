@@ -24,10 +24,13 @@ module naxos_usb_wrapper  #(
     output                      usb_dn_oe_o,
     output                      usb_dp_pullup_o,
     output                      usb_dn_pullup_o,
+    output                      usb_diff_rx_en_o,
+    output                      usb_diff_tx_o,
     output                      usb_dp_o,
     output                      usb_dn_o,
     input                       usb_dp_i,
     input                       usb_dn_i,
+    input                       usb_diff_rx_i,
     input                       usb_sense_i
 );
 
@@ -91,8 +94,7 @@ module naxos_usb_wrapper  #(
 
     //USB
     // data output
-    wire usbdev_tx_se0_o;
-    wire usbdev_rx_enable_o, usbdev_tx_use_d_se0_o;
+    wire usbdev_tx_se0_o, usbdev_tx_use_d_se0_o;
     wire usbdev_aon_suspend_req_o, usbdev_aon_wake_ack_o;
     wire usbdev_ref_val_o, usbdev_ref_pulse_o;
     wire usbdev_rx_fifo_rvalid;
@@ -122,7 +124,7 @@ module naxos_usb_wrapper  #(
         // data inputs tied low
         .cio_usb_dp_i           (usb_dp_i),
         .cio_usb_dn_i           (usb_dn_i),
-        .usb_rx_d_i             (1'b0),     // tie-low??
+        .usb_rx_d_i             (usb_diff_rx_i),
 
         // data outputs
         .cio_usb_dp_o           (usb_dp_o),
@@ -130,13 +132,13 @@ module naxos_usb_wrapper  #(
         .cio_usb_dn_o           (usb_dn_o),
         .cio_usb_dn_en_o        (usb_dn_oe_o),
         .usb_tx_se0_o           (usbdev_tx_se0_o),
-        .usb_tx_d_o             (),
+        .usb_tx_d_o             (usb_diff_tx_o),
 
         // Non-data I/O
         .cio_sense_i            (usb_sense_i),
         .usb_dp_pullup_o        (usb_dp_pullup_o),
         .usb_dn_pullup_o        (usb_dn_pullup_o),
-        .usb_rx_enable_o        (usbdev_rx_enable_o),
+        .usb_rx_enable_o        (usb_diff_rx_en_o),
         .usb_tx_use_d_se0_o     (usbdev_tx_use_d_se0_o),
 
         // AON pinmux

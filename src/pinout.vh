@@ -19,7 +19,9 @@
 `define PAD_CARAVEL_END `PAD_FLASH_IO1
 
 // USB
-`define PAD_USB_START   `PAD_USB_DP
+`define PAD_USB_START   `PAD_USB_DIFF_RX
+`define PAD_USB_DIFF_RX 34
+`define PAD_USB_DIFF_TX 35
 `define PAD_USB_DP      36
 `define PAD_USB_DN      37
 `define PAD_USB_END     `PAD_USB_DN
