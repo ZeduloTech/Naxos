@@ -44,7 +44,7 @@ module naxos_usb_wrapper  #(
     wire macro_cen, macro_gwen;
     wire [31:0] macro_wen;
 
-    assign macro_cen = ~sram_req;
+    assign macro_cen = wb_rst_i; //~sram_req;
     assign macro_gwen = ~sram_we;
     assign macro_wen = ~sram_wmask;
     

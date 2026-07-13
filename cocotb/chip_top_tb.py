@@ -121,13 +121,16 @@ def test_chip_top_runner(test : str):
         sources += (proj_path / "../caravel/verilog/").glob("*.v")
         
         # Timer IP
-        sources.append(proj_path / "../ztimer/src/inverter.v"),
-        sources.append(proj_path / "../ztimer/src/not_rosc.v"),
-        sources.append(proj_path / "../ztimer/src/rosc_timer.v"),
-        sources.append(proj_path / "../ztimer/src/spi_byte_sm.sv"),
-        sources.append(proj_path / "../ztimer/src/spi_core.sv"),
-        sources.append(proj_path / "../ztimer/src/spi_device.sv"),
-        sources.append(proj_path / "../ztimer/src/rosc_spi_bridge.sv"),
+        # sources.append(proj_path / "../ztimer/src/inverter.v"),
+        # sources.append(proj_path / "../ztimer/src/not_rosc.v"),
+        # sources.append(proj_path / "../ztimer/src/rosc_timer.v"),
+        # sources.append(proj_path / "../ztimer/src/spi_byte_sm.sv"),
+        # sources.append(proj_path / "../ztimer/src/spi_core.sv"),
+        # sources.append(proj_path / "../ztimer/src/spi_device.sv"),
+        # sources.append(proj_path / "../ztimer/src/rosc_spi_bridge.sv"),
+        sources.append(proj_path / "../pstdc/shrinking_tdc.v"),
+        # sources += (proj_path / "../ztimer/src/").glob("*.sv")
+        sources += (proj_path / "../sctimer/src/").glob("*.sv")
         
         # USB IP
         sources.append(proj_path / "../otUSB/src/usb_wrapper.sv"),
