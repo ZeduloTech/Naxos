@@ -110,7 +110,7 @@ def test_chip_top_runner(test : str):
         sources.append(proj_path / "../caravel/final/pnl/caravel_core.pnl.v")
         sources.append(proj_path / "../final/pnl/chip_top.pnl.v")
         
-        sources.append(proj_path / "../ztimer/final/pnl/rosc_spi_bridge.pnl.v"),
+        sources.append(proj_path / "../pstdc/final/pnl/shrinking_tdc.pnl.v"),
 
         defines.update({"GL" : 1, "USE_POWER_PINS": 1})
         if sdf:
@@ -122,6 +122,7 @@ def test_chip_top_runner(test : str):
         sources += (proj_path / "../caravel/verilog/").glob("*.v")
         
         # Timer IP
+<<<<<<< HEAD
         # sources.append(proj_path / "../ztimer/src/inverter.v"),
         # sources.append(proj_path / "../ztimer/src/not_rosc.v"),
         # sources.append(proj_path / "../ztimer/src/rosc_timer.v"),
@@ -132,6 +133,17 @@ def test_chip_top_runner(test : str):
         sources.append(proj_path / "../pstdc/shrinking_tdc.v"),
         # sources += (proj_path / "../ztimer/src/").glob("*.sv")
         sources += (proj_path / "../sctimer/src/").glob("*.sv")
+=======
+        sources.append(proj_path / "../pstdc/shrinking_tdc.v"),
+        sources.append(proj_path / "../sctimer/src/sr_latch.sv"),
+        sources.append(proj_path / "../sctimer/src/d_latch.sv"),
+        sources.append(proj_path / "../sctimer/src/ss2p.sv"),
+        sources.append(proj_path / "../sctimer/src/clk_timer.sv"),
+        sources.append(proj_path / "../sctimer/src/spi_byte_sm.sv"),
+        sources.append(proj_path / "../sctimer/src/spi_core.sv"),
+        sources.append(proj_path / "../sctimer/src/spi_device.sv"),
+        sources.append(proj_path / "../sctimer/src/sctimer.sv"),
+>>>>>>> e1b1a60 (chip_top.py updated to use sctimer, pstdc)
         
         # USB IP
         sources.append(proj_path / "../otUSB/src/usb_wrapper.sv"),
