@@ -44,6 +44,7 @@ module usb_tb;
     wire SDO;
     
     reg test_success = 1'b0;
+    reg addr_updated = 1'b0;   // used below but was never declared in the original file
 
     assign checkbits = mprj_io[1];
     assign uart_tx = mprj_io[6];
@@ -65,11 +66,16 @@ module usb_tb;
 
     initial begin
         $display("Wait for USB test to complete");
-        wait(usb_tb_host.test_success == 1'b1);
-        $display("Monitor: Test USB Passed");
-        test_success <= 1'b1;
-        #100;
-        $finish;
+    `ifdef GL
+            wait(usb_tb_host.gl_test_success == 1'b1);
+            $display("Monitor: Test USB Passed (Gate-Level)");
+    `else
+            wait(usb_tb_host.test_success == 1'b1);
+            $display("Monitor: Test USB Passed (Functional)");
+    `endif
+            test_success <= 1'b1;
+            #100;
+            $finish;
     end
 
     initial begin
@@ -87,7 +93,7 @@ module usb_tb;
 
     initial begin
          //wait(checkbits == 1'b1);
-         #10000000;
+         #15000000;
          $display("Monitor: Test USB Failed (timeout)");
          $finish;
     end
@@ -130,19 +136,132 @@ module usb_tb;
     // Testbench USB host
     wire usb_sense;
     assign (strong1, strong0) uut.in_pads[`PADI_USB_SENSE] = usb_sense;
-    
-    usb_host usb_tb_host (
-        .clk(clock),         
-        .rst_ni(RSTB),
-        .enable(1),
-        .is_set(0), 
-        .send_in(0),
 
-        .usb_sense_p2d_o(usb_sense),  
+    // `addr_updated` watches usbdev's internal devaddr register directly.
+    `ifndef GL
+       always @(posedge clock) begin
+          if(uut.chip.i_chip_core.usb.u_usbdev.usbdev_impl.devaddr_i == 7'd5) begin
+             addr_updated = 1'b1;
+          end
+       end
+    `endif  
+
+    //==========================================================================
+    // Debug: confirm firmware register writes are actually reaching hardware
+    //==========================================================================
+    // Layer 2 - did the wrapper's decode/one-shot logic
+    `ifndef GL
+       always @(posedge clock) begin
+          if (uut.chip.i_chip_core.usb.usbdev_bus_we || uut.chip.i_chip_core.usb.usbdev_bus_re) begin
+              $display("[USBDEV_BUS %0t] we=%b re=%b addr=%03h wdata=%08h (bus_we_sent=%b bus_re_sent=%b)",
+                $time,
+                uut.chip.i_chip_core.usb.usbdev_bus_we,
+                uut.chip.i_chip_core.usb.usbdev_bus_re,
+                uut.chip.i_chip_core.usb.usbdev_bus_addr,
+                uut.chip.i_chip_core.usb.usbdev_bus_wdata,
+                uut.chip.i_chip_core.usb.bus_we_sent,
+                uut.chip.i_chip_core.usb.bus_re_sent);
+          end
+       end
+    `endif
+
+    // Testbench - USB Host
+   
+    // Layer 4 - check if the firmware is done configuring the device and pressetting the descriptor
+    //before enabling the host to begin the test
+    logic fw_loop_reached = 1'b0;
+
+   `ifndef GL
+     always @(posedge clock or negedge RSTB) begin
+        if (!RSTB) begin
+            fw_loop_reached <= 1'b0;
+        end else if (!fw_loop_reached &&
+                    uut.chip.i_chip_core.usb.wb_stb_i &&
+                    uut.chip.i_chip_core.usb.wb_cyc_i &&
+                    !uut.chip.i_chip_core.usb.wb_we_i &&
+                    uut.chip.i_chip_core.usb.wb_adr_i == 32'h3000000C) begin
+            fw_loop_reached <= 1'b1;
+            $display("[%0t] Firmware reached main polling loop - releasing USB host", $time);
+        end
+    end
+  `else
+    initial begin
+        fw_loop_reached = 1'b0;
+        wait (RSTB == 1'b1);
+        #500000;   // generous fixed delay - tune against your GL sim's observed init time
+        fw_loop_reached = 1'b1;
+        $display("[%0t] GL build: releasing USB host after fixed delay (no internal fw-ready probe available)", $time);
+    end
+  `endif
+
+    //debug wb rdata
+  `ifndef GL
+    always @(posedge clock) begin
+        if (uut.chip.i_chip_core.usb.wb_stb_i && uut.chip.i_chip_core.usb.wb_cyc_i &&
+            !uut.chip.i_chip_core.usb.wb_we_i && uut.chip.i_chip_core.usb.wb_ack_o) begin
+            $display("[WB_READ_DATA %0t] adr=%08h -> dat_o=%08h",
+                $time,
+                uut.chip.i_chip_core.usb.wb_adr_i,
+                uut.chip.i_chip_core.usb.wb_dat_o);
+        end
+     end
+  `endif
+
+    //debug sram w/r
+   `ifndef GL
+     always @(posedge clock) begin
+        if (uut.chip.i_chip_core.usb.sram_req && uut.chip.i_chip_core.usb.sram_we) begin
+            $display("[SRAM_WRITE %0t] req=1 we=%b addr=%0d(0x%03h) wdata=%08h wmask=%08h",
+                $time,
+                uut.chip.i_chip_core.usb.sram_we,
+                uut.chip.i_chip_core.usb.sram_addr,
+                uut.chip.i_chip_core.usb.sram_addr,
+                uut.chip.i_chip_core.usb.sram_wdata,
+                uut.chip.i_chip_core.usb.sram_wmask);
+        end else if (uut.chip.i_chip_core.usb.sram_req && !uut.chip.i_chip_core.usb.sram_we) begin
+            $display("[SRAM_READ %0t] req=1 we=%b addr=%0d(0x%03h) rdata=%08h rvalid=%0b",
+                $time,
+                uut.chip.i_chip_core.usb.sram_we,
+                uut.chip.i_chip_core.usb.sram_addr,
+                uut.chip.i_chip_core.usb.sram_addr,
+                uut.chip.i_chip_core.usb.sram_rdata,
+                uut.chip.i_chip_core.usb.sram_rvalid);
+        end
+    end
+  `endif
+
+    //monitor device linkstates
+  `ifndef GL
+    logic [2:0] link_state_prev = 3'd0;
+    always @(posedge clock) begin
+        if (uut.chip.i_chip_core.usb.u_usbdev.usbdev_impl.link_state_o != link_state_prev) begin
+            link_state_prev <= uut.chip.i_chip_core.usb.u_usbdev.usbdev_impl.link_state_o;
+            $display("[LINK_STATE %0t] %0d -> %0d (active=%b)",
+                $time, link_state_prev,
+                uut.chip.i_chip_core.usb.u_usbdev.usbdev_impl.link_state_o,
+                uut.chip.i_chip_core.usb.u_usbdev.usbdev_impl.link_active_o);
+        end
+    end
+ `endif
+
+ `ifndef GL
+     wire send_in_sig = uut.chip.i_chip_core.usb.u_usbdev.reg2hw.configin_0.rdy.q;
+ `else
+    wire send_in_sig = 1'b0;
+ `endif
+
+    usb_host usb_tb_host (
+        .clk(clock),
+        .rst_ni(RSTB),
+        .enable(fw_loop_reached), //enable host when device is ready
+        .is_set(addr_updated),
+        .send_in(send_in_sig), //use .rdy to send IN token
+
+        .usb_sense_p2d_o(usb_sense),
 
         .usb_p(uut.bidir_pads[`PAD_USB_DP]),
         .usb_n(uut.bidir_pads[`PAD_USB_DN])
     );
         
 endmodule
-`default_nettype wire
+

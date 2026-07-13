@@ -18,6 +18,7 @@ module usb_host (
         pullup(usb_n);
 
         logic test_success = 0;
+        logic gl_test_success = 0;
         logic rx_pkt_done, is_handshake;
         logic data_recv;
         logic [7:0] rx_pid;
@@ -644,7 +645,7 @@ module usb_host (
                                         if (rx_pkt_done) begin
                                                 if ((rx_pid == 8'hD2) || (rx_pid == 8'h2D)) begin  // ACK
                                                         $display("\n[HOST_DEBUG] ACK ACCEPTED!");
-                                                        test_success <= 1;     // !!! Finish here for now
+                                                        gl_test_success <= 1; //gl test ends here
                                                         trans_success <= 1;
                                                         trans_done <= 1;
                                                         wait_ack <= 1'b0;
@@ -971,7 +972,7 @@ module usb_host (
                                                         enum_next <= 3'd1;
                                                 end
                                                 3'd1: begin
-                                                        if(first_setup) begin
+                                                        if(first_setup && send_in) begin
                                                                 if(counter > 1000)
                                                                 begin
                                                                         trans_pid <= PID_IN;
@@ -1044,7 +1045,7 @@ module usb_host (
                                                         end
                                                         3'd1: begin
                                                                 //$display("\n[HOST_DEBUG] tb_set_address: %0b", tb_set_address);
-                                                                if(set_address & address_set) begin
+                                                                if(set_address & address_set && send_in) begin
                                                                         // SETUP succeeded, now do Status stage IN at address 0
                                                                         trans_pid <= PID_IN;
                                                                         trans_addr = device_address;
@@ -1089,7 +1090,7 @@ module usb_host (
                                 end
                                 ST_ENUM_SET_ADDR_WAIT: begin
 
-                                        if(set_address & address_set)
+                                        if(set_address & address_set && send_in)
                                         begin
                                                 counter <= 0;
                                                 current_state <= ST_ENUM_SET_ADDR;
@@ -1112,6 +1113,7 @@ module usb_host (
                                                 if (enum_timer >= 1000) begin
                                                         current_state <= ST_OPERATIONAL;
                                                         sim_complete <= 1'b1;
+                                                        test_success <= 1;
                                                         $display("[%0t] [HOST] *** ENUMERATION COMPLETE *** Device is now operational", $time);
                                                 end
                                         end
