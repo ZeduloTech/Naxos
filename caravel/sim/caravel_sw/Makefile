@@ -10,7 +10,7 @@ COMMON_DIR = common
 hex:  $(PROG).hex
 
 %.elf: %.c
-	$(TOOLCHAIN_PATH)$(TOOLCHAIN_PREFIX)-gcc -I$(COMMON_DIR) -I$(COMMON_DIR)/generated/ -O0 -mabi=ilp32 -march=rv32i_zicsr -D__vexriscv__ -Wl,-Bstatic,-T,$(COMMON_DIR)/sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ $(COMMON_DIR)/crt0_vex.S $(COMMON_DIR)/isr.c $<
+	$(TOOLCHAIN_PATH)$(TOOLCHAIN_PREFIX)-gcc -I$(COMMON_DIR) -I$(COMMON_DIR)/generated/ -Os -mabi=ilp32 -march=rv32i_zicsr -D__vexriscv__ -Wl,-Bstatic,-T,$(COMMON_DIR)/sections.lds,--strip-debug -ffreestanding -nostdlib -o $@ $(COMMON_DIR)/crt0_vex.S $(COMMON_DIR)/isr.c $<
 
 %.hex: %.elf
 	$(TOOLCHAIN_PATH)$(TOOLCHAIN_PREFIX)-objcopy -O verilog $< $@

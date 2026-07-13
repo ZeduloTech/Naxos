@@ -134,6 +134,7 @@ static inline void sram_write_word(uint8_t bufid, uint8_t word_idx, uint32_t val
 // ---------------------------------------------------------------------------
 // send_ep0_in
 // ---------------------------------------------------------------------------
+void send_ep0_in(uint8_t len, uint8_t buffer) __attribute__((section(".data")));
 void send_ep0_in(uint8_t len, uint8_t buffer)
 {
     // Arm CONFIGIN_0:  [31]=rdy  [14:8]=size  [4:0]=buffer
@@ -159,6 +160,7 @@ void preset_sram(const uint8_t *data, uint8_t len, uint8_t buffer)
 // ---------------------------------------------------------------------------
 // print_payload + SETUP dispatcher
 // ---------------------------------------------------------------------------
+static void print_payload(uint8_t bufid, uint8_t setup, uint8_t ep) __attribute__((section(".data")));
 static void print_payload(uint8_t bufid, uint8_t setup, uint8_t ep)
 {
     uint32_t w0 = sram_read_word(bufid, 0);
@@ -213,13 +215,14 @@ static void print_payload(uint8_t bufid, uint8_t setup, uint8_t ep)
 // ---------------------------------------------------------------------------
 // main
 // ---------------------------------------------------------------------------
+void main(void) __attribute__((section(".data")));
 void main(void)
 {
     reg_wb_enable = 1; //enable wishbone
 
     // Apply configuration  
-    reg_mprj_xfer = 1;  
-    while (reg_mprj_xfer == 1); 
+    // reg_mprj_xfer = 1;  
+    // while (reg_mprj_xfer == 1); 
 
     /* uart_crlf();
     uart_puts("=== UART -> otUSB RXFIFO Polling (Caravel) ===");
@@ -262,13 +265,13 @@ void main(void)
     preset_sram(cfg_desc, send_len, BUF_CFG);//config descriptor
 
     //read back preset descriptor debug
-    for (uint8_t w = 0; w < 3u; w++) {
-        uint32_t v = sram_read_word(BUF_IN_EP0, w);
-    }
+    // for (uint8_t w = 0; w < 3u; w++) {
+    //     uint32_t v = sram_read_word(BUF_IN_EP0, w);
+    // }
 
-    for (uint8_t w = 0; w < 3u; w++) {
-        uint32_t v = sram_read_word(BUF_CFG, w);
-    }
+    // for (uint8_t w = 0; w < 3u; w++) {
+    //     uint32_t v = sram_read_word(BUF_CFG, w);
+    // }
 
     uint32_t sig;
     while (1) {

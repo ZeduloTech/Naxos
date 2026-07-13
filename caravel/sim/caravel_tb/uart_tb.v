@@ -49,7 +49,7 @@ module uart_tb;
     assign uart_tx = mprj_io[6];
     assign mprj_io[5] = uart_rx;
 
-    always #25 clock <= (clock === 1'b0);
+    always #10.42 clock <= (clock === 1'b0);    // 48 MHz
 
     initial begin
         clock = 0;

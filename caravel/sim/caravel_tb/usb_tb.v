@@ -26,6 +26,8 @@
 
 `include "pinout.vh"
 
+// `define VERBOSE
+
 module usb_tb;
     reg clock;
     reg RSTB;
@@ -150,7 +152,7 @@ module usb_tb;
     // Debug: confirm firmware register writes are actually reaching hardware
     //==========================================================================
     // Layer 2 - did the wrapper's decode/one-shot logic
-    `ifndef GL
+    `ifdef VERBOSE
        always @(posedge clock) begin
           if (uut.chip.i_chip_core.usb.usbdev_bus_we || uut.chip.i_chip_core.usb.usbdev_bus_re) begin
               $display("[USBDEV_BUS %0t] we=%b re=%b addr=%03h wdata=%08h (bus_we_sent=%b bus_re_sent=%b)",
@@ -195,7 +197,7 @@ module usb_tb;
   `endif
 
     //debug wb rdata
-  `ifndef GL
+  `ifdef VERBOSE
     always @(posedge clock) begin
         if (uut.chip.i_chip_core.usb.wb_stb_i && uut.chip.i_chip_core.usb.wb_cyc_i &&
             !uut.chip.i_chip_core.usb.wb_we_i && uut.chip.i_chip_core.usb.wb_ack_o) begin
@@ -208,7 +210,7 @@ module usb_tb;
   `endif
 
     //debug sram w/r
-   `ifndef GL
+   `ifdef VERBOSE
      always @(posedge clock) begin
         if (uut.chip.i_chip_core.usb.sram_req && uut.chip.i_chip_core.usb.sram_we) begin
             $display("[SRAM_WRITE %0t] req=1 we=%b addr=%0d(0x%03h) wdata=%08h wmask=%08h",

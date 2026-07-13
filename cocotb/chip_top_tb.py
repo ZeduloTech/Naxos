@@ -55,7 +55,7 @@ async def caravel_test(dut):
         shutil.copy(efuse, "efuse_init.hex")
 
     # Connect UART
-    uart_sink = UartSink(dut.uart_tx, baud=19200, bits=8)
+    uart_sink = UartSink(dut.uart_tx, baud=115200, bits=8)
     cocotb.start_soon(uart_monitor(uart_sink))
     
     await RisingEdge(dut.test_success)
@@ -91,6 +91,7 @@ def test_chip_top_runner(test : str):
     hex_prefix = str(proj_path / "../caravel/sim/caravel_sw") + "/"
     defines.update({
         "SIM" : 1, 
+        "SIM_FAST" : 1, 
         "SLOT_" + slot : "", 
         "HEX_PREFIX" : hex_prefix,
         "FINAL_PREFIX" : str(proj_path / "../final") + "/",

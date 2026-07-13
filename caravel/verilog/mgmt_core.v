@@ -4459,7 +4459,7 @@ assign request = {dbg_uart_wishbone_cyc, mgmtsoc_dbus_dbus_cyc, mgmtsoc_ibus_ibu
 always @(*) begin
 	slave_sel = 6'd0;
 	slave_sel[0] = (shared_adr[29:6] == 24'd15732480);
-	slave_sel[1] = (shared_adr[29:9] == 1'd0);
+	slave_sel[1] = (shared_adr[29:11] == 1'd0);
 	slave_sel[2] = (shared_adr[29:22] == 5'd16);
 	slave_sel[3] = (shared_adr[29:26] == 2'd3);
 	slave_sel[4] = (shared_adr[29:20] == 8'd152);
@@ -6387,9 +6387,9 @@ always @(posedge sys_clk) begin
 	if (spi_master_count_spimaster_next_value_ce) begin
 		spi_master_count <= spi_master_count_spimaster_next_value;
 	end
-	{uart_phy_tx_tick, uart_phy_tx_phase} <= 22'd4123168;
+	{uart_phy_tx_tick, uart_phy_tx_phase} <= 24'd10307921;
 	if (uart_phy_tx_enable) begin
-		{uart_phy_tx_tick, uart_phy_tx_phase} <= (uart_phy_tx_phase + 22'd4123168);
+		{uart_phy_tx_tick, uart_phy_tx_phase} <= (uart_phy_tx_phase + 24'd10307921);
 	end
 	rs232phy_rs232phytx_state <= rs232phy_rs232phytx_next_state;
 	if (uart_phy_tx_count_rs232phy_rs232phytx_next_value_ce0) begin
@@ -6404,7 +6404,7 @@ always @(posedge sys_clk) begin
 	uart_phy_rx_rx_d <= uart_phy_rx_rx;
 	{uart_phy_rx_tick, uart_phy_rx_phase} <= 32'd2147483648;
 	if (uart_phy_rx_enable) begin
-		{uart_phy_rx_tick, uart_phy_rx_phase} <= (uart_phy_rx_phase + 22'd4123168);
+		{uart_phy_rx_tick, uart_phy_rx_phase} <= (uart_phy_rx_phase + 24'd10307921);
 	end
 	rs232phy_rs232phyrx_state <= rs232phy_rs232phyrx_next_state;
 	if (uart_phy_rx_count_rs232phy_rs232phyrx_next_value_ce0) begin

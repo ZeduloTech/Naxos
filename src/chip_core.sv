@@ -76,6 +76,7 @@ module chip_core #(
     assign bidir_pd[`PAD_FLASH_IO1:`PAD_GPIO] = 5'b0000;
     assign bidir_sl[`PAD_FLASH_IO1:`PAD_GPIO] = 5'b0000;
     assign bidir_cs[`PAD_FLASH_IO1:`PAD_GPIO] = 5'b0000;
+    assign bidir_ie[`PAD_FLASH_CLK:`PAD_FLASH_CSB] = 2'b00;
 
     // set all other bidir configs between the Caravel & USB block to zero
     assign bidir_pu[`PAD_USB_START-1:`PAD_CARAVEL_END+1] = '0;
@@ -88,6 +89,7 @@ module chip_core #(
     // USB pad config
     assign bidir_sl[`PAD_USB_END:`PAD_USB_START] = 2'b00;
     assign bidir_cs[`PAD_USB_END:`PAD_USB_START] = 2'b00;
+    assign bidir_pd[`PAD_USB_END:`PAD_USB_START] = 2'b00;
 
     // ztimer SPI pad config [CSB, SDI, SCK, SDO]
     assign bidir_pu[`PAD_ZTIMER_SPI_HI:`PAD_ZTIMER_SPI_LO] = 4'b1000; // CSB pull-up
