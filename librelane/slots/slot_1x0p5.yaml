@@ -95,9 +95,9 @@ PAD_WEST: [
     "inputs\\[1\\].pad",
     "inputs\\[0\\].pad",
     
+    "analog\\[4\\].pad",
     "analog\\[3\\].pad",
     "analog\\[2\\].pad",
-    "bidir\\[45\\].pad",
     "bidir\\[44\\].pad",
     
     "dvss_pads\\[6\\].pad",

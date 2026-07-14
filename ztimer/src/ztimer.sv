@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 /************************************************************************
-// Integration of psTDC, clk_timer to SPI interface to read and clear register(s)
+// Integration of sctimer (psTDC), clk_timer to SPI interface to read 
+// and clear register(s)
 // For the clk_timer module: 
 // When start is triggered, the timer begins to count
 // Triggering stop, ends the timing session and stores the count value(s) 
@@ -25,7 +26,14 @@
 // interest 
 **************************************************************************/ 
 
-module sctimer #(
+// reduce duplication
+`ifdef SIM
+   `define TDC_USE sctimer	
+`else
+   `define TDC_USE shrinking_tdc
+`endif
+
+module ztimer #(
     parameter integer N_REGS = 5,
 	parameter integer FLAT_COUNTER_REGISTERS = (N_REGS * 32)
 )(
@@ -39,8 +47,7 @@ module sctimer #(
 
     input wire start_i,
     input wire stop_i,
-	input wire extpulse, //to test sub-clock directly
-    output reg [31:0] debug_count
+	input wire extpulse //to test sub-clock directly
 );	 
 
     wire [31:0] t0_elapsed_time;
@@ -70,7 +77,7 @@ module sctimer #(
     .pulse(sc_start_pulse)
     );
 
-	(* keep, dont_touch *) shrinking_tdc  sc_start(
+	(* keep, dont_touch *) `TDC_USE sc_start(
     .rst_n (rst_ni),
     .pulse_in(sc_start_pulse),
     .count(sc_start_count)
@@ -85,7 +92,7 @@ module sctimer #(
     .pulse(sc_stop_pulse)
     );
 	 
-	(* keep, dont_touch *) shrinking_tdc  sc_stop(
+	(* keep, dont_touch *) `TDC_USE sc_stop(
     .rst_n (rst_ni),
     .pulse_in(sc_stop_pulse),
     .count(sc_stop_count)
@@ -100,14 +107,14 @@ module sctimer #(
     .pulse(sc_cal_pulse)
     );
 
-	(* keep, dont_touch *) shrinking_tdc sc_cal(
+	(* keep, dont_touch *) `TDC_USE sc_cal(
     .rst_n (rst_ni),
     .pulse_in(sc_cal_pulse),
     .count(sc_cal_count)
 	 );
 
 //sub-clock taking in external input
-	(* keep, dont_touch *) shrinking_tdc  sc_direct(
+	(* keep, dont_touch *) `TDC_USE sc_direct(
     .rst_n (rst_ni),
     .pulse_in(extpulse),
     .count(sc_direct_count)
@@ -119,7 +126,6 @@ module sctimer #(
 		  .clear         (cnt_rst_en && (cnt_idx == 4'd0)),
 		  .start         (start_i),
 		  .stop          (stop_i),
-		  .debug_count   (debug_count), 	//LED driver output
 		  .elapsed_count (t0_elapsed_time)
 	);
 	

@@ -61,6 +61,12 @@ module chip_core #(
     // USB
     wire usb_dp_oe;
     wire usb_dn_oe;
+    wire usb_rx_en;
+    
+    // Ztimer
+    wire ztimer_extpulse;
+    wire ztimer_start;
+    wire ztimer_stop;
 
     // #####################################################################
     // ############################# IO CONFIG #############################
@@ -87,9 +93,9 @@ module chip_core #(
     assign bidir_oe[`PAD_USB_START-1:`PAD_CARAVEL_END+1] = '0;
 
     // USB pad config
-    assign bidir_sl[`PAD_USB_END:`PAD_USB_START] = 2'b00;
-    assign bidir_cs[`PAD_USB_END:`PAD_USB_START] = 2'b00;
-    assign bidir_pd[`PAD_USB_END:`PAD_USB_START] = 2'b00;
+    assign bidir_sl[`PAD_USB_END:`PAD_USB_START] = 4'b0000;
+    assign bidir_cs[`PAD_USB_END:`PAD_USB_START] = 4'b0000;
+    assign bidir_pd[`PAD_USB_END:`PAD_USB_START] = 4'b0000;
 
     // ztimer SPI pad config [CSB, SDI, SCK, SDO]
     assign bidir_pu[`PAD_ZTIMER_SPI_HI:`PAD_ZTIMER_SPI_LO] = 4'b1000; // CSB pull-up
@@ -98,18 +104,6 @@ module chip_core #(
     assign bidir_cs[`PAD_ZTIMER_SPI_HI:`PAD_ZTIMER_SPI_LO] = 4'b1110; // Schmitt on 3 inputs
     assign bidir_ie[`PAD_ZTIMER_SPI_HI:`PAD_ZTIMER_SPI_LO] = 4'b1110; // inputs enabled
     assign bidir_oe[`PAD_ZTIMER_SPI_HI:`PAD_ZTIMER_SPI_LO] = 4'b0001; // SDO output enabled
-
-    //!!!!!!!!!!!!!!!!!!!!!!!!
-    // CONFIG FOR ZTIMER CONTROL PINS!
-    //!!!!!!!!!!!!!!!!!!!!!!!!
-
-     // bidir 44
-    assign bidir_pu[`PAD_ZTIMER_START] = 1'b0;
-    assign bidir_pd[`PAD_ZTIMER_START] = 1'b1;
-    assign bidir_sl[`PAD_ZTIMER_START] = 1'b0;
-    assign bidir_cs[`PAD_ZTIMER_START] = 1'b0;
-    assign bidir_ie[`PAD_ZTIMER_START] = 1'b1;
-    assign bidir_oe[`PAD_ZTIMER_START] = 1'b0;
 
     // bidir 39 to 38
     assign bidir_pu[`PAD_ZTIMER_BEGIN-1:`PAD_USB_END+1] = 2'b00;
@@ -134,8 +128,8 @@ module chip_core #(
 
     // XTAL driver IP
     (* keep, dont_touch *) XTAL xtal_driver (
-        .OSC1(analog[1]),
-        .OSC2(analog[0]),
+        .OSC1(analog[`PADA_XTAL_OSC1]),
+        .OSC2(analog[`PADA_XTAL_OSC2]),
         .VCLOCK(xtal_clk)
     );
     assign bidir_out[`PAD_SYS_CLK_FB] = xtal_clk;
@@ -216,23 +210,22 @@ module chip_core #(
     // ztimer 
     //
 
-wire [31:0] debug_count; // prevent from dangling after synth, temp for now
-    //(* keep, dont_touch *) sctimer  u_ztimer (
-        //.clk_i         (core_clk),   // post-mux chip clock
-        //.rst_ni        (rst_n),
 
-        //// SPI slave
-        //.cio_sck_i     (bidir_in[`PAD_ZTIMER_SCK]),
-        //.cio_csb_i     (bidir_in[`PAD_ZTIMER_CSB]),
-        //.cio_sd_i      (bidir_in[`PAD_ZTIMER_SDI]),
-        //.cio_sd_o      (bidir_out[`PAD_ZTIMER_SDO]),
+   (* keep, dont_touch *) ztimer  u_ztimer (
+        .clk_i         (core_clk),   // post-mux chip clock
+        .rst_ni        (rst_n),
 
-        //// controls
-	//.debug_count   (debug_count),
-	//.extpulse      (input_in[`PADI_ZTIMER_EXTPULSE]), 
-        //.start_i       (bidir_in[`PAD_ZTIMER_START]),
-        //.stop_i        (input_in[`PADI_ZTIMER_STOP])
-    //);
+        // SPI slave
+        .cio_sck_i     (bidir_in[`PAD_ZTIMER_SCK]),
+        .cio_csb_i     (bidir_in[`PAD_ZTIMER_CSB]),
+        .cio_sd_i      (bidir_in[`PAD_ZTIMER_SDI]),
+        .cio_sd_o      (bidir_out[`PAD_ZTIMER_SDO]),
+
+        // controls
+        .extpulse      (ztimer_extpulse), 
+        .start_i       (ztimer_start),
+        .stop_i        (ztimer_stop)
+    );
 
     //
     // OpenTitan USB
@@ -253,21 +246,44 @@ wire [31:0] debug_count; // prevent from dangling after synth, temp for now
         .wb_dat_o(user_wb_dat_rd),
         .wb_ack_o(user_wb_ack),
 
-        .usb_dp_oe_o    (usb_dp_oe),
-        .usb_dn_oe_o    (usb_dn_oe),
-        .usb_dp_pullup_o(bidir_pu [`PAD_USB_DP]),
-        .usb_dn_pullup_o(bidir_pu [`PAD_USB_DN]),
-        .usb_dp_o       (bidir_out[`PAD_USB_DP]),
-        .usb_dn_o       (bidir_out[`PAD_USB_DN]),
-        .usb_dp_i       (bidir_in [`PAD_USB_DP]),
-        .usb_dn_i       (bidir_in [`PAD_USB_DN]),
-        .usb_sense_i    (input_in [`PADI_USB_SENSE])
+        .usb_dp_oe_o      (usb_dp_oe),
+        .usb_dn_oe_o      (usb_dn_oe),
+        .usb_dp_pullup_o  (bidir_pu [`PAD_USB_DP]),
+        .usb_dn_pullup_o  (bidir_pu [`PAD_USB_DN]),
+        .usb_diff_rx_en_o (usb_rx_en),
+        .usb_diff_tx_o    (bidir_out[`PAD_USB_DIFF_TX]),
+        .usb_dp_o         (bidir_out[`PAD_USB_DP]),
+        .usb_dn_o         (bidir_out[`PAD_USB_DN]),
+        .usb_dp_i         (bidir_in [`PAD_USB_DP]),
+        .usb_dn_i         (bidir_in [`PAD_USB_DN]),
+        .usb_diff_rx_i    (bidir_in [`PAD_USB_DIFF_RX]),
+        .usb_sense_i      (input_in [`PADI_USB_SENSE])
     );
 
     assign bidir_ie[`PAD_USB_DP] = ~usb_dp_oe;
     assign bidir_ie[`PAD_USB_DN] = ~usb_dn_oe;
     assign bidir_oe[`PAD_USB_DP] = usb_dp_oe;
     assign bidir_oe[`PAD_USB_DN] = usb_dn_oe;
+    assign bidir_ie[`PAD_USB_DIFF_RX] = 1'b1;
+    assign bidir_oe[`PAD_USB_DIFF_RX] = 1'b0;
+    assign bidir_ie[`PAD_USB_DIFF_TX] = 1'b0;
+    assign bidir_oe[`PAD_USB_DIFF_TX] = 1'b1;
+    
+    // Analog pad helpers, necessary for analog signals to be routed by OpenROAD
+    apad_helper apad_helper_extpulse (
+        .PAD(analog[`PADA_ZTIMER_EXTPULSE]),
+        .SIG(ztimer_extpulse)
+    );
+    
+    apad_helper apad_helper_start (
+        .PAD(analog[`PADA_ZTIMER_START]),
+        .SIG(ztimer_start)
+    );
+    
+    apad_helper apad_helper_stop (
+        .PAD(analog[`PADA_ZTIMER_STOP]),
+        .SIG(ztimer_stop)
+    );
 
 endmodule
 `default_nettype wire

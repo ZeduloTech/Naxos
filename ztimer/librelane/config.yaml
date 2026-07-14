@@ -9,15 +9,17 @@ meta:
     Checker.MaxSlewViolations: null # Demoted to warning while timing is being >
     Checker.MaxCapViolations: null
 
-DESIGN_NAME: ztimer_naxos
+DESIGN_NAME: sctimer
 VERILOG_FILES:
-- dir::../src/inverter.v
-- dir::../src/not_rosc.v
-- dir::../src/.v
+- dir::../src/ss2p.sv
+- dir::../src/d_latch.sv
+- dir::../src/sr_latch.sv
+- dir::../../pstdc/shrinking_tdc.v
+- dir::../src/clk_timer.sv
 - dir::../src/spi_byte_sm.sv
 - dir::../src/spi_core.sv
 - dir::../src/spi_device.sv
-- dir::../src/ztimer_naxos.sv
+- dir::../src/sctimer.sv
 
 # 3.3V CELL LIBRABRY
 STD_CELL_LIBRARY: gf180mcu_as_sc_mcu7t3v3

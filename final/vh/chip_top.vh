@@ -9,7 +9,7 @@ module chip_top(
   inout clk_PAD,
   inout rst_n_PAD,
   inout[3:0] input_PAD,
-  inout[45:0] bidir_PAD,
-  inout[3:0] analog_PAD
+  inout[44:0] bidir_PAD,
+  inout[4:0] analog_PAD
 );
 endmodule

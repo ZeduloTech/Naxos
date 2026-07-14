@@ -28,15 +28,15 @@ library (chip_top) {
   type ("analog_PAD") {
     base_type : array;
     data_type : bit;
-    bit_width : 4;
-    bit_from : 3;
+    bit_width : 5;
+    bit_from : 4;
     bit_to : 0;
   }
   type ("bidir_PAD") {
     base_type : array;
     data_type : bit;
-    bit_width : 46;
-    bit_from : 45;
+    bit_width : 45;
+    bit_from : 44;
     bit_to : 0;
   }
   type ("input_PAD") {
@@ -48,7 +48,7 @@ library (chip_top) {
   }
 
   cell ("chip_top") {
-    area : 9306368.000 
+    area : 9327481.000 
     is_macro_cell : true;
     pin("clk_PAD") {
       direction : inout;
@@ -62,6 +62,10 @@ library (chip_top) {
       bus_type : analog_PAD;
       direction : inout;
       capacitance : 0.0000;
+    pin("analog_PAD[4]") {
+      direction : inout;
+      capacitance : 0.0000;
+    }
     pin("analog_PAD[3]") {
       direction : inout;
       capacitance : 0.0000;
@@ -83,10 +87,6 @@ library (chip_top) {
       bus_type : bidir_PAD;
       direction : inout;
       capacitance : 0.0000;
-    pin("bidir_PAD[45]") {
-      direction : inout;
-      capacitance : 3.5630;
-    }
     pin("bidir_PAD[44]") {
       direction : inout;
       capacitance : 3.5630;

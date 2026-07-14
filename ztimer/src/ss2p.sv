@@ -5,7 +5,7 @@
  
 //// Start / Stop conversion to pulse
 //pulse output is by defaul high, start/stop are by default low.
-//pulse goes low when start goes high, and then pulse goes high when stop goes high
+//pulse goes low when start goes high, and then stop goes high then pulse goes high
 //reset takes the circuit back to default values
  
  module ss2p(
@@ -15,7 +15,6 @@
     output wire pulse
 );
 
-
     wire sr0_q;
     sr_latch sr0 (
         .s(start),
@@ -23,13 +22,20 @@
         .q(sr0_q)
 	);
 
-    wire d0_q;
-    d_latch d0 (
-        .d(sr0_q),
-        .r(~rst_n),
-        .en(stop),
-        .q(d0_q)
-	);
+    reg d0_q;
+    //d_latch d0 (    // !! should be DFF instead of D-latch !!
+        //.d(sr0_q),
+        //.r(~rst_n),
+        //.en(stop),
+        //.q(d0_q)
+	//);
+    always @(posedge stop or negedge rst_n) begin
+        if (rst_n == 1'b0) begin
+            d0_q <= 1'b0;
+        end else begin
+            d0_q <= sr0_q;
+        end
+    end
 	
 	assign pulse = ~ (d0_q ^ sr0_q);
     

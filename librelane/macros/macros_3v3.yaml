@@ -139,6 +139,24 @@ MACROS:
         location: [460.5, 2087.5]
         orientation: N
 
+  apad_helper:
+    gds:
+      - dir::../ip/apad_helper/apad_helper.gds
+    lef:
+      - dir::../ip/apad_helper/apad_helper.lef
+    vh:
+      - dir::../ip/apad_helper/apad_helper.v
+    instances:
+      i_chip_core.apad_helper_start:
+        location: [375.9, 1595.84]
+        orientation: W
+      i_chip_core.apad_helper_stop:
+        location: [375.9, 1454.84]
+        orientation: W
+      i_chip_core.apad_helper_extpulse:
+        location: [375.9, 1313.84]
+        orientation: W
+
   shrinking_tdc:
     gds:
       - dir::../pstdc/final/gds/shrinking_tdc.gds
@@ -147,7 +165,7 @@ MACROS:
     vh:
       - dir::../pstdc/final/vh/shrinking_tdc.vh
     instances:
-      i_chip_core.u_ztimer.shrinking_tdc:
+      i_chip_core.u_ztimer.sc_start:
         location: [490, 1515]
         orientation: N
       i_chip_core.u_ztimer.sc_stop:

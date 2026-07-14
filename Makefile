@@ -160,5 +160,6 @@ sim-view: ## View simulation waveforms in GTKWave
 copy-final: ## Copy final output files from the last run
 	rm -rf final/
 	cp -r librelane/runs/${RUN_TAG}/final/ final/
+	md5sum final/gds/chip_top.gds > final/gds/chip_top.gds.md5sum
 	gzip -f9 final/gds/chip_top.gds
 .PHONY: copy-final

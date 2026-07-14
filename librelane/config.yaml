@@ -74,14 +74,15 @@ VERILOG_FILES:
 - dir::../otUSB/src/usbdev_reg_top.sv
 - dir::../otUSB/src/usbdev.sv
 
-- dir::../sctimer/src/sr_latch.sv
-- dir::../sctimer/src/d_latch.sv
-- dir::../sctimer/src/ss2p.sv
-- dir::../sctimer/src/clk_timer.sv
-- dir::../sctimer/src/spi_byte_sm.sv
-- dir::../sctimer/src/spi_core.sv
-- dir::../sctimer/src/spi_device.sv
-- dir::../sctimer/src/sctimer.sv
+- dir::../ztimer/src/sr_latch.sv
+- dir::../ztimer/src/d_latch.sv
+- dir::../ztimer/src/ss2p.sv
+#- dir::../ztimer/src/sctimer.sv
+- dir::../ztimer/src/clk_timer.sv
+- dir::../ztimer/src/spi_byte_sm.sv
+- dir::../ztimer/src/spi_core.sv
+- dir::../ztimer/src/spi_device.sv
+- dir::../ztimer/src/ztimer.sv
 
  
 VERILOG_INCLUDE_DIRS: [ dir::../caravel/verilog/ ]

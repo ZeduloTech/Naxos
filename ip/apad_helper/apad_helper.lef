@@ -1,0 +1,24 @@
+VERSION 5.7 ;
+  NOWIREEXTENSIONATPIN ON ;
+  DIVIDERCHAR "/" ;
+  BUSBITCHARS "[]" ;
+MACRO apad_helper
+  CLASS BLOCK ;
+  FOREIGN apad_helper ;
+  ORIGIN 0.000 0.000 ;
+  SIZE 44.320 BY 1.000 ;
+  PIN PAD
+    PORT
+      LAYER Metal2 ;
+        RECT 0.000 0.000 44.320 1.000 ;
+    END
+  END PAD
+  PIN SIG
+    PORT
+      LAYER Metal3 ;
+        RECT 0.000 0.000 44.320 1.000 ;
+    END
+  END SIG
+END apad_helper
+END LIBRARY
+
