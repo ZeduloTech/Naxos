@@ -204,7 +204,10 @@ module caravel_core (
 
     // Power-on-reset signal, both sense-positive and inverted.
 
-    wire porb;
+    wire porb_prebuf;
+    wire porb0;
+    wire porb1;
+    wire porb2;
     wire por;
 
     // Flash SPI communication (management SoC to housekeeping)
@@ -500,7 +503,7 @@ module caravel_core (
         .pll_clk(pll_clk),
         .pll_clk90(pll_clk90),
         .resetb(rstb),
-        .porb(porb),
+        .porb(porb1),
         .sel(spi_pll_sel),
         .sel2(spi_pll90_sel),
         .ext_reset(ext_reset),  // From housekeeping SPI
@@ -565,7 +568,7 @@ module caravel_core (
         .wb_ack_o(hk_ack_i),
         .wb_dat_o(hk_dat_i),
 
-        .porb(porb),    // Do not connect to other reset sources
+        .porb(porb0),    // Do not connect to other reset sources
 
         .pll_ena(spi_pll_ena),
         .pll_dco_ena(spi_pll_dco_ena),
@@ -825,10 +828,26 @@ module caravel_core (
         .VDD(VDD),
         .VSS(VSS),
     `endif
-        .porb(porb),
+        .porb(porb_prebuf),
         .por(por)
     );
-    assign npor = porb;
+    
+    (* keep *)  gf180mcu_as_sc_mcu7t3v3__clkbuff_12 porb0_buf (
+        .A(porb_prebuf),
+        .Y(porb0)
+    );
+    
+    (* keep *)  gf180mcu_as_sc_mcu7t3v3__clkbuff_12 porb1_buf (
+        .A(porb_prebuf),
+        .Y(porb1)
+    );
+    
+    (* keep *)  gf180mcu_as_sc_mcu7t3v3__clkbuff_12 porb2_buf (
+        .A(porb_prebuf),
+        .Y(porb2)
+    );
+    
+    assign npor = porb2;
 
 endmodule
 // `default_nettype wire

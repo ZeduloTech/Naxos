@@ -83,6 +83,10 @@ all: caravel-librelane macros-librelane librelane copy-final ## Build the projec
 
 $(PDK_ROOT)/ciel/gf180mcu/versions/$(PDK_COMMIT)/$(PDK):
 	ciel enable $(PDK_COMMIT) --pdk-root $(PDK_ROOT) --pdk-family $(PDK) --include-libraries all
+	git clone https://github.com/AvalonSemiconductors/gf180mcu_as_sc_mcu7t3v3 --depth 1 gf180mcu/gf180mcu_as_sc_mcu7t3v3
+	rm -rf gf180mcu/gf180mcuD/libs.ref/gf180mcu_as_sc_mcu7t3v3 gf180mcu/gf180mcuD/libs.tech/librelane/gf180mcu_as_sc_mcu7t3v3
+	ln -s $(MAKEFILE_DIR)/gf180mcu/gf180mcu_as_sc_mcu7t3v3/pdk/libs.ref/gf180mcu_as_sc_mcu7t3v3 gf180mcu/gf180mcuD/libs.ref/
+	ln -s $(MAKEFILE_DIR)/gf180mcu/gf180mcu_as_sc_mcu7t3v3/pdk/libs.tech/librelane/gf180mcu_as_sc_mcu7t3v3 gf180mcu/gf180mcuD/libs.tech/librelane/
 
 clone-pdk: $(PDK_ROOT)/ciel/gf180mcu/versions/$(PDK_COMMIT)/$(PDK) ## Clone the gf180mcu PDK
 .PHONY: clone-pdk

@@ -217,22 +217,22 @@ module chip_core #(
     //
 
 wire [31:0] debug_count; // prevent from dangling after synth, temp for now
-    (* keep, dont_touch *) sctimer  u_ztimer (
-        .clk_i         (core_clk),   // post-mux chip clock
-        .rst_ni        (rst_n),
+    //(* keep, dont_touch *) sctimer  u_ztimer (
+        //.clk_i         (core_clk),   // post-mux chip clock
+        //.rst_ni        (rst_n),
 
-        // SPI slave
-        .cio_sck_i     (bidir_in[`PAD_ZTIMER_SCK]),
-        .cio_csb_i     (bidir_in[`PAD_ZTIMER_CSB]),
-        .cio_sd_i      (bidir_in[`PAD_ZTIMER_SDI]),
-        .cio_sd_o      (bidir_out[`PAD_ZTIMER_SDO]),
+        //// SPI slave
+        //.cio_sck_i     (bidir_in[`PAD_ZTIMER_SCK]),
+        //.cio_csb_i     (bidir_in[`PAD_ZTIMER_CSB]),
+        //.cio_sd_i      (bidir_in[`PAD_ZTIMER_SDI]),
+        //.cio_sd_o      (bidir_out[`PAD_ZTIMER_SDO]),
 
-        // controls
-	.debug_count   (debug_count),
-	.extpulse      (input_in[`PADI_ZTIMER_EXTPULSE]), 
-        .start_i       (bidir_in[`PAD_ZTIMER_START]),
-        .stop_i        (input_in[`PADI_ZTIMER_STOP])
-    );
+        //// controls
+	//.debug_count   (debug_count),
+	//.extpulse      (input_in[`PADI_ZTIMER_EXTPULSE]), 
+        //.start_i       (bidir_in[`PAD_ZTIMER_START]),
+        //.stop_i        (input_in[`PADI_ZTIMER_STOP])
+    //);
 
     //
     // OpenTitan USB
