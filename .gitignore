@@ -13,6 +13,7 @@ librelane/macros/macros_5v_or.yaml
 librelane/pdn/pdn_5v_sram_or.yaml
 librelane/pdn/pdn_3v3_sram_or.yaml
 
+final/gds/chip_top.gds
 # final/
 final/def/
 final/json_h/
