@@ -65,6 +65,12 @@ module ztimer #(
     reg sc_stop_clear_n;
     reg sc_cal_clear_n;
     reg sc_direct_clear_n;
+
+    wire clk_buffed;
+    (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__clkbuff_8 clk_buf (
+	.A (clk_i),
+	.Y (clk_buffed)
+    );
    
     
     always @(posedge clk_buffed or negedge rst_ni) begin
@@ -86,13 +92,6 @@ module ztimer #(
     assign counters_i[2 * 32 +: 32] = {sc_stop_clear_n, 18'h0, sc_stop_count};   //subclock stop
     assign counters_i[3 * 32 +: 32] = {sc_cal_clear_n, 18'h0, sc_cal_count};    //subclock calibration
     assign counters_i[4 * 32 +: 32] = {sc_direct_clear_n, 18'h0, sc_direct_count}; //direct subclock
-
-    wire clk_buffed;
-    (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__clkbuff_8 clk_buf (
-	.A (clk_i),
-	.Y (clk_buffed)
-    );
-
 
 //sub-clock from start input to next rising edge of clock
 	wire sc_start_pulse;
