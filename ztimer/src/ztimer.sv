@@ -67,7 +67,7 @@ module ztimer #(
     reg sc_direct_clear_n;
    
     
-    always @(posedge clk_i or negedge rst_ni) begin
+    always @(posedge clk_buffed or negedge rst_ni) begin
         if (!rst_ni) begin
             sc_start_clear_n  <= 1'b1;
             sc_stop_clear_n   <= 1'b1;
@@ -128,7 +128,7 @@ module ztimer #(
 
     wire sc_cal_pulse;
 	ss2p ss2p_cal(
-    .start(clk_i), 
+    .start(clk_buffed), 
     .stop(~clk_buffed), 
     .rst_n(sc_cal_clear_n),
     .pulse(sc_cal_pulse)
