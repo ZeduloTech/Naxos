@@ -73,7 +73,7 @@ module ztimer #(
     );
    
     
-    always @(posedge clk_buffed or negedge rst_ni) begin
+    always @(posedge clk_i or negedge rst_ni) begin
         if (!rst_ni) begin
             sc_start_clear_n  <= 1'b1;
             sc_stop_clear_n   <= 1'b1;
@@ -160,7 +160,7 @@ module ztimer #(
 	    .FLAT_COUNTER_REGISTERS (FLAT_COUNTER_REGISTERS),
 	    .N_REGS (N_REGS)
 	 ) spi_device (
-        .clk_i      (clk_buffed),
+        .clk_i      (clk_i),
         .rst_ni     (rst_ni),
 
         .cio_sck_i  (cio_sck_i),
