@@ -147,7 +147,7 @@ module ztimer #(
 	 );
 
 	 clk_timer u_timer_xtal (
-		  .clk_i         (clk_buffed),
+		  .clk_i         (clk_i),
 		  .rst_n         (rst_ni),
 		  .clear         (cnt_rst_en && (cnt_idx == 4'd0)),
 		  .start         (start_i),
