@@ -6,8 +6,8 @@
     
 module caravel #(
     parameter NUM_INPUT_PADS = 12,
-    parameter NUM_BIDIR_PADS = 40,
-    parameter NUM_ANALOG_PADS = 2
+    parameter NUM_BIDIR_PADS = 44,
+    parameter NUM_ANALOG_PADS = 5
     ) (
     `ifdef USE_POWER_PINS
     inout VDD,        
@@ -26,8 +26,10 @@ module caravel #(
 
     wire [NUM_INPUT_PADS-1:0] in_pads;
     wire [NUM_BIDIR_PADS-1:0] bidir_pads;
+    wire [NUM_ANALOG_PADS-1:0] analog_pads;
     
     assign (weak1, weak0) in_pads = {NUM_INPUT_PADS{1'b0}};
+    assign (weak1, weak0) analog_pads = {NUM_ANALOG_PADS{1'b0}};
 
     chip_top chip (
         `ifdef USE_POWER_PINS
@@ -39,7 +41,8 @@ module caravel #(
         .rst_n_PAD(resetb),
 
         .input_PAD(in_pads),
-        .bidir_PAD({bidir_pads[NUM_BIDIR_PADS-1:`PAD_CARAVEL_END+1], flash_io1, flash_io0, flash_clk, flash_csb, gpio, mprj_io[`MPRJ_IO_PADS-1:`MPRJ_IO_PADS-`MPRJ_TO_CARAVEL_HI], mprj_io[`MPRJ_TO_CARAVEL_LO-1:0]})
+        .bidir_PAD({bidir_pads[NUM_BIDIR_PADS-1:`PAD_CARAVEL_END+1], flash_io1, flash_io0, flash_clk, flash_csb, gpio, mprj_io[`MPRJ_IO_PADS-1:`MPRJ_IO_PADS-`MPRJ_TO_CARAVEL_HI], mprj_io[`MPRJ_TO_CARAVEL_LO-1:0]}),
+        .analog_PAD(analog_pads)
     );
     
 

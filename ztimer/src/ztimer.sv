@@ -47,38 +47,64 @@ module ztimer #(
 
     input wire start_i,
     input wire stop_i,
-	input wire extpulse //to test sub-clock directly
+    input wire extpulse //to test sub-clock directly
 );	 
 
     wire [31:0] t0_elapsed_time;
 	 
-
     wire [FLAT_COUNTER_REGISTERS - 1:0] counters_i;
     wire [3:0] cnt_idx;
     wire cnt_rst_en;
 
-	wire [12:0] sc_start_count;
-	wire [12:0] sc_stop_count;
-	wire [12:0] sc_cal_count;
-	wire [12:0] sc_direct_count;
+    wire [12:0] sc_start_count;
+    wire [12:0] sc_stop_count;
+    wire [12:0] sc_cal_count;
+    wire [12:0] sc_direct_count;
 	 
+    reg sc_start_clear_n;
+    reg sc_stop_clear_n;
+    reg sc_cal_clear_n;
+    reg sc_direct_clear_n;
+   
+    
+    always @(posedge clk_i or negedge rst_ni) begin
+        if (!rst_ni) begin
+            sc_start_clear_n  <= 1'b1;
+            sc_stop_clear_n   <= 1'b1;
+            sc_cal_clear_n    <= 1'b1;
+            sc_direct_clear_n <= 1'b1;
+        end else begin
+            if (cnt_rst_en && (cnt_idx == 4'd1)) sc_start_clear_n  <= ~sc_start_clear_n;
+            if (cnt_rst_en && (cnt_idx == 4'd2)) sc_stop_clear_n   <= ~sc_stop_clear_n;
+            if (cnt_rst_en && (cnt_idx == 4'd3)) sc_cal_clear_n    <= ~sc_cal_clear_n;
+            if (cnt_rst_en && (cnt_idx == 4'd4)) sc_direct_clear_n <= ~sc_direct_clear_n;
+        end
+    end
+    
     assign counters_i[0 * 32 +: 32] = t0_elapsed_time;
-    assign counters_i[1 * 32 +: 32] = {19'h0, sc_start_count};  //subclock start
-    assign counters_i[2 * 32 +: 32] = {19'h0, sc_stop_count};   //subclock stop
-    assign counters_i[3 * 32 +: 32] = {19'h0, sc_cal_count};    //subclock calibration
-    assign counters_i[4 * 32 +: 32] = {19'h0, sc_direct_count}; //direct subclock
+    assign counters_i[1 * 32 +: 32] = {sc_start_clear_n, 18'h0, sc_start_count};  //subclock start
+    assign counters_i[2 * 32 +: 32] = {sc_stop_clear_n, 18'h0, sc_stop_count};   //subclock stop
+    assign counters_i[3 * 32 +: 32] = {sc_cal_clear_n, 18'h0, sc_cal_count};    //subclock calibration
+    assign counters_i[4 * 32 +: 32] = {sc_direct_clear_n, 18'h0, sc_direct_count}; //direct subclock
+
+    wire clk_buffed;
+    (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__clkbuff_8 clk_buf (
+	.A (clk_i),
+	.Y (clk_buffed)
+    );
+
 
 //sub-clock from start input to next rising edge of clock
 	wire sc_start_pulse;
 	ss2p ss2p_start(
     .start(start_i), 
-    .stop(clk_i),
-    .rst_n(rst_ni),
+    .stop(clk_buffed),
+    .rst_n(sc_start_clear_n),
     .pulse(sc_start_pulse)
     );
 
 	(* keep, dont_touch *) `TDC_USE sc_start(
-    .rst_n (rst_ni),
+    .rst_n (sc_start_clear_n),
     .pulse_in(sc_start_pulse),
     .count(sc_start_count)
 	 );
@@ -87,41 +113,42 @@ module ztimer #(
 	wire sc_stop_pulse;
 	ss2p ss2p_stop(
     .start(stop_i), 
-    .stop(clk_i),
-    .rst_n(rst_ni),
+    .stop(clk_buffed),
+    .rst_n(sc_stop_clear_n),
     .pulse(sc_stop_pulse)
     );
 	 
 	(* keep, dont_touch *) `TDC_USE sc_stop(
-    .rst_n (rst_ni),
+    .rst_n (sc_stop_clear_n),
     .pulse_in(sc_stop_pulse),
     .count(sc_stop_count)
 	 );
 
-//sub-clock calibration, measures time for half a clock period
- 	wire sc_cal_pulse;
+    //sub-clock calibration, measures time for half a clock period
+
+    wire sc_cal_pulse;
 	ss2p ss2p_cal(
     .start(clk_i), 
-    .stop(~clk_i), 
-    .rst_n(rst_ni),
+    .stop(~clk_buffed), 
+    .rst_n(sc_cal_clear_n),
     .pulse(sc_cal_pulse)
     );
 
 	(* keep, dont_touch *) `TDC_USE sc_cal(
-    .rst_n (rst_ni),
+    .rst_n (sc_cal_clear_n),
     .pulse_in(sc_cal_pulse),
     .count(sc_cal_count)
 	 );
-
-//sub-clock taking in external input
+	 
+    //sub-clock taking in external input
 	(* keep, dont_touch *) `TDC_USE sc_direct(
-    .rst_n (rst_ni),
+    .rst_n (sc_direct_clear_n),
     .pulse_in(extpulse),
     .count(sc_direct_count)
 	 );
 
 	 clk_timer u_timer_xtal (
-		  .clk_i         (clk_i),
+		  .clk_i         (clk_buffed),
 		  .rst_n         (rst_ni),
 		  .clear         (cnt_rst_en && (cnt_idx == 4'd0)),
 		  .start         (start_i),
@@ -134,7 +161,7 @@ module ztimer #(
 	    .FLAT_COUNTER_REGISTERS (FLAT_COUNTER_REGISTERS),
 	    .N_REGS (N_REGS)
 	 ) spi_device (
-        .clk_i      (clk_i),
+        .clk_i      (clk_buffed),
         .rst_ni     (rst_ni),
 
         .cio_sck_i  (cio_sck_i),

@@ -69,6 +69,10 @@ if {$hierarchical_sta} {
         [expr $caravel_in_min_delay + $delta] [expr $caravel_period - $caravel_in_max_delay + $delta]
 }
 
+###################### TIMER CONSTRAINTS ############################### 
+
+create_clock [get_pin i_chip_core.u_ztimer.clk_buf/Y] -name ztimer_clk -period 20
+ 
 ###################### GENERAL CONSTRAINTS ############################# 
 
 set_false_path -through [get_pins $cvl/user_wb_rst_o]
