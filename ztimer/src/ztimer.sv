@@ -72,6 +72,11 @@ module ztimer #(
 	.Y (clk_buffed)
     );
    
+    wire clk_buffed;
+    (* keep, dont_touch *) gf180mcu_as_sc_mcu7t3v3__clkbuff_8 clk_buf (
+	.A (clk_i),
+	.Y (clk_buffed)
+    );
     
     always @(posedge clk_buffed or negedge rst_ni) begin
         if (!rst_ni) begin

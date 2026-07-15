@@ -75,7 +75,7 @@ VERILOG_FILES:
 - dir::../otUSB/src/usbdev.sv
 
 - dir::../ztimer/src/sr_latch.sv
-- dir::../ztimer/src/d_latch.sv
+#- dir::../ztimer/src/d_latch.sv
 - dir::../ztimer/src/ss2p.sv
 - dir::../ztimer/src/clk_timer.sv
 - dir::../ztimer/src/spi_byte_sm.sv
